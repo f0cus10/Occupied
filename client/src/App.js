@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+=======
 import React, { Component } from 'react';
 import Login from './components/Login';
 import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 import './App.css';
+>>>>>>> 2a1323e34e91ddf034d76cc16d9162510209c761
 
 class App extends Component {
   render() {
@@ -15,7 +21,7 @@ class App extends Component {
       </BrowserRouter>
 =======
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.change
@@ -28,7 +34,7 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </header> */}
       </div>
 >>>>>>> 5be038710c6efd59922cd0e162bf80ff83d1905e
     );
