@@ -6,7 +6,6 @@ import "semantic-ui-css/semantic.min.css";
 import data from "./dummydata.json";
 import "./App.css";
 
-
 class App extends Component {
   componentDidMount() {
     console.log(data);
@@ -16,7 +15,6 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           Occupied
-		  
           <Login />
           {/* <div className="card-container"> */}
             {/* <CardExampleCard /> */}
