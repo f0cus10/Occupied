@@ -1,50 +1,39 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
-import Authorization from '../auth';
+import { connect } from 'react-redux';
+import { setUser, setAuth } from '../store';
 import '../styles/Login.css';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isAuth: false
     };
   }
 
-  login = (e) => {
-    e.preventDefault();
-    Authorization.authenticate(() => {
-      this.setState({ isAuth: true })
-    });
-  }
-
-  componentDidMount() {
-    console.log('hello');
-  }
-
   render() {
-    const { isAuthenticated } = Authorization;
+    const { setUsername, isAuth } = this.props;
     // let { from } = this.props.location.state || { from: { pathname: "/" } };
-    if (isAuthenticated) {
+    if (isAuth) {
       return <Redirect to='/home' />
     }
 
     return (
-      <div class="login-page">
-        <div class="form">
-          <form class="register-form">
+      <div className="login-page">
+        <div className="form">
+          <form className="register-form">
             <input type="text" placeholder="name" />
             <input type="password" placeholder="password" />
             <input type="text" placeholder="email address" />
             <button>create</button>
-            <p class="message">Already registered? <a href="#">Sign In</a></p>
+            <p className="message">Already registered? <a href="#">Sign In</a></p>
           </form>
-          <form class="login-form">
-            <input type="text" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+          <form onSubmit={setUsername} className="login-form">
+            <input type="text" placeholder="Username" name="username" />
+            <input type="password" placeholder="Password" name="password" />
 
-            <button onClick={this.login}>login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <button type="submit">login</button>
+            <p className="message">Not registered? <a href="#">Create an account</a></p>
           </form>
         </div>
       </div>
@@ -52,4 +41,23 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapState = state => {
+  console.log(state.user)
+  return {
+    username: state.user.user,
+    isAuth: state.user.isAuth
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    setUsername(e) {
+      e.preventDefault();
+      const username = e.target.username.value;
+      dispatch(setUser(username));
+      dispatch(setAuth());
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(Login);
