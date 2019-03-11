@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import Navbar from './components/Navbar';
 import "semantic-ui-css/semantic.min.css";
 import {
   BrowserRouter,
@@ -10,21 +11,25 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import Authorization from './auth';
+import { connect } from 'react-redux';
 import "./App.css";
 
 class App extends Component {
-  componentDidMount() {
-    const { isAuthenticated } = Authorization;
-    console.log(isAuthenticated);
+  constructor(props) {
+    super(props);
   }
+
   render() {
+    const { isAuth } = this.props;
     return (
       <BrowserRouter>
         <div className="App">
           <h1> Occupied </h1>
+          {isAuth &&
+            <Navbar />
+          }
           <Route exact path="/" component={Login} />
-          <PrivateRoute path="/home" component={Home} />
+          <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
         </div>
       </BrowserRouter>
     );
@@ -34,13 +39,12 @@ class App extends Component {
 /**
  * A private route, if isAuthenticated is false, redirects back to "/"
  */
-function PrivateRoute({ component: Component, ...rest }) {
-  const { isAuthenticated } = Authorization;
+function PrivateRoute({ isAuth, component: Component, ...rest }) {
   return (
     <Route
       {...rest}
       render={props =>
-        isAuthenticated ? (
+        isAuth ? (
           <Component {...props} />
         ) : (
             <Redirect
@@ -54,4 +58,11 @@ function PrivateRoute({ component: Component, ...rest }) {
   )
 }
 
-export default App;
+const mapState = state => {
+  return {
+    user: state.user.user,
+    isAuth: state.user.isAuth
+  }
+}
+
+export default connect(mapState)(App);
