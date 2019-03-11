@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-    res.send('hello');
+    res.send(process.env.PGUSER);
 })
 
 const port = 5000;
