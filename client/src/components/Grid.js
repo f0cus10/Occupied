@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Grid, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
-import CardExampleCard from "../components/Card.js";
+import CardExampleCard from "./Card.js";
 
-class GridExampleCelled extends Component {
+class BlueprintGrid extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,4 +38,4 @@ class GridExampleCelled extends Component {
   }
 }
 
-export default GridExampleCelled;
+export default BlueprintGrid;
