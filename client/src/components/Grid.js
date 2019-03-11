@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Grid, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
-import CardExampleCard from "./card.js";
+import CardExampleCard from "./Card.js";
 
 class BlueprintGrid extends Component {
   constructor(props) {
