@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Image } from 'semantic-ui-react'
-import CardExampleCard from "./Card.js";
-import BlueprintGrid from "./Grid.js";
+import BlueprintGrid from "./Grid";
 import '../styles/Home.css';
 
 class Home extends Component {
