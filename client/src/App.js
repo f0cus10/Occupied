@@ -12,6 +12,8 @@ import {
   withRouter
 } from "react-router-dom";
 import { connect } from 'react-redux';
+import CreateBlueprint from './components/CreateBlueprint';
+import JoinBlueprint from './components/JoinBlueprint';
 import "./App.css";
 
 class App extends Component {
@@ -30,6 +32,8 @@ class App extends Component {
           }
           <Route exact path="/" component={Login} />
           <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
+          <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
+          <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
         </div>
       </BrowserRouter>
     );

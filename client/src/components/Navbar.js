@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input, Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 
 class Navbar extends Component {
@@ -16,26 +17,26 @@ class Navbar extends Component {
     const { activeItem } = this.state;
     return (
       <div className="navBar">
-      <Menu secondary>
-      <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} />
-      <Menu.Item name='Create Blueprint' active={activeItem === 'Create Blueprint'} onClick={this.handleItemClick} />
+        <Menu secondary>
+          <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} />
+          <Menu.Item name='Create Blueprint' active={activeItem === 'Create Blueprint'} onClick={this.handleItemClick} />
 
-      <Menu.Menu position='right'>
-        <Menu.Item>
-            <Input icon='search' placeholder='Search Blueprints...' />
-        </Menu.Item>
-        <Menu.Item> 
-            <div className="user">
-              Welcome {username}!
+          <Menu.Menu position='right'>
+            <Menu.Item>
+              <Input icon='search' placeholder='Search Blueprints...' />
+            </Menu.Item>
+            <Menu.Item>
+              <div className="user">
+                Welcome {username}!
             </div>
-        </Menu.Item>
-        <Menu.Item
-          name='logout'
-          active={activeItem === 'logout'}
-          onClick={this.handleItemClick}
-        />
-      </Menu.Menu>
-      </Menu>
+            </Menu.Item>
+            <Menu.Item
+              name='logout'
+              active={activeItem === 'logout'}
+              onClick={this.handleItemClick}
+            />
+          </Menu.Menu>
+        </Menu>
       </div>
     );
   }
