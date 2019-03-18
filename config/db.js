@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
+var Sequelize = require('sequelize');
+var db = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
   host: 'localhost',
   dialect: 'postgres',
   operatorsAliases: false,
@@ -12,7 +12,7 @@ const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPA
   },
 });
 
-sequelize
+db
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -21,4 +21,4 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-module.exports = sequelize;
+module.exports = db;

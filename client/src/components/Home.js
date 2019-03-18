@@ -26,7 +26,7 @@ class Home extends Component {
             <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
           </Grid.Column>
           <Grid.Column width={13}>
-            <Link to="/create"> Hello</Link>
+            {/* <Link to="/create"> Hello</Link> */}
             <BlueprintGrid />
             <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' />
           </Grid.Column>

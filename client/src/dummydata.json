@@ -7,68 +7,17 @@
     "time": "3:45 PM"
   },
   {
-    "name": "Dance Room",
-    "description": "Place to study",
-    "img_url": "http://c2945642.myzen.co.uk/wp-content/uploads/2016/01/The-Dance-Studio.jpg",
+    "name": "My House",
+    "description": "This is my crib",
+    "img_url": "https://pmcvariety.files.wordpress.com/2018/07/bradybunchhouse_sc11.jpg?w=1000&h=563&crop=1",
     "status": "Available",
     "time": "Last Used 9:45 AM"
   },
   {
-    "name": "Bathroom",
-    "description": "2nd floor bathroom",
-    "img_url": "https://www.distinctiveremodeling.com/wp-content/uploads/2019/01/small-bathroom.jpg",
+    "name": "Friend's House",
+    "description": "This is my friend's house",
+    "img_url": "https://farm4.staticflickr.com/3311/3246474481_d250c5ecc9_b.jpg",
     "status": "Occupied",
     "time": "7:45 PM"
-  },
-  {
-    "name": "Bedroom",
-    "description": "Master Bedroom",
-    "img_url": "https://images.zgallerie.com/is/image/ZGallerie/SEP18_12?$inspirationgrid$",
-    "status": "Available",
-    "time": "Last Used 5:45 PM"
-  },
-
-  {
-    "name": "Study Room",
-    "description": "Place to study",
-    "img_url": "https://ace.fsu.edu/sites/g/files/upcbnu296/files/Study%20Room%20w%20Interactive%20White%20Board.JPG",
-    "status": "Occupied",
-    "time": "6:45 PM"
-  },
-  {
-    "name": "Hunter College",
-    "description": "School",
-    "img_url": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
-    "status": "Occupied",
-    "time": "3:45 PM"
-  },
-  {
-    "name": "Dance Room",
-    "description": "Place to study",
-    "img_url": "http://c2945642.myzen.co.uk/wp-content/uploads/2016/01/The-Dance-Studio.jpg",
-    "status": "Available",
-    "time": "Last Used 9:45 AM"
-  },
-  {
-    "name": "Bathroom",
-    "description": "2nd floor bathroom",
-    "img_url": "https://www.distinctiveremodeling.com/wp-content/uploads/2019/01/small-bathroom.jpg",
-    "status": "Occupied",
-    "time": "7:45 PM"
-  },
-  {
-    "name": "Bedroom",
-    "description": "Master Bedroom",
-    "img_url": "https://images.zgallerie.com/is/image/ZGallerie/SEP18_12?$inspirationgrid$",
-    "status": "Available",
-    "time": "Last Used 5:45 PM"
-  },
-
-  {
-    "name": "Study Room",
-    "description": "Place to study",
-    "img_url": "https://ace.fsu.edu/sites/g/files/upcbnu296/files/Study%20Room%20w%20Interactive%20White%20Board.JPG",
-    "status": "Occupied",
-    "time": "6:45 PM"
   }
 ]
