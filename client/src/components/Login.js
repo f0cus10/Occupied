@@ -15,7 +15,7 @@ class Login extends Component {
     const { setUsername, isAuth } = this.props;
     // let { from } = this.props.location.state || { from: { pathname: "/" } };
     if (isAuth) {
-      return <Redirect to='/home' />
+      return <Redirect to='/Home' />
     }
 
     return (
@@ -33,7 +33,7 @@ class Login extends Component {
             <input type="password" placeholder="Password" name="password" />
 
             <button type="submit">login</button>
-            <p className="message">Not registered? <a href="#">Create an account</a></p>
+            <p className="message">Not registered? <a href="/register">Create an account</a></p>
           </form>
         </div>
       </div>

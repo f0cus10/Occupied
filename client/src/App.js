@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
+import Registration from "./components/Registration";
 import Home from "./components/Home";
 import Navbar from './components/Navbar';
 import "semantic-ui-css/semantic.min.css";
@@ -34,6 +35,7 @@ class App extends Component {
           <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
           <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
           <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
+          <Route path="/register" component={Registration} isAuth={isAuth} />
         </div>
       </BrowserRouter>
     );
