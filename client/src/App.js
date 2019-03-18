@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
 import Home from "./components/Home";
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
 import "semantic-ui-css/semantic.min.css";
 import {
   BrowserRouter,
@@ -11,9 +11,11 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
-import { connect } from 'react-redux';
-import CreateBlueprint from './components/CreateBlueprint';
-import JoinBlueprint from './components/JoinBlueprint';
+import { connect } from "react-redux";
+import CreateBlueprint from "./components/CreateBlueprint";
+import JoinBlueprint from "./components/JoinBlueprint";
+import ViewBlueprint from "./components/ViewBlueprint";
+import EditBlueprint from "./components/EditBlueprint";
 import "./App.css";
 
 class App extends Component {
@@ -27,13 +29,13 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <h1> Occupied </h1>
-          {isAuth &&
-            <Navbar />
-          }
+          {isAuth && <Navbar />}
           <Route exact path="/" component={Login} />
           <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
           <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
           <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
+          <Route path="/view" component={ViewBlueprint} isAuth={isAuth} />
+          <Route path="/edit" component={EditBlueprint} isAuth={isAuth} />
         </div>
       </BrowserRouter>
     );
@@ -51,22 +53,22 @@ function PrivateRoute({ isAuth, component: Component, ...rest }) {
         isAuth ? (
           <Component {...props} />
         ) : (
-            <Redirect
-              to={{
-                pathname: "/"
-              }}
-            />
-          )
+          <Redirect
+            to={{
+              pathname: "/"
+            }}
+          />
+        )
       }
     />
-  )
+  );
 }
 
 const mapState = state => {
   return {
     user: state.user.user,
     isAuth: state.user.isAuth
-  }
-}
+  };
+};
 
 export default connect(mapState)(App);

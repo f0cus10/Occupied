@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import CardExampleCard from "./Card";
 import { Link } from "react-router-dom";
 
-class CreateBlueprint extends Component {
+class ViewBlueprint extends Component {
   render() {
     const { username } = this.props;
     return (
       <div>
-        <h1>Create Blueprint</h1>
+        <h1>View Blueprint</h1>
         <h2>Welcome {username} !</h2>
+        <h1>MY NAME IS {this.name}</h1>
+        <CardExampleCard />
         <Link to="/home">GO TO HOME</Link>
       </div>
     );
@@ -21,4 +24,4 @@ const mapState = state => {
   };
 };
 
-export default connect(mapState)(CreateBlueprint);
+export default connect(mapState)(ViewBlueprint);

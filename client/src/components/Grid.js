@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Grid, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import CardExampleCard from "./Card";
+import { Link } from "react-router-dom";
 
 class BlueprintGrid extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class BlueprintGrid extends Component {
           img_url={post.img_url}
           status={post.status}
           time={post.time}
+          id={post.id}
         />
       </Grid.Column>
     ));
