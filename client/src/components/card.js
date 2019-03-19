@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Card, Icon, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class CardExampleCard extends Component {
   constructor(props) {
@@ -11,38 +13,52 @@ class CardExampleCard extends Component {
   }
 
   componentDidMount() {
-    // fetch("data", {
-    //   method: "GET"
-    // })
-    //   .then(res => res.json())
-    //   .then(data => {
     this.setState({ posts: data });
     console.log(this.posts);
-    //   });
   }
 
   render() {
+    const {
+      isAdminOf,
+      status,
+      time,
+      name,
+      description,
+      img_url,
+      id
+    } = this.props;
+
     return (
       <div>
         <Card>
-          <Image src={this.props.img_url} />
+          <Image src={img_url} />
           <Card.Content>
-            <Card.Header>{this.props.name}</Card.Header>
+            <Card.Header>{name}</Card.Header>
             <Card.Meta>
-              <span className="date">{this.props.time}</span>
+              <span className="date">{time}</span>
             </Card.Meta>
-            <Card.Description>{this.props.description}</Card.Description>
+            <Card.Description>{description}</Card.Description>
           </Card.Content>
           <Card.Content extra>
             <a>
               <Icon name="user" />
-              {this.props.status}
+              {status}
             </a>
+            <div>
+              <Link to="/view">View </Link>
+              {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>}
+            </div>
           </Card.Content>
         </Card>
       </div>
     );
   }
 }
+const mapState = state => {
+  console.log(state);
+  return {
+    isAdminOf: state.user.isAdminOf
+  };
+};
 
-export default CardExampleCard;
+export default connect(mapState)(CardExampleCard);

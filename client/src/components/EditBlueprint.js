@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-class CreateBlueprint extends Component {
+class EditBlueprint extends Component {
   render() {
-    const { username } = this.props;
+    const { username, isAdminOf } = this.props;
     return (
       <div>
-        <h1>Create Blueprint</h1>
+        <h1>Edit Blueprint</h1>
         <h2>Welcome {username} !</h2>
         <Link to="/home">GO TO HOME</Link>
       </div>
@@ -17,8 +17,9 @@ class CreateBlueprint extends Component {
 
 const mapState = state => {
   return {
-    username: state.user.user
+    username: state.user.user,
+    isAdminOf: state.user.isAdminOf
   };
 };
 
-export default connect(mapState)(CreateBlueprint);
+export default connect(mapState)(EditBlueprint);
