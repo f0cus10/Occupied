@@ -1,10 +1,20 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const db = require('./config/db');
 
 const app = express();
 
+app.use('/api', require('./api'));
+db.sync().then(() => console.log('synced!'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+
 app.get('/', (req, res) => {
     res.send(process.env.PGUSER);
+})
+
+app.get('/get-users', (req, res, next) => {
+
 })
 
 const port = 5000;
