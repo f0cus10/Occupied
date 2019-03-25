@@ -13,10 +13,12 @@ const User = db.define('user', {
     }
   },
 
-  // Array of blueprints users are admins of 
-  AdminsOf: {
-    type: Sequelize.ARRAY,
-  }
-})
+  associate: (models) => {
+    //Blue prints the user is an admin of
+    User.hasMany(models.Blueprint, {
+      foreignKey: 'ownedBlueID',
+    });
+  },
+});
 
 module.exports = User;
