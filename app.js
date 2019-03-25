@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 
 const app = express();
-
 app.use('/api', require('./api'));
 db.sync().then(() => console.log('synced!'));
 app.use(bodyParser.json());
@@ -13,8 +12,8 @@ app.get('/', (req, res) => {
     res.send(process.env.PGUSER);
 })
 
-app.get('/get-users', (req, res, next) => {
-
+// Populates the db with dummy data
+app.get('/populate', async (req, res) => {
 })
 
 const port = 5000;
