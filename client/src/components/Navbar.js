@@ -18,8 +18,13 @@ class Navbar extends Component {
     return (
       <div className="navBar">
         <Menu secondary>
+        <Link to="/home">
           <Menu.Item name='Home' active={activeItem === 'Home'} onClick={this.handleItemClick} />
+        </Link>
+        
+        <Link to="/create">
           <Menu.Item name='Create Blueprint' active={activeItem === 'Create Blueprint'} onClick={this.handleItemClick} />
+        </Link>
 
           <Menu.Menu position='right'>
             <Menu.Item>
