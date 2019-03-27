@@ -40,7 +40,7 @@ const Space = db.define('space', {
     //by default this is not occupied
     defaultValue: false,
     allowNull: false
-  }
+  },
 })
 
 module.exports = Space;
