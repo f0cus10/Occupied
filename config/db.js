@@ -21,6 +21,7 @@ db
     console.error('Unable to connect to the database:', err);
   });
 
+//associate all the models in the database 
 Object.keys(db).forEach((modelName) => {
   if ('associate' in db[modelName]) {
     db[modelName].associate(db);
