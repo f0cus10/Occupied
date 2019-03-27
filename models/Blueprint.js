@@ -21,7 +21,14 @@ const Blueprint = db.define('blueprint', {
     validate: {
       notEmpty: true
     }
-  }
-})
+  },
+});
+
+  //A blueprint holds multiple spaces
+Blueprint.associate = (models) => {
+  Blueprint.hasMany(models.Space, {
+    foreignKey: 'blueprintID',
+  });
+}
 
 module.exports = Blueprint;
