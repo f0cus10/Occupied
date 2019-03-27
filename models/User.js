@@ -1,10 +1,10 @@
-const db = require('../config/db');
+// const db = require('../config/db');
 const Sequelize = require('sequelize');
 
 /**
  * Users can be creators of certain blueprints
  */
-const User = db.define('user', {
+const User = db.define('User', {
   username: {
     type: Sequelize.STRING,
     unique: true,

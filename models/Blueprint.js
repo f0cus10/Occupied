@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 * they themselves cannot be reserved but contain _spaces_ that can be reserved
 */
 
-const Blueprint = db.define('blueprint', {
+const Blueprint = db.define('Blueprint', {
   //unique id for identification
   blueprint_id: {
     type: Sequelize.UUID,
