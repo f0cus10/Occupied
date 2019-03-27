@@ -17,8 +17,30 @@ class JoinBlueprint extends Component {
     this.setState({blueprints : publicBlueprints});
     console.log(obj.description);
   }
+
+  renderblueprints = blueprint => {
+    const { search } = this.state;
+    var code = blueprint.name.toLowerCase();
+    return(
+      <Grid.Column width={3}>
+      <CardExampleCard
+        name={blueprint.name}
+        description={blueprint.description}
+        img_url={blueprint.img_url}
+        status={blueprint.status}
+        time={blueprint.time}
+      />
+    </Grid.Column>
+    );
+  };
+
+  onchange = e => {
+    this.setState({ search: e.target.value });
+  };
+
+
   render() {
-    let cards = this.state.blueprints.map(bp => (
+    /*let cards = this.state.blueprints.map(bp => (
       <Grid.Column width={3}>
         <CardExampleCard
           name={bp.name}
@@ -28,30 +50,41 @@ class JoinBlueprint extends Component {
           time={bp.time}
         />
       </Grid.Column>
-    ));
+    ));*/
+    const { search } = this.state;
+    const filteredblueprints = publicBlueprints.filter(blueprints => {
+      return blueprints.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+    });
     return (
       <Grid celled>
-    <Grid.Row>
-      <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-      </Grid.Column>
-      <Grid.Column width={13}>
-      <Menu.Item>
-              <Input icon='search' placeholder='Search Blueprints...' />
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          </Grid.Column>
+          <Grid.Column width={13}>
+            <Menu.Item>
+              <Input
+                label="Search blueprints"
+                icon="search"
+                onChange={this.onchange}
+              />
             </Menu.Item>
-            <div>Message</div>
-      </Grid.Column>
-    </Grid.Row>
+            <div>Search for your Blueprints here!</div>
+          </Grid.Column>
+        </Grid.Row>
 
-    <Grid.Row>
-      <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-      </Grid.Column>
-      {cards}
-      <Grid.Column width={13}>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          </Grid.Column>
+          {filteredblueprints.map(blueprints => {
+            console.log(blueprints)
+            return this.renderblueprints(blueprints);
+          })}
+          <Grid.Column width={13}>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
