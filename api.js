@@ -10,7 +10,7 @@ router.get('/users', async(req, res) => {
   res.send(users);
 })
 
-route.post('/login/', async(req, res) => {
+router.post('/login/', async(req, res) => {
   res.send(404);
 })
 
