@@ -1,28 +1,76 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Login from "./components/Login";
+import Registration from "./components/Registration";
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+import "semantic-ui-css/semantic.min.css";
+import {
+  BrowserRouter,
+  Route,
+  Redirect,
+  Link,
+  Switch,
+  withRouter
+} from "react-router-dom";
+import { connect } from "react-redux";
+import CreateBlueprint from "./components/CreateBlueprint";
+import JoinBlueprint from "./components/JoinBlueprint";
+import ViewBlueprint from "./components/ViewBlueprint";
+import EditBlueprint from "./components/EditBlueprint";
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { isAuth } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <h1> Occupied </h1>
+          {isAuth && <Navbar />}
+          <Route exact path="/" component={Login} />
+          <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
+          <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
+          <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
+          <Route path="/view" component={ViewBlueprint} isAuth={isAuth} />
+          <Route path="/edit" component={EditBlueprint} isAuth={isAuth} />
+          <Route path="/register" component={Registration} isAuth={isAuth} />
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+/**
+ * A private route, if isAuthenticated is false, redirects back to "/"
+ */
+function PrivateRoute({ isAuth, component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuth ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/"
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+const mapState = state => {
+  return {
+    user: state.user.user,
+    isAuth: state.user.isAuth
+  };
+};
+
+export default connect(mapState)(App);

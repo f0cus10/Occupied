@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Hunter College",
+        "description": "School",
+        "img_url": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
+        "status": "Occupied",
+        "time": "3:45 PM"
+    },
+    {
+        "name": "Office",
+        "description": "Work",
+        "img_url": "http://www.intheblack.com/~/media/intheblack/allimages/sponsored-content/2018/dexus-office-space.jpg",
+        "status": "Available",
+        "time": "Last Used 9:45 AM"
+      },
+      {
+        "name": "Home",
+        "description": "Home",
+        "img_url": "https://img.huffingtonpost.com/asset/5a3126821500004e0049b6c9.jpeg?ops=scalefit_720_noupscale",
+        "status": "Available",
+        "time": "7:45 PM"
+      }
+]

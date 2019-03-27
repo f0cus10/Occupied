@@ -1,0 +1,17 @@
+{
+  "name": "occupied-backend",
+  "version": "1.0.0",
+  "description": "Backend server for occupied!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "express": "^4.16.4",
+    "pg": "^7.8.1",
+    "sequelize": "^4.43.0"
+  }
+}
