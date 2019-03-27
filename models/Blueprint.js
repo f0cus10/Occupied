@@ -10,7 +10,7 @@ const Sequelize = require('sequelize');
 const Blueprint = db.define('blueprint', {
   //unique id for identification
   blueprint_id: {
-    type: Sequelize.UUIDV4,
+    type: Sequelize.UUID,
     primaryKey: true,
     allowNull: false,
     autoIncrement: false

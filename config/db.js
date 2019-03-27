@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
+var sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
   host: 'localhost',
   dialect: 'postgres',
   operatorsAliases: false,
@@ -12,7 +12,7 @@ var db = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
   },
 });
 
-db
+sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
@@ -22,10 +22,10 @@ db
   });
 
 //associate all the models in the database 
-Object.keys(db).forEach((modelName) => {
-  if ('associate' in db[modelName]) {
-    db[modelName].associate(db);
-  }
-});
+// Object.keys(db).forEach((modelName) => {
+//   if ('associate' in db[modelName]) {
+//     db[modelName].associate(db);
+//   }
+// });
 
-module.exports = db;
+module.exports = sequelize;

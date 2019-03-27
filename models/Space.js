@@ -10,7 +10,7 @@ const Sequelize = require('sequelize');
 const Space = db.define('space', {
   //unique id for identification
   space_id: {
-    type: Sequelize.UUIDV1,
+    type: Sequelize.UUID,
     primaryKey: true,
     allowNull: false,
     autoIncorrect: false
