@@ -1,9 +1,5 @@
 const router = require('express').Router();
-const { sequelize } = require('./models/');
-// const User = require('./models').User;
-// const Blueprint = require('./models').Blueprint;
-// const Space = require('./models').Space;
-const Sequelize = require('sequelize');
+const { User, Blueprint, Space } = require('./models').db;
 
 router.get('/users', async(req, res) => {
   const users = await User.findAll();

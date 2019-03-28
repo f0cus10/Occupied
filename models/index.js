@@ -1,38 +1,47 @@
-'use strict';
-
-var fs        = require('fs');
-var path      = require('path');
 var Sequelize = require('sequelize');
-var basename  = path.basename(__filename);
-//var env       = process.env.NODE_ENV || 'development';
-// var config    = require(__dirname + '/../config/config.json')[env];
-var db        = {};
 
-var sequelize = require('../config/db');
-var space = require('./space');
-var user = require('./user');
-var blueprint = require('./blueprint');
+const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
+  host: 'localhost',
+  dialect: 'postgres',
+  operatorsAliases: false,
 
-// fs
-//   .readdirSync(__dirname)
-//   .filter(file => {
-//     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-//   })
-//   .forEach(file => {
-//     var model = sequelize['import'](path.join(__dirname, file));
-//     console.log(`The model name is: ` + model);
-//     db[model.name] = model;
-//   });
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+});
 
-db.user = user;
-db.space = space;
-db.blueprint = blueprint;
+/*
+* import all the models from the folder
+*/
+const db = {
+  User: sequeilize.import('./users.js'),
+  Blueprint: sequelize.import('./blueprint.js'),
+  Space: sequelize.import('./space.js'),
+}
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
+/*
+* validate the database connection
+*/
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+
+// associate all the models in the database 
+Object.keys(db).forEach((modelName) => {
+  if ('associate' in db[modelName]) {
     db[modelName].associate(db);
   }
 });
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
