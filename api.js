@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Blueprint, Space } = require('./models').db;
+const { User, Blueprint, Space } = require('./models');
 
 router.get('/users', async(req, res) => {
   const users = await User.findAll();

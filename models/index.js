@@ -17,7 +17,7 @@ const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPA
 * import all the models from the folder
 */
 const db = {
-  User: sequeilize.import('./users.js'),
+  User: sequelize.import('./user.js'),
   Blueprint: sequelize.import('./blueprint.js'),
   Space: sequelize.import('./space.js'),
 }

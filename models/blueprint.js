@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'blueprintID',
     });
 
-    Blueprint.belogsTo(models.User, {
+    Blueprint.belongsTo(models.User, {
       foreignKey: 'owner',
     });
   };
