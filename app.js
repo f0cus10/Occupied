@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./config/db');
+const db = require('./models');
 
 const app = express();
 app.use('/api', require('./api'));
-db.sync().then(() => console.log('synced!'));
+db.sequelize.sync().then(() => console.log('synced!'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
