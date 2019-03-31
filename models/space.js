@@ -33,11 +33,10 @@ module.exports = (sequelize, DataTypes) => {
 
   Space.associate = (models) => {
     Space.belongsTo(models.Blueprint, {
-      foreignKey: 'blueprintID',
+      foreignKey: 'blueprintId',
     });
-
     Space.hasOne(models.User, {
-      foreignKey: 'occupiedID',
+      constraints: false
     });
   };
 

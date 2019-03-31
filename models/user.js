@@ -13,8 +13,9 @@ module.exports = (sequelize, DataTypes) => {
     //A user can be part of many blueprints
     User.belongsToMany(models.Blueprint, {
       through: 'member',
-      foreignKey: 'memberID',
+      foreignKey: 'memberId',
     })
+    User.hasMany(models.Blueprint)
   };
 
   return User;
