@@ -7,11 +7,26 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
+
     description: {
       type: DataTypes.STRING
-    }
-  }, {
-    timestamps: false
+    },
+
+    usageTime: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0.00
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+    },
+
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: sequelize.fn('NOW'),
+    },
+
   });
 
   User.associate = (models) => {
