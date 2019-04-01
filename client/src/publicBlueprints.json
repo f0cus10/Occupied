@@ -2,15 +2,13 @@
     {
         "name": "Hunter College",
         "description": "School",
-        "img_url": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
-        "status": "Occupied",
+        "imageUrl": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
         "time": "3:45 PM"
     },
     {
         "name": "Office",
         "description": "Work",
         "img_url": "http://www.intheblack.com/~/media/intheblack/allimages/sponsored-content/2018/dexus-office-space.jpg",
-        "status": "Available",
         "time": "Last Used 9:45 AM"
       },
       {

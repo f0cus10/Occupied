@@ -1,6 +1,5 @@
 [
   {
-    "userId": 1,
     "name": "My House",
     "description": "this is my house",
     "isPublic": "false"
@@ -8,6 +7,7 @@
   {
     "name": "Hunter College",
     "description": "the best cuny probably",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Hunter_College.jpg/215px-Hunter_College.jpg",
     "isPublic": true
   },
   {
