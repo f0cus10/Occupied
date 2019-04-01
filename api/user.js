@@ -7,6 +7,23 @@ router.get('/', async (req, res, next) => {
     res.send(users);
   } catch (err) {
     console.error(err);
+    res.sendStatus(404);
+  }
+})
+
+router.post('/usage', async (req, res) => {
+  const { id, usageTime } = req.body;
+  try {
+    const user = await User.find({
+      where: { id }
+    });
+    if (user) {
+      user.update({ usageTime })
+    }
+    res.sendStatus(201);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(404);
   }
 })
 
