@@ -1,17 +1,24 @@
 const router = require('express').Router();
-const { sequelize } = require('../models/');
-const User = require('../models').User;
-const Blueprint = require('../models').Blueprint;
-const Space = require('../models').Space;
-const Sequelize = require('sequelize');
+const dummyUsers = require('../dummy/users.json');
+const dummyBlueprints = require('../dummy/blueprints.json');
+const { User, Blueprint, Space } = require('../models');
 
-router.get('/users', async(req, res) => {
-  const users = await User.findAll();
-  res.send(users);
+router.use('/user', require('./user'));
+router.use('/blueprint', require('./blueprint'));
+router.use('/space', require('./space'));
+
+router.get('/populate', async (req, res, next) => {
+  try {
+    const users = User.bulkCreate(dummyUsers);
+    const blueprints = Blueprint.bulkCreate(dummyBlueprints);
+    res.status(201).send("Populate complete");
+  } catch (err) {
+    res.sendStatus(404);
+  }
 })
 
-route.post('/login/', async(req, res) => {
-
+router.post('/login/', async(req, res) => {
+  res.send(404);
 })
 
 module.exports = router;

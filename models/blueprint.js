@@ -1,18 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
   const Blueprint = sequelize.define('blueprint', {
-    blueprint_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: false,
-    },
-
     name: {
       type: DataTypes.STRING,
       validate: {
         notEmpty: true,
       }
+    },
+
+    description: {
+      type: DataTypes.STRING,
+      defaultValue: "this is a place",
+    },
+
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image"
     }
+  }, {
+    timestamps: false
   });
 
   Blueprint.associate = (models) => {
@@ -25,4 +30,4 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return Blueprint;
-}
+};

@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
+    description: {
+      type: DataTypes.STRING
+    }
+  }, {
+    timestamps: false
   });
 
   User.associate = (models) => {

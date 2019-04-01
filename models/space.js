@@ -1,12 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
-    space_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: false,
-    },
-
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -15,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
-    space_number: {
+    spaceNumber: {
       type: DataTypes.STRING,
       unique: false,
       validate: {
@@ -29,6 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
       allowNull: false,
     },
+  }, {
+    timestamps: false
   });
 
   Space.associate = (models) => {
