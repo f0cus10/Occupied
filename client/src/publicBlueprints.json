@@ -2,7 +2,12 @@
     {
         "name": "Hunter College",
         "description": "School",
+<<<<<<< HEAD
         "imageUrl": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
+=======
+        "img_url": "http://www.hunter.cuny.edu/admissions/repository/images/classic-hunter-nyc-cabs.jpg",
+        "status": "Available",
+>>>>>>> 98cc715edcdd9edf4376649cc09ca176aa1c8624
         "time": "3:45 PM"
     },
     {

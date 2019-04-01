@@ -22,18 +22,33 @@ class JoinBlueprint extends Component {
     .then(res => res.json())
     .then(data => this.setState({blueprints : data}))
   }
-  render() {
-    let cards = this.state.blueprints.map(bp => (
+
+  renderblueprints = blueprint => {
+    const { search } = this.state;
+    var code = blueprint.name.toLowerCase();
+    return(
       <Grid.Column width={3}>
-        <CardExampleCard
-          name={bp.name}
-          description={bp.description}
-          img_url={bp.imageUrl}
-          status=""
-          time=""
-        />
-      </Grid.Column>
-    ));
+      <CardExampleCard
+        name={blueprint.name}
+        description={blueprint.description}
+        img_url={blueprint.img_url}
+        status={blueprint.status}
+        time={blueprint.time}
+      />
+    </Grid.Column>
+    );
+  };
+
+  onchange = e => {
+    this.setState({ search: e.target.value });
+  };
+
+
+  render() {
+    const { search } = this.state;
+    const filteredblueprints = publicBlueprints.filter(blueprints => {
+      return blueprints.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+    });
     return (
       <Grid celled>
         <Grid.Row>
@@ -42,9 +57,13 @@ class JoinBlueprint extends Component {
           </Grid.Column>
           <Grid.Column width={13}>
             <Menu.Item>
-              <Input icon='search' placeholder='Search Blueprints...' />
+              <Input
+                label="Search blueprints"
+                icon="search"
+                onChange={this.onchange}
+              />
             </Menu.Item>
-            <div>Message</div>
+            <div>Search for your Blueprints here!</div>
           </Grid.Column>
         </Grid.Row>
 
@@ -52,7 +71,10 @@ class JoinBlueprint extends Component {
           <Grid.Column width={3}>
             <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
           </Grid.Column>
-          {cards}
+          {filteredblueprints.map(blueprints => {
+            console.log(blueprints)
+            return this.renderblueprints(blueprints);
+          })}
           <Grid.Column width={13}>
           </Grid.Column>
         </Grid.Row>
