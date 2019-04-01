@@ -7,6 +7,21 @@ router.get('/', async (req, res, next) => {
     res.send(blueprints);
   } catch (err) {
     console.error(err);
+    res.send(404);
+  }
+})
+
+router.get('/public', async (req, res) => {
+  try {
+    const publicBlueprints = await Blueprint.findAll({
+      where: {
+        isPublic: true
+      }
+    });
+    res.send(publicBlueprints);
+  } catch (err) {
+    console.error(err)
+    res.send(404);
   }
 })
 

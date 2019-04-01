@@ -2,6 +2,27 @@
   {
     "userId": 1,
     "name": "My House",
-    "description": "this is my house"
+    "description": "this is my house",
+    "isPublic": "false"
+  },
+  {
+    "name": "Hunter College",
+    "description": "the best cuny probably",
+    "isPublic": true
+  },
+  {
+    "name": "Marjan's dance studio",
+    "description": "Book an appointment now!",
+    "isPublic": true
+  },
+  {
+    "name": "JP Morgan & Chase",
+    "description": "A bank",
+    "isPublic": true
+  },
+  {
+    "name": "Park 1",
+    "description": "A park where you can reserve courts?",
+    "isPublic": true
   }
 ]

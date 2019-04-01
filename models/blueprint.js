@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     imageUrl: {
       type: DataTypes.STRING,
       defaultValue: "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image"
+    },
+
+    isPublic: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     timestamps: false
