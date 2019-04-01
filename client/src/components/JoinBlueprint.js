@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Image } from 'semantic-ui-react';
 import { Input, Menu } from 'semantic-ui-react';
-import publicBlueprints from '../publicBlueprints.json';
+// import publicBlueprints from '../publicBlueprints.json';
 import CardExampleCard from './Card.js';
 
 class JoinBlueprint extends Component {
@@ -31,7 +31,7 @@ class JoinBlueprint extends Component {
       <CardExampleCard
         name={blueprint.name}
         description={blueprint.description}
-        img_url={blueprint.img_url}
+        img_url={blueprint.imageUrl}
         status={blueprint.status}
         time={blueprint.time}
       />
@@ -45,8 +45,8 @@ class JoinBlueprint extends Component {
 
 
   render() {
-    const { search } = this.state;
-    const filteredblueprints = publicBlueprints.filter(blueprints => {
+    const { blueprints, search } = this.state;
+    const filteredblueprints = blueprints.filter(blueprints => {
       return blueprints.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
     return (

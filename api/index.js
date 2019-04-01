@@ -9,8 +9,8 @@ router.use('/space', require('./space'));
 
 router.get('/populate', async (req, res, next) => {
   try {
-    const users = User.bulkCreate(dummyUsers);
-    const blueprints = Blueprint.bulkCreate(dummyBlueprints);
+    const users = await User.bulkCreate(dummyUsers);
+    const blueprints = await Blueprint.bulkCreate(dummyBlueprints);
     res.status(201).send("Populate complete");
   } catch (err) {
     res.sendStatus(404);
