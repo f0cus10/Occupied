@@ -13,9 +13,14 @@ class JoinBlueprint extends Component {
     }
   }
   componentDidMount() {
-    var obj = publicBlueprints[0];
-    this.setState({blueprints : publicBlueprints});
-    console.log(obj.description);
+    // var obj = publicBlueprints[0];
+    // this.setState({blueprints : publicBlueprints});
+    // console.log(obj.description);
+    fetch('/api/blueprint/public', {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(data => this.setState({blueprints : data}))
   }
   render() {
     let cards = this.state.blueprints.map(bp => (
@@ -23,35 +28,35 @@ class JoinBlueprint extends Component {
         <CardExampleCard
           name={bp.name}
           description={bp.description}
-          img_url={bp.img_url}
-          status={bp.status}
-          time={bp.time}
+          img_url={bp.imageUrl}
+          status=""
+          time=""
         />
       </Grid.Column>
     ));
     return (
       <Grid celled>
-    <Grid.Row>
-      <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-      </Grid.Column>
-      <Grid.Column width={13}>
-      <Menu.Item>
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          </Grid.Column>
+          <Grid.Column width={13}>
+            <Menu.Item>
               <Input icon='search' placeholder='Search Blueprints...' />
             </Menu.Item>
             <div>Message</div>
-      </Grid.Column>
-    </Grid.Row>
+          </Grid.Column>
+        </Grid.Row>
 
-    <Grid.Row>
-      <Grid.Column width={3}>
-        <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-      </Grid.Column>
-      {cards}
-      <Grid.Column width={13}>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+        <Grid.Row>
+          <Grid.Column width={3}>
+            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
+          </Grid.Column>
+          {cards}
+          <Grid.Column width={13}>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     );
   }
 }
