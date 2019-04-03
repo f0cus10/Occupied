@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       through: 'member',
       foreignKey: 'memberId',
     });
-    Blueprint.belongsTo(models.User);
+    Blueprint.belongsTo(models.User, {
+      foreignKey: 'ownerID', 
+    });
   };
 
   return Blueprint;
