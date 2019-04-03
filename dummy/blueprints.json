@@ -6,6 +6,7 @@
   },
   {
     "name": "Hunter College",
+    "category": "School",
     "description": "the best cuny probably",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Hunter_College.jpg/215px-Hunter_College.jpg",
     "isPublic": true

@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "this is a place",
     },
 
+    category: {
+      type: DataTypes.STRING,
+      defaultValue: "Place"
+    },
+
     imageUrl: {
       type: DataTypes.STRING,
       defaultValue: "https://imgplaceholder.com/420x320/ff7f7f/333333/fa-image"
@@ -32,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       through: 'member',
       foreignKey: 'memberId',
     });
-    Blueprint.belongsTo(models.User);
+    Blueprint.belongsTo(models.User, {
+      foreignKey: 'ownerID', 
+    });
   };
 
   return Blueprint;

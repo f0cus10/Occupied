@@ -1,3 +1,4 @@
+'use strict';
 var Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {

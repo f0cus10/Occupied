@@ -4,17 +4,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.5",
+    "react-scripts": "^2.1.8",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.85.0",
-    "bootstrap": "^4.1.1"
+    "semantic-ui-react": "^0.85.0"
   },
   "scripts": {
     "start": "PORT=3000 react-scripts start",
