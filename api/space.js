@@ -10,6 +10,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:spacesId', async (req, res) => {
+
+});
+
 router.get('/delete/:id', async (req, res) => {
   // const { id } = req.params;
   // try {

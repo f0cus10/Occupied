@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Grid, Image } from "semantic-ui-react";
+import { Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import CardExampleCard from "./Card";
+import '../styles/Grid.css';
 import { Link } from "react-router-dom";
 
 class BlueprintGrid extends Component {
@@ -18,23 +19,19 @@ class BlueprintGrid extends Component {
   }
   render() {
     let cards = this.state.posts.map(post => (
-      <Grid.Column width={3}>
-        <CardExampleCard
-          name={post.name}
-          description={post.description}
-          img_url={post.img_url}
-          status={post.status}
-          time={post.time}
-          id={post.id}
-        />
-      </Grid.Column>
+      <CardExampleCard
+        name={post.name}
+        description={post.description}
+        img_url={post.img_url}
+        status={post.status}
+        time={post.time}
+        id={post.id}
+      />
     ));
 
     return (
-      <div>
-        <Grid celled>
-          <Grid.Row width={30}>{cards}</Grid.Row>
-        </Grid>
+      <div className="card-container">
+        {cards}
       </div>
     );
   }
