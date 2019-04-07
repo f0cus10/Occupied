@@ -1,10 +1,16 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Blueprint, Space } = require('../models');
 const { Op } = require('sequelize');
 
 router.get('/all', async (req, res, next) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [{
+        model: Blueprint
+      }, {
+        model: Space
+      }]
+    });
     res.send(users);
   } catch (err) {
     console.error(err);
@@ -24,14 +30,11 @@ router.get('/query', async(req, res) => {
       }
     });
     if (found) {
-      const foundBp = await found.getBlueprints();
-      if (foundBp.length > 0) {
-        found.dataValues.blueprints = foundBp
-        res.send(found);
-      }
+      foundBp = await found.getBlueprints();
+      found.dataValues.blueprints = foundBp;
       res.send(found);
     } else {
-      res.status(404).send("Not found.");
+      res.status(404).send("Not found.");;
     }
   } catch (err) {
     console.error(err);
@@ -51,16 +54,19 @@ router.get('/:id', async(req, res) => {
       }
     });
     if (found) {
+      foundBp = await found.getBlueprints();
+      console.log('foundBp')
+      console.log(foundBp)
+      found.dataValues.blueprints = foundBp;
       res.send(found);
     } else {
-      res.status(404).send("Not found.");
+      res.status(404).send("Not found.");;
     }
   } catch (err) {
     console.error(err);
     res.sendStatus(404);
   }
 })
-
 
 router.post('/usage', async (req, res) => {
   const { id, usageTime } = req.body;

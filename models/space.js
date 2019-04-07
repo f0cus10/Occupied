@@ -4,35 +4,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: true,
-        allowNull: false,
+        // allowNull: false,
       }
     },
 
-    spaceNumber: {
+    description: {
       type: DataTypes.STRING,
-      unique: false,
-      validate: {
-        notEmpty: true,
-        allowNull: false,
-      }
     },
 
     occupied: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
     },
   }, {
     timestamps: false
   });
 
   Space.associate = (models) => {
+    // space can only belong to one blueprint through blueprintId
     Space.belongsTo(models.Blueprint, {
       foreignKey: 'blueprintId',
     });
-    Space.hasOne(models.User, {
-      constraints: false
-    });
+    // current user that occupies space
+    Space.belongsTo(models.User);
   };
 
   return Space;
