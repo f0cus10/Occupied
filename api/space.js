@@ -15,10 +15,12 @@ router.get('/:spacesId', async (req, res) => {
 });
 
 router.get('/delete/:id', async (req, res) => {
-  // const { id } = req.params;
-  // try {
-    // const users = await User.destroy()
-  // }
+  const { id } = req.params;
+  try {
+    const users = await Space.destroy()
+  } catch (err) {
+    console.error(err);
+  }
 })
 
 module.exports = router;
