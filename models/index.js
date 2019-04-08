@@ -20,7 +20,7 @@ const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPA
 const db = {
   User: sequelize.import('./user.js'),
   Blueprint: sequelize.import('./blueprint.js'),
-  Space: sequelize.import('./space.js'),
+  Space: sequelize.import('./space.js')
 }
 
 /*
