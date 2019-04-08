@@ -22,7 +22,7 @@ router.get('/all', async (req, res, next) => {
   Get's multiple blueprint information by query params
 */
 router.get('/query', async (req, res) => {
-  const { name, description, category, size } = req.query;
+  const { name, description, category, size, public } = req.query;
   try {
     let foundBps;
     if (name || description || category) {
@@ -43,7 +43,7 @@ router.get('/query', async (req, res) => {
               category: {
                 [Op.iLike]: `${category}%`
               }
-            }
+            },
           ]
         },
       }, {
@@ -60,25 +60,6 @@ router.get('/query', async (req, res) => {
   }
 })
 
-/** 
-  Get's blueprint information by ID
- */
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const found = await Blueprint.findOne({
-      where: {
-        id
-      }
-    }, {
-      include: [{
-        model: Blueprint
-      }]
-    })
-  } catch (err) {
-    console.error(err);
-  }
-})
 
 // only the owner of 
 router.post('/invite', async(req, res) => {
@@ -166,6 +147,26 @@ router.get('/delete/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.sendStatus(404);
+  }
+})
+
+/** 
+  Get's blueprint information by ID
+ */
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const found = await Blueprint.findOne({
+      where: {
+        id
+      }
+    }, {
+      include: [{
+        model: Blueprint
+      }]
+    })
+  } catch (err) {
+    console.error(err);
   }
 })
 
