@@ -122,7 +122,7 @@ router.get('/public', async (req, res) => {
     res.send(publicBlueprints);
   } catch (err) {
     console.error(err)
-    res.send(404);
+    res.sendStatus(404);
   }
 })
 
