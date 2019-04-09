@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "this is a place",
     },
 
+    address: {
+      type: DataTypes.STRING,
+      defaultValue: "123 Nothing Avenue",
+    },
+
     category: {
       type: DataTypes.STRING,
       defaultValue: "Place"

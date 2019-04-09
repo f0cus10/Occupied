@@ -103,12 +103,21 @@ router.get('/public', async (req, res) => {
     res.send(publicBlueprints);
   } catch (err) {
     console.error(err)
-    res.send(404);
+    res.sendStatus(404);
   }
 })
 
 router.post('/create', async (req, res) => {
-  let { userId, username, name, description, category, imageUrl, isPublic } = req.body;
+  let {
+    userId,
+    username,
+    name, 
+    description,
+    address,
+    category, 
+    imageUrl,
+    isPublic
+  } = req.body;
   try {
     const found = await User.findOne({
       where: {
@@ -117,16 +126,13 @@ router.post('/create', async (req, res) => {
     });
     if (found) {
       const newBlueprint = await Blueprint.create({
-        name, description, category, imageUrl, isPublic
+        name, description, category, imageUrl, isPublic, address
       })
       await found.addBlueprint(newBlueprint);
       await newBlueprint.addUser(found);
       res.sendStatus(201);
     } else {
-      await Blueprint.create({
-        name, description, category, imageUrl, isPublic
-      })
-      res.sendStatus(201);
+      res.send(404);
     }
   } catch (err) {
     console.error(err);
