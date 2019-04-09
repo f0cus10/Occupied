@@ -7,6 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    address: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+
     description: {
       type: DataTypes.STRING,
       defaultValue: "this is a place",

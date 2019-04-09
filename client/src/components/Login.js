@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setUser, setAuth } from '../store';
+import { auth } from '../store';
 import '../styles/Login.css';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      warning: ""
     };
   }
 
   render() {
     const { setUsername, isAuth } = this.props;
+    const { warning} = this.state;
     // let { from } = this.props.location.state || { from: { pathname: "/" } };
     if (isAuth) {
       return <Redirect to='/Home' />
@@ -21,6 +23,7 @@ class Login extends Component {
     return (
       <div className="login-page">
         <div className="form">
+          <h2> {warning} </h2>
           <form className="register-form">
             <input type="text" placeholder="name" />
             <input type="password" placeholder="password" />
@@ -42,7 +45,6 @@ class Login extends Component {
 }
 
 const mapState = state => {
-  console.log(state.user)
   return {
     username: state.user.user,
     isAuth: state.user.isAuth
@@ -54,8 +56,10 @@ const mapDispatch = dispatch => {
     setUsername(e) {
       e.preventDefault();
       const username = e.target.username.value;
-      dispatch(setUser(username));
-      dispatch(setAuth());
+      const isLogin = dispatch(auth(username));
+      if (!isLogin) {
+        this.setState({ warning: "User does not exist!" })
+      }
     }
   }
 }

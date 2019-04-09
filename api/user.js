@@ -27,15 +27,14 @@ router.get('/query', async(req, res) => {
     const found = await User.findOne({
       where: {
         [Op.or]: [{username}, {description}, {usageTime}]
-      }
+      },
+      include: [{
+        model: Blueprint
+      }, {
+        model: Space
+      }]
     });
-    if (found) {
-      foundBp = await found.getBlueprints();
-      found.dataValues.blueprints = foundBp;
-      res.send(found);
-    } else {
-      res.status(404).send("Not found.");;
-    }
+    res.send(found);
   } catch (err) {
     console.error(err);
     res.sendStatus(404);
@@ -68,6 +67,9 @@ router.get('/:id', async(req, res) => {
   }
 })
 
+/**
+  Updates usage time
+ */
 router.post('/usage', async (req, res) => {
   const { id, usageTime } = req.body;
   try {

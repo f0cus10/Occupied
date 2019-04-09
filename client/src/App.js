@@ -6,11 +6,7 @@ import Navbar from "./components/Navbar";
 import "semantic-ui-css/semantic.min.css";
 import {
   BrowserRouter,
-  Route,
-  Redirect,
-  Link,
-  Switch,
-  withRouter
+  Route
 } from "react-router-dom";
 import { connect } from "react-redux";
 import CreateBlueprint from "./components/CreateBlueprint";
@@ -20,10 +16,6 @@ import EditBlueprint from "./components/EditBlueprint";
 import "./App.css";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { isAuth } = this.props;
     return (
@@ -32,7 +24,7 @@ class App extends Component {
           <h1> Occupied </h1>
           {isAuth && <Navbar />}
           <Route exact path="/" component={Login} />
-          <PrivateRoute path="/home" component={Home} isAuth={isAuth} />
+          <Route path="/home" component={Home} isAuth={isAuth} />
           <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
           <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
           <Route path="/view" component={ViewBlueprint} isAuth={isAuth} />
@@ -42,28 +34,6 @@ class App extends Component {
       </BrowserRouter>
     );
   }
-}
-
-/**
- * A private route, if isAuthenticated is false, redirects back to "/"
- */
-function PrivateRoute({ isAuth, component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isAuth ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/"
-            }}
-          />
-        )
-      }
-    />
-  );
 }
 
 const mapState = state => {

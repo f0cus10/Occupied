@@ -4,6 +4,7 @@ const db = require('./models');
 const { User, Blueprint } = require('./models');
 const dummyUsers = require('./dummy/users.json');
 const dummyBlueprints = require('./dummy/blueprints.json');
+const dummyAssociations = require('./dummy/associations.json');
 
 const app = express();
 db.sequelize.sync({ force: true }).then(() => console.log('synced!'));
@@ -31,29 +32,22 @@ app.get('/', (req, res) => {
                 username: "linda liang",
                 description: "whoa"
             });
+            const n = await Blueprint.findOne({ where: { id: 2}});
             const miguel = await User.findOne({ where: { username: "miguel"} })
-            try {
-                const added = await linda.addBlueprint(hunter, { through : { isPublic : false }});
-                const a2 = await Blueprint.create({"name": "asdf", "category": "adf", "description": "asdf"})
-                const added2  = await linda.addBlueprint(a2);
-            } catch (err) {
-                console.log(err)
-            }
-            const m = await linda.getBlueprints();
-            const z = await miguel.getBlueprints();
-            const n = await hunter.setUser(linda);
-            // console.log(m.length)
-            // const found = await User.findAll({
-            //     where: {
-            //         username: 'linda liang'
-            //     },
-            //     include: [{
-            //         model: Blueprint
-            //     }]
-            // })
-            // const m = await User.findOne({ where: { username: "linda liang" }});
-            // console.log('m')
-            // console.log(m.blueprints)
+            hunter.setUser(miguel);
+            n.setUser(miguel);
+            hunter.addUser(miguel);
+            // try {
+            //     const added = await linda.addBlueprint(hunter, { through : { isPublic : false }});
+            //     const a2 = await Blueprint.create({"name": "asdf", "category": "adf", "description": "asdf"})
+            //     const added2  = await linda.addBlueprint(a2);
+            // } catch (err) {
+            //     console.log(err)
+            // }
+            // const m = await linda.getBlueprints();
+            // const z = await miguel.getBlueprints();
+            // const n = await hunter.setUser(linda);
+            // const y = await hunter.setUsers(users);
         }, 1000)
         console.log('bulk creation finished')
     } catch (err) {

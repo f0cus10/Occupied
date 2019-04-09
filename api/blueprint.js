@@ -18,6 +18,25 @@ router.get('/all', async (req, res, next) => {
   }
 })
 
+router.get('/public', async (req, res) => {
+  try {
+    const publicBlueprints = await Blueprint.findAll({
+      where: {
+        isPublic: true
+      },
+      include: [{
+        model: User
+      }, {
+        model: Space
+      }]
+    });
+    res.send(publicBlueprints);
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(404);
+  }
+})
+
 /**
   Get's multiple blueprint information by query params
 */
@@ -52,7 +71,13 @@ router.get('/query', async (req, res) => {
         }]
       })
     } else {
-      foundBps = await Blueprint.findAll();
+      foundBps = await Blueprint.findAll({
+        include: [{
+          model: User
+        }, {
+          model: Space
+        }]
+      });
     }
     res.send(foundBps)
   } catch (err) {
@@ -93,19 +118,6 @@ router.post('/invite', async(req, res) => {
   }
 })
 
-router.get('/public', async (req, res) => {
-  try {
-    const publicBlueprints = await Blueprint.findAll({
-      where: {
-        isPublic: true
-      }
-    });
-    res.send(publicBlueprints);
-  } catch (err) {
-    console.error(err)
-    res.sendStatus(404);
-  }
-})
 
 router.post('/create', async (req, res) => {
   let {
