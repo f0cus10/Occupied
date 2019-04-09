@@ -37,17 +37,6 @@ app.get('/', (req, res) => {
             hunter.setUser(miguel);
             n.setUser(miguel);
             hunter.addUser(miguel);
-            // try {
-            //     const added = await linda.addBlueprint(hunter, { through : { isPublic : false }});
-            //     const a2 = await Blueprint.create({"name": "asdf", "category": "adf", "description": "asdf"})
-            //     const added2  = await linda.addBlueprint(a2);
-            // } catch (err) {
-            //     console.log(err)
-            // }
-            // const m = await linda.getBlueprints();
-            // const z = await miguel.getBlueprints();
-            // const n = await hunter.setUser(linda);
-            // const y = await hunter.setUsers(users);
         }, 1000)
         console.log('bulk creation finished')
     } catch (err) {
