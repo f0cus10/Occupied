@@ -9,7 +9,6 @@ const { User, Blueprint, Space } = require('../models');
 ProtectedRoutes.use((req, res, next) => {
   //check header for the token
   var token = req.headers['access-token'];
-  console.log(`The token provided was: ` + token);
   if(token){
     jwt.verify(token, require('./config').secret, (err, decoded) => {
       if (err){
@@ -22,9 +21,7 @@ ProtectedRoutes.use((req, res, next) => {
     }) 
   }
   else {
-    res.send({
-      message: "No token provided"
-    })
+    res.redirect(400, '/');
   }
 });
 
