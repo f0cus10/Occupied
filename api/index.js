@@ -6,6 +6,7 @@ const { User, Blueprint, Space } = require('../models');
 router.use('/user', require('./user'));
 router.use('/blueprint', require('./blueprint'));
 router.use('/space', require('./space'));
+router.use(require('./authenticate'));
 
 router.get('/populate', async (req, res, next) => {
   try {
