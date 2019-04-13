@@ -1,3 +1,6 @@
+'use strict';
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     username: {
@@ -6,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
+    },
+
+    password: {
+      type: DataTypes.STRING,
     },
 
     description: {
@@ -27,6 +34,17 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: sequelize.fn('NOW'),
     },
 
+  },
+  {
+    freezeTableName: true,
+    instanceMethods: {
+      generateHash(password){
+        return bcrypt.hash(password, bcrypt.genSaltSync(8));
+      },
+      verifyPassword(password){
+        return bcrypt.compare(password, this.password);
+      }
+    },
   });
 
   User.associate = (models) => {
