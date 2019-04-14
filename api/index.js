@@ -25,7 +25,7 @@ ProtectedRoutes.use((req, res, next) => {
   }
 });
 
-router.use('/user', ProtectedRoutes, require('./user'));
+router.use('/user', require('./user'));
 router.use('/blueprint', ProtectedRoutes, require('./blueprint'));
 router.use('/space', ProtectedRoutes, require('./space'));
 router.use(require('./authenticate'));

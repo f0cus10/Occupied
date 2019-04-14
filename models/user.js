@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 
     password: {
       type: DataTypes.STRING,
+      allowNull: true
     },
 
     description: {
@@ -38,16 +39,8 @@ module.exports = (sequelize, DataTypes) => {
   {
     freezeTableName: true,
     hooks: {
-      beforeCreate: async function(user) {
-        try{
-          const salt = await bcrypt.genSalt(8);
-          bcrypt.hash(user.password, salt, function(_err, hashedPassword){
-            user.password = hashedPassword;
-          });
-        }
-        catch(error){
-          throw new Error();
-        }
+      beforeCreate: function(user) {
+        user.password = bcrypt.hashSync(user.password, 10);
       },
     }
   });

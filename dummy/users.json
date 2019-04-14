@@ -1,14 +1,17 @@
 [
   {
     "username": "miguel",
+    "password": "lmao",
     "description": "a boi"
   },
   {
     "username": "jia",
+    "password": "okay",
     "description": "fashionable boi"
   },
   {
     "username": "marjan",
+    "password": "bruh",
     "description": "uhhh"
   }
 ]
