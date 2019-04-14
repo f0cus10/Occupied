@@ -37,15 +37,24 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     freezeTableName: true,
-    instanceMethods: {
-      generateHash(password){
-        return bcrypt.hash(password, bcrypt.genSaltSync(8));
+    hooks: {
+      beforeCreate: async function(user) {
+        try{
+          const salt = await bcrypt.genSalt(8);
+          bcrypt.hash(user.password, salt, function(_err, hashedPassword){
+            user.password = hashedPassword;
+          });
+        }
+        catch(error){
+          throw new Error();
+        }
       },
-      verifyPassword(password){
-        return bcrypt.compare(password, this.password);
-      }
-    },
+    }
   });
+
+  User.prototype.validPassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+  }
 
   User.associate = (models) => {
     // User can have many blueprints that they belong to. 

@@ -1,36 +1,35 @@
 'use strict';
-const { Op } = require('sequelize');
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-const { User,  } = require('../models');
+const { User } = require('../models');
 
-// Make a post route for authentication token
-router.post('/signup', async (req,res) => {
-  if (req.body.username == config.username) {
-    if (req.body.password == config.password){
-      //we can create our token
-      const payload = {
-        check: true
-      }
+// // Make a post route for authentication token
+// router.post('/signup', async (req,res) => {
+//   if (req.body.username == config.username) {
+//     if (req.body.password == config.password){
+//       //we can create our token
+//       const payload = {
+//         check: true
+//       }
 
-      var token = jwt.sign(payload, config.secret, {
-        expiresIn: 1440 //24 hours
-      });
+//       var token = jwt.sign(payload, config.secret, {
+//         expiresIn: 1440 //24 hours
+//       });
 
-      res.json({
-        message: "Login Successful",
-        token: token
-      });
-    }
-    else {
-      res.json({ message: "Incorrect Password" });
-    }
-  }
-  else {
-    res.json({message: "User not found!" });
-  }
-})
+//       res.json({
+//         message: "Login Successful",
+//         token: token
+//       });
+//     }
+//     else {
+//       res.json({ message: "Incorrect Password" });
+//     }
+//   }
+//   else {
+//     res.json({message: "User not found!" });
+//   }
+// })
 
 /*
  *
@@ -55,11 +54,18 @@ router.post('/signup', async (req, res) => {
         res.status(409).json({ message: "Username already exists" });
       }
       else{
+        //create the user with the password
+        const newUser = await User.create({
+          username: req.body.username,
+          password: req.body.password
+        });
+        console.log(newUser.get({plain: true}));
         res.status(201).json({ message: "User created" });
       }
     }
     catch (err){
-      res.sendStatus(400).json({ message: "Database error" });
+      console.log(err);
+      res.status(400).json({ message: "Database error" });
     }
   }
   else {
