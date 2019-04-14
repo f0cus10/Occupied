@@ -62,3 +62,6 @@ typings/
 
 # vscode debugger
 .vscode
+
+# config files
+config.js

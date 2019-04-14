@@ -1,7 +1,9 @@
+'use strict';
+const { Op } = require('sequelize');
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const config = require('./config');
-const { User } = require('../models');
+const { User,  } = require('../models');
 
 // Make a post route for authentication token
 router.post('/signup', async (req,res) => {
@@ -42,16 +44,27 @@ router.post('/signup', async (req, res) => {
   //null check
   if (req.body.username && req.body.password){
     //check database for username
-    //if (user) respond user found 
-    //else
-      //create user
-        //store password using bcrypt
-      //create token
-      //send token
+    try{
+      const found = await User.findOne({
+        where: {
+          username: req.body.username,
+        }
+      });
+      //if (user) respond user found
+      if (found){
+        res.status(409).json({ message: "Username already exists" });
+      }
+      else{
+        res.status(201).json({ message: "User created" });
+      }
+    }
+    catch (err){
+      res.sendStatus(400).json({ message: "Database error" });
+    }
   }
   else {
     //no username or password
-    res.json({ message: "Missing username or password" });
+    res.status(400).json({ message: "Missing username or password" });
   }
 })
 
