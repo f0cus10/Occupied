@@ -1,8 +1,13 @@
 'use strict';
 const router = require('express').Router();
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 const { User } = require('../models');
+
+//read the keys
+const privateKEY = fs.readFileSync('./private.key', 'utf8');
+const publicKEY = fs.readFileSync('./public.key', 'utf8');
 
 // // Make a post route for authentication token
 // router.post('/signup', async (req,res) => {
@@ -61,7 +66,25 @@ router.post('/signup', async (req, res) => {
           password: req.body.password
         });
         console.log(newUser.get({plain: true}));
-        res.status(201).json({ message: "User created" });
+
+        //generate the token
+        const payload = {
+          check: true
+        }
+
+        const i = 'Occupied';
+        const s = req.body.username;
+
+        var signOptions = {
+          issuer: i,
+          subject: s,
+          expiresIn: "12h",
+          algorithm: "RS256"
+        };
+
+        const token = jwt.sign(payload, privateKEY, signOptions);
+        console.log("Token - " + token);
+        res.status(201).json({ message: "User created", token: token });
       }
     }
     catch (err){

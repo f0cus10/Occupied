@@ -65,3 +65,6 @@ typings/
 
 # config files
 config.js
+
+# key files
+*.key
