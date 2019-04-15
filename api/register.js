@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
         //create the user with the password
         const newUser = await User.create({
           username: req.body.username,
-          password: req.body.password
+          password: req.body.password,
         });
         console.log(newUser.get({plain: true}));
 
@@ -65,6 +65,23 @@ router.post('/signup', async (req, res) => {
   else {
     //no username or password
     res.status(400).json({ message: "Missing username or password" });
+  }
+})
+
+router.post('/login', async(req, res) => {
+  try{
+    const foundUser = await User.findOne({
+      username: req.body.username
+    });
+    if(!foundUser){
+      //user not found
+    }
+    else if (foundUser){
+      //check for password
+    }
+  }
+  catch (err) {
+    throw err;
   }
 })
 

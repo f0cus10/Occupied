@@ -1,6 +1,6 @@
 'use strict';
 //inherit from express router
-const AuthRouter = require('express').Router;
+const AuthRouter = require('express').Router();
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
@@ -14,15 +14,14 @@ const publicKEY = fs.readFileSync('./public.key', 'utf8');
  * 
  */
 
-AuthRouter.use((req, res, next) => {
+AuthRouter.use(async (req, res, next) => {
   //check header for the token
   const token = req.headers['access-token'];
   if(token){
     var verifyOptions = {
-      issuer = 'Occupied',
-      
+      issuer:'Occupied',
     }
-    jwt.verify(token, publicKEY, (err, decoded) => {
+    jwt.verify(token, publicKEY, verifyOptions, (err, decoded) => {
       if (err){
         res.status(401).json({ message: 'Invalid Token' });
       }
