@@ -19,8 +19,4 @@ router.get('/populate', async (req, res, next) => {
   }
 })
 
-router.post('/login/', async(req, res) => {
-  res.send(404);
-})
-
 module.exports = router;

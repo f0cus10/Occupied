@@ -20,6 +20,7 @@ const initialUser = {
 };
 
 const axios = require('axios');
+const Cookies = require('js-cookie');
 
 /**
  * Action Creators
@@ -36,6 +37,7 @@ export const setBlueprints = blueprint => ({ type: SET_BLUEPRINTS }, blueprint);
 export const auth = (username, password) => async dispatch => {
   try {
     const foundUser = await axios.get(`/api/user/query?username=${username}`);
+    // const login = await axios.get(`api/`)
     if (foundUser) {
       dispatch(setUser(foundUser.data.username));
       // dispatch(setBlueprints(foundUser.data.blueprints));
