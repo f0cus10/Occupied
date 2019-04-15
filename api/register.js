@@ -2,39 +2,10 @@
 const router = require('express').Router();
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-const config = require('./config');
 const { User } = require('../models');
 
 //read the keys
 const privateKEY = fs.readFileSync('./private.key', 'utf8');
-const publicKEY = fs.readFileSync('./public.key', 'utf8');
-
-// // Make a post route for authentication token
-// router.post('/signup', async (req,res) => {
-//   if (req.body.username == config.username) {
-//     if (req.body.password == config.password){
-//       //we can create our token
-//       const payload = {
-//         check: true
-//       }
-
-//       var token = jwt.sign(payload, config.secret, {
-//         expiresIn: 1440 //24 hours
-//       });
-
-//       res.json({
-//         message: "Login Successful",
-//         token: token
-//       });
-//     }
-//     else {
-//       res.json({ message: "Incorrect Password" });
-//     }
-//   }
-//   else {
-//     res.json({message: "User not found!" });
-//   }
-// })
 
 /*
  *
@@ -73,11 +44,11 @@ router.post('/signup', async (req, res) => {
         }
 
         const i = 'Occupied';
-        const s = req.body.username;
+        const a = req.body.username;
 
         var signOptions = {
           issuer: i,
-          subject: s,
+          audience: a,
           expiresIn: "12h",
           algorithm: "RS256"
         };
