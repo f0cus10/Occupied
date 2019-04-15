@@ -32,29 +32,13 @@ router.post('/signup', async (req, res) => {
       }
       else{
         //create the user with the password
+        //TODO: add more options to the user
         const newUser = await User.create({
           username: req.body.username,
           password: req.body.password,
         });
         console.log(newUser.get({plain: true}));
-
-        //generate the token
-        const payload = {
-          check: true
-        }
-
-        const i = 'Occupied';
-        const a = req.body.username;
-
-        var signOptions = {
-          issuer: i,
-          expiresIn: "12h",
-          algorithm: "RS256"
-        };
-
-        const token = jwt.sign(payload, privateKEY, signOptions);
-        console.log("Token - " + token);
-        res.status(201).json({ message: "User created", token: token });
+        res.status(201).json({ message: "User created" });
       }
     }
     catch (err){
@@ -75,9 +59,39 @@ router.post('/login', async(req, res) => {
     });
     if(!foundUser){
       //user not found
+      res.status(401).json({ message: "Authentication Failed" });
     }
     else if (foundUser){
       //check for password
+      try{
+        const match = await foundUser.validPassword(req.body.password);
+        if(!match){
+          res.status(401).json({ message: "Authentication failed" });
+        }
+        else{
+          //issue a token
+          //generate the token
+          const payload = {
+            username: foundUser.username,
+            loggedIn: true,
+          }
+
+          const i = 'Occupied';
+
+          var signOptions = {
+            issuer: i,
+            expiresIn: "12h",
+            algorithm: "RS256"
+          };
+
+          const token = jwt.sign(payload, privateKEY, signOptions);
+          console.log("Token - " + token);
+          res.status(201).json({ message: "Successfully logged in", token: token});
+        }
+      }
+      catch (err){
+        throw err;
+      }
     }
   }
   catch (err) {
