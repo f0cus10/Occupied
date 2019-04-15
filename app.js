@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('./models');
-const { User, Blueprint } = require('./models');
+const { User, Blueprint, Space } = require('./models');
 const dummyUsers = require('./dummy/users.json');
 const dummyBlueprints = require('./dummy/blueprints.json');
 const dummyAssociations = require('./dummy/associations.json');
@@ -35,12 +35,11 @@ app.get('/', (req, res) => {
                 }
             }
             for (let a of blueprintToSpace) {
-                const { user, blueprint } = a;
-                const foundUser = await User.findOne({ where: { username: user }});
+                const { blueprint, space } = a;
                 const foundBp = await Blueprint.findOne({ where: { name: blueprint }});
-                if (foundUser || foundBp) {
-                    foundBp.addUser(foundUser);
-                    foundUser.addBlueprint(foundBp);
+                const foundSpace = await Space.findOne({ where: { name: space }});
+                if (foundSpace || foundBp) {
+                    foundBp.addSpace(foundSpace);
                 } else {
                     throw 'assocation failed';
                 }
