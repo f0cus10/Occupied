@@ -39,9 +39,15 @@ module.exports = (sequelize, DataTypes) => {
   {
     freezeTableName: true,
     hooks: {
-      beforeCreate: function(user) {
+      beforeCreate:function(user) {
         user.password = bcrypt.hashSync(user.password, 10);
-      },
+      }, 
+      beforeBulkCreate:function(users) {
+        users.map(u => {
+          u.password = bcrypt.hashSync(u.password, 10);
+          return u;
+        })
+      }
     }
   });
 

@@ -37,7 +37,8 @@ export const setBlueprints = blueprint => ({ type: SET_BLUEPRINTS }, blueprint);
 export const auth = (username, password) => async dispatch => {
   try {
     const foundUser = await axios.get(`/api/user/query?username=${username}`);
-    // const login = await axios.get(`api/`)
+    // const login = await axios.get(`api/login`, { username, password });
+    Cookies.set('token', )
     if (foundUser) {
       dispatch(setUser(foundUser.data.username));
       // dispatch(setBlueprints(foundUser.data.blueprints));

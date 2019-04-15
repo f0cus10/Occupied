@@ -54,7 +54,7 @@ router.post('/signup', async (req, res) => {
 
         const token = jwt.sign(payload, privateKEY, signOptions);
         console.log("Token - " + token);
-        res.status(201).json({ message: "User created", token: token });
+        res.status(201).json({ message: "User created", token });
       }
     }
     catch (err){
