@@ -4,7 +4,7 @@ const dummyBlueprints = require('../dummy/blueprints.json');
 const { User, Blueprint, Space } = require('../models');
 const AuthRouter = require('./authRouter');
 
-router.use('/user', require('./user'));
+router.use('/user', AuthRouter, require('./user'));
 router.use('/blueprint', AuthRouter, require('./blueprint'));
 router.use('/space', AuthRouter, require('./space'));
 router.use(require('./register'));
