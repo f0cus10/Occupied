@@ -48,7 +48,6 @@ router.post('/signup', async (req, res) => {
 
         var signOptions = {
           issuer: i,
-          audience: a,
           expiresIn: "12h",
           algorithm: "RS256"
         };

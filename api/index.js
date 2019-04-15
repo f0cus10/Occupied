@@ -1,29 +1,8 @@
 const router = require('express').Router();
-const ProtectedRoutes = require('express').Router();
-const {verify} = require('jsonwebtoken');
 const dummyUsers = require('../dummy/users.json');
 const dummyBlueprints = require('../dummy/blueprints.json');
 const { User, Blueprint, Space } = require('../models');
-
-
-ProtectedRoutes.use((req, res, next) => {
-  //check header for the token
-  var token = req.headers['access-token'];
-  if(token){
-    verify(token, require('./config').secret, (err, decoded) => {
-      if (err){
-        return res.json({ message: 'Invalid Token' });
-      }
-      else{
-        req.decoded = decoded;
-        next();
-      }
-    }) 
-  }
-  else {
-    res.redirect(400, '/');
-  }
-});
+const AuthRouter = require('./authRouter');
 
 router.use('/user', require('./user'));
 router.use('/blueprint', ProtectedRoutes, require('./blueprint'));
