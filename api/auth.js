@@ -38,23 +38,23 @@ router.post('/signup', async (req, res) => {
       //if (user) respond user found
       if (found){
         console.log(found.get({ plain: true }));
-        res.status(409).json({ message: "Username already exists" });
+        //edit standard error
+        const resObject = {
+          registered: false,
+          errors: [{path: "user", message:"Username already exists"}]
+        }
+        res.status(409).json(resObject);
       }
       else{
         //create the user with the password
         //TODO: add more options to the user
         try{
           if (req.body.password.length < 8 || req.body.password.length > 50){
-            const response = {
+            const resObject = {
               registered: false,
-              errors: [
-                {
-                  path: "Password", 
-                  message: "The password must be between 8 and 50 characters long",
-                },
-              ],
+              errors: [{path:"password", message: "The password must be between 8 and 50 characters long"}]
             }
-            res.status(401).json(response);
+            res.status(401).json(resObject);
           }
           const newUser = await User.create({
             username: req.body.username,
