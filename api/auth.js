@@ -2,10 +2,20 @@
 const router = require('express').Router();
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const { User } = require('../models');
 
 //read the keys
 const privateKEY = fs.readFileSync('./private.key', 'utf8');
+
+//Error handler
+const errorHandler = (err, models) => {
+  if (err instanceof models.sequelize.ValidationError){
+    //use lodash to pick between the key-value pairs in the object
+    return err.errors.map(x => _.pick(x, ['path', 'message']));
+  }
+  return [{ path: 'authorization', message: 'Unknown Error' }];
+}
 
 /*
  *
@@ -33,13 +43,26 @@ router.post('/signup', async (req, res) => {
       else{
         //create the user with the password
         //TODO: add more options to the user
-        const newUser = await User.create({
-          username: req.body.username,
-          password: req.body.password,
-          description: req.body.description,
-        });
-        console.log(newUser.get({plain: true}));
-        res.status(201).json({ message: "User created" });
+        try{
+          const newUser = await User.create({
+            username: req.body.username,
+            password: req.body.password,
+            description: req.body.description,
+          });
+          console.log(newUser.get({plain: true}));
+          const response = {
+            registered: true
+          }
+          res.status(201).json(response);
+        }
+        catch (err){
+          //There has been an error
+          const response = {
+            registered: false,
+            errors: errorHandler(err, User),
+          }
+          res.status(401).json(response);
+        } 
       }
     }
     catch (err){
