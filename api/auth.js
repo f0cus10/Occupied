@@ -44,6 +44,18 @@ router.post('/signup', async (req, res) => {
         //create the user with the password
         //TODO: add more options to the user
         try{
+          if (req.body.password.length < 8 || req.body.password.length > 50){
+            const response = {
+              registered: false,
+              errors: [
+                {
+                  path: "Password", 
+                  message: "The password must be between 8 and 50 characters long",
+                },
+              ],
+            }
+            res.status(401).json(response);
+          }
           const newUser = await User.create({
             username: req.body.username,
             password: req.body.password,
