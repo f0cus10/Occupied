@@ -58,7 +58,9 @@ router.post('/signup', async (req, res) => {
 router.post('/login', async(req, res) => {
   try{
     const foundUser = await User.findOne({
-      username: req.body.username
+      where:{
+        username: req.body.username
+      }
     });
     if(!foundUser){
       //user not found
@@ -89,7 +91,7 @@ router.post('/login', async(req, res) => {
 
           const token = jwt.sign(payload, privateKEY, signOptions);
           console.log("Token - " + token);
-          res.status(201).json({ message: "Successfully logged in", token: token});
+          res.status(201).json({ message: "Successfully logged in", token});
         }
       }
       catch (err){
