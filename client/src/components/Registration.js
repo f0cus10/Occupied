@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import '../styles/Registration.css';
 
 class Registration extends Component {
@@ -21,14 +22,10 @@ class Registration extends Component {
             password,
             description: firstName+lastName
         };
-        fetch('/api/signup', {
-            method: 'POST',
-            headers:{
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => console.log(res));
+        axios.post('/api/signup', data)
+            .then(res => {
+                console.log(res);
+            })
     }
 
     onChange = (e) => {
