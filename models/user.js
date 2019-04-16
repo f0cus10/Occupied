@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true,
       validate: {
-        isAlphaNumeric: {
+        isAlphanumeric: {
           args: true,
           msg: "The username can only contain letters and numbers",
         },
