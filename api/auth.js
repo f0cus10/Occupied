@@ -36,6 +36,7 @@ router.post('/signup', async (req, res) => {
         const newUser = await User.create({
           username: req.body.username,
           password: req.body.password,
+          description: req.body.description,
         });
         console.log(newUser.get({plain: true}));
         res.status(201).json({ message: "User created" });
