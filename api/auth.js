@@ -52,6 +52,9 @@ router.post('/signup', async (req, res) => {
   }
 })
 
+/**
+ * @returns the jwt token as a string.
+ */
 router.post('/login', async(req, res) => {
   try{
     const foundUser = await User.findOne({

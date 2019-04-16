@@ -1,5 +1,26 @@
 {
-  "user-to-blueprint": {
-
-  }
+  "userToBlueprint": [
+    {
+      "user": "miguel",
+      "blueprint": "Hunter College"
+    },
+    {
+      "user": "jia",
+      "blueprint": "Hunter College"
+    }
+  ],
+  "blueprintToSpace": [
+    {
+      "blueprint": "Hunter College",
+      "space": "my bathroom"
+    }
+  ],
+  "userToSpace": [
+    {
+      "user": "miguel",
+      "space": "my bathroom"
+    }
+  ],
+  "ownerToBlueprint": [
+  ]
 }

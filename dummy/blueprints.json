@@ -1,11 +1,21 @@
 [
   {
     "name": "My House",
+    "category": "Home",
     "description": "this is my house",
-    "isPublic": "false"
+    "imageUrl": "https://images.adsttc.com/media/images/59a4/c624/b22e/389d/3e00/02a3/newsletter/MHA.JR_201708_038.jpg?1503970808",
+    "isPublic": false
+  },
+  {
+    "name": "Jia's House",
+    "category": "Home",
+    "description": "The cool home",
+    "imageUrl": "https://images.adsttc.com/media/images/58bc/4293/e58e/cecd/d000/016d/newsletter/FEATURED_IMAGE.jpg?1488732815",
+    "isPublic": false
   },
   {
     "name": "Hunter College",
+    "address": "695 Park Ave, New York, NY 10065",
     "category": "School",
     "description": "the best cuny probably",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Hunter_College.jpg/215px-Hunter_College.jpg",
@@ -13,17 +23,25 @@
   },
   {
     "name": "Marjan's dance studio",
+    "category": "studio",
     "description": "Book an appointment now!",
+    "imageUrl": "https://mountvernon.gwu.edu/sites/g/files/zaxdzs1156/f/styles/gw_gallery_9_col/public/downloads/DSC_0055_1.JPG?itok=gPuixmX7",
     "isPublic": true
   },
   {
     "name": "JP Morgan & Chase",
-    "description": "A bank",
+    "address": "10081, 25-02 Camp Rd, New York, 11691",
+    "category": "bank",
+    "description": "Best bank for your buck",
+    "imageUrl": "https://media.bizj.us/view/img/10798484/jpmorgan*750xx1600-900-0-25.jpg",
     "isPublic": true
   },
   {
-    "name": "Park 1",
-    "description": "A park where you can reserve courts?",
+    "name": "Central Park",
+    "address": "New York, NY",
+    "category": "Park",
+    "description": "Largest man made park",
+    "imageUrl": "https://s3.amazonaws.com/assets.centralparknyc.org/images/about/history/history-1.jpg",
     "isPublic": true
   }
 ]
