@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react';
+import "../styles/CreateBlueprint.css";
 
 class CreateBlueprint extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
-      description: ''
+      description: '',
+      imageUrl: ''
     }
   }
 
-  createBlueprint = (name, description) => {
-    let data = { name, description, isPublic: true, userId: 1, blueprintId: 10, username: 'miguel', category: 'House'};
+  createBlueprint = (name, description, imageUrl) => {
+    let data = { name, description, imageUrl, isPublic: true, userId: 1, blueprintId: 10, username: 'miguel', category: 'House'};
     fetch('/api/blueprint/create', {
       method: 'POST',
       headers: {
@@ -27,21 +29,46 @@ class CreateBlueprint extends Component {
 
   render() {
     const { username } = this.props;
-    const { name, description } = this.state;
+    const { name, description, imageUrl } = this.state;
     return (
       <div>
-        <h1>Create Blueprint</h1>
-        <h2>Welcome {username} !</h2>
-        <Form onSubmit={() => this.createBlueprint(name, description)}>
+        <h1>Create A Blueprint!</h1>
+        <Form className="blueprint" onSubmit={() => this.createBlueprint(name, description, imageUrl)}>
         <Form.Field>
           <label className="label"> Building Name</label>
           <input onChange={(e) => this.setState({name: e.target.value})} placeholder='Building Name'/>
         </Form.Field>
         <Form.Field>
-          <label>Address</label>
+          <label className="label">Address</label>
           <input placeholder='Address' />
         </Form.Field>
-        <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
+        <Form.Field>
+         <label className="label">Blueprint Type</label>
+          <select class="ui dropdown">
+          <option value=""></option>
+          <option value="1">Public</option>
+          <option value="0">Private</option>
+          </select>
+        </Form.Field> 
+        <Form.Field>
+            <label className="label">Categories</label>
+            <select class="ui dropdown">
+            <option value=""></option>
+            <option value="School">School</option>
+            <option value="Home">Home</option>
+            <option value="Office">Office</option>
+            <option value="Building">Building</option>
+            <option value="Building">Other</option>
+            </select>
+        </Form.Field>  
+        <Form.Field>
+          <label className="label">Image URL</label>
+          <input onChange={(e) => this.setState({imageUrl: e.target.value})} placeholder='Image url' />
+        </Form.Field>
+        <Form.Field>   
+        <label className="label">Description</label>   
+        <Form.TextArea onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
+        </Form.Field> 
         <Button type='submit'>Submit</Button>
         </Form>
         <Link to="/home">GO TO HOME</Link>
