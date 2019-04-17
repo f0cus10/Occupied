@@ -57,6 +57,8 @@ const mapDispatch = dispatch => {
       const username = e.target.username.value;
       const password = e.target.password.value;
       const isLogin = dispatch(loginAuth(username, password));
+      console.log('isLogin')
+      console.log(isLogin)
       if (!isLogin) {
         this.setState({ warning: "User does not exist!" })
       }

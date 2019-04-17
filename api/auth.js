@@ -59,7 +59,7 @@ router.post('/signup', async (req, res) => {
           registered: false,
           errors: [{path: "user", message:"Username already exists"}]
         }
-        res.status(409).json(resObject);
+        res.json(resObject);
       }
       else{
         //create the user with the password
@@ -70,7 +70,7 @@ router.post('/signup', async (req, res) => {
               registered: false,
               errors: [{path:"password", message: "The password must be between 8 and 50 characters long"}]
             }
-            return res.status(401).json(resObject);
+            return res.json(resObject);
           }
           const newUser = await User.create({
             username: req.body.username,
@@ -82,7 +82,7 @@ router.post('/signup', async (req, res) => {
             registered: true,
             errors:[{path:null, message: null}]
           }
-          res.status(201).json(resObject);
+          res.json(resObject);
         }
         catch (err){
           //There has been an error
@@ -90,7 +90,7 @@ router.post('/signup', async (req, res) => {
             registered: false,
             errors: errorHandler(err, User),
           }
-          res.status(401).json(resObject);
+          res.json(resObject);
         } 
       }
     }
@@ -100,7 +100,7 @@ router.post('/signup', async (req, res) => {
         registered: false,
         errors: [{ path: "database", message: "Database Error"}]
       }
-      res.status(400).json(resObject);
+      res.json(resObject);
     }
   }
   else {
@@ -109,7 +109,7 @@ router.post('/signup', async (req, res) => {
       registered: false,
       errors: [{ path: "incomplete", messsage: "Missing username or password" }]
     }
-    res.status(400).json(resObject);
+    res.json(resObject);
   }
 })
 
@@ -125,14 +125,14 @@ router.post('/login', async(req, res) => {
     });
     if(!foundUser){
       //user not found
-      res.status(401).json({ message: "Authentication Failed" });
+      res.json({ message: "Authentication Failed" });
     }
     else if (foundUser){
       //check for password
       try{
         const match = await foundUser.validPassword(req.body.password);
         if(!match){
-          res.status(401).json({ error: "Authentication failed" });
+          res.json({ message: "Authentication failed" });
         }
         else{
           //issue a token
@@ -152,7 +152,7 @@ router.post('/login', async(req, res) => {
 
           const token = jwt.sign(payload, privateKEY, signOptions);
           console.log("Token - " + token);
-          res.status(201).json({ message: "Successfully logged in", token});
+          res.json({ message: "Successfully logged in", token});
         }
       }
       catch (err){

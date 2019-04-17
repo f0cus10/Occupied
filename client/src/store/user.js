@@ -25,7 +25,8 @@ export const setAuth = auth => ({ type: SET_AUTH, auth });
 export const loginAuth = (username, password) => async dispatch => {
   try {
     const login = await axios.post(`/api/login`, { username, password });
-    if (login.status === 201) {
+    console.log(login)
+    if (login.status === 200) {
       const { token } = login.data;
       Cookies.set('token', token);
       dispatch(setAuth());

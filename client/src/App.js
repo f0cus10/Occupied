@@ -23,13 +23,13 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Route exact path="/" component={Login} />
-          {/* <Route path="/home" render={(props) => <ProtectedRoute {...props} component={Home}/>} /> */}
           <Route path="/home" component={Home} />
           <Route path="/create" component={CreateBlueprint} />
           <Route path="/join" component={JoinBlueprint} />
           <Route path="/view" component={ViewBlueprint} />
           <Route path="/edit" component={EditBlueprint} />
           <Route path="/register" component={Registration} />
+          {/* <Route path="/profile" component={Profile} /> */}
         </div>
       </BrowserRouter>
     );
