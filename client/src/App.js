@@ -3,6 +3,7 @@ import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
+import Profile from "./components/Profile";
 import "semantic-ui-css/semantic.min.css";
 import {
   BrowserRouter,
@@ -30,6 +31,7 @@ class App extends Component {
           <Route path="/view" component={ViewBlueprint} isAuth={isAuth} />
           <Route path="/edit" component={EditBlueprint} isAuth={isAuth} />
           <Route path="/register" component={Registration} isAuth={isAuth} />
+          <Route path="/profile" component={Profile} isAuth={isAuth} />
         </div>
       </BrowserRouter>
     );

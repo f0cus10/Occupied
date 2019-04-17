@@ -23,17 +23,20 @@ class Navbar extends Component {
           </Link>
           <Link to="/create">
             <Menu.Item name='Create Blueprint' active={activeItem === 'Create Blueprint'} />
-          </Link>>
+          </Link>
           <Link to="/join">
             <Menu.Item name='Join Blueprint' active={activeItem === 'Join Blueprint'} />
-          </Link>>
+          </Link>
 
           <Menu.Menu position='right'>
+            
+          <Link to="/profile">
             <Menu.Item>
               <div className="user">
-                Welcome {username}!
-            </div>
+                Welcome {username}! 
+              </div>
             </Menu.Item>
+            </Link>
             <Link to="/">
             <Menu.Item
               name='Log out'
