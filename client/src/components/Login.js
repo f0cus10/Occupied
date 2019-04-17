@@ -1,27 +1,26 @@
 import React, { Component } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { auth } from '../store';
+import { loginAuth } from '../store';
 import '../styles/Login.css';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 class Login extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      warning: ""
-    };
   }
-
+  componentDidMount() {
+  }
   render() {
-    const { setUsername, isAuth } = this.props;
-    const { warning} = this.state;
-    // let { from } = this.props.location.state || { from: { pathname: "/" } };
+    const { setUsername, isAuth, warning } = this.props;
     if (isAuth) {
       return <Redirect to='/Home' />
     }
 
     return (
       <div className="login-page">
+        <h1> Occupied Login </h1>
         <div className="form">
           <h2> {warning} </h2>
           <form className="register-form">
@@ -56,7 +55,10 @@ const mapDispatch = dispatch => {
     setUsername(e) {
       e.preventDefault();
       const username = e.target.username.value;
-      const isLogin = dispatch(auth(username));
+      const password = e.target.password.value;
+      const isLogin = dispatch(loginAuth(username, password));
+      console.log('isLogin')
+      console.log(isLogin)
       if (!isLogin) {
         this.setState({ warning: "User does not exist!" })
       }

@@ -13,6 +13,7 @@ class Registration extends Component {
             passwordError: '',
             firstName: '',
             lastName: '',
+            err: ''
         }
     }
 
@@ -53,12 +54,13 @@ class Registration extends Component {
 
     render() {
         //grab the variables from the state
-        const { username, password, firstName, lastName, usernameError, passwordError } = this.state;
+        const { username, password, firstName, lastName, usernameError, passwordError, err } = this.state;
 
         return (
             <body>
                 <div className="container">
                     <div id="logbox">
+                        <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
                             <input 
                                 className="input pass" 

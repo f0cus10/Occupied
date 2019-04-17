@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import '../styles/Navbar.css';
 
 class Navbar extends Component {
@@ -12,6 +13,10 @@ class Navbar extends Component {
   state = { activeItem: 'home' }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleLogin = () => {
+    Cookies.remove('token')
+    Cookies.remove('cookie')
+  }
   render() {
     const { username } = this.props;
     const { activeItem } = this.state;
@@ -37,7 +42,7 @@ class Navbar extends Component {
               </div>
             </Menu.Item>
             </Link>
-            <Link to="/">
+            <Link onClick={this.handleLogin} to="/">
             <Menu.Item
               name='Log out'
               active={activeItem === 'Log out'}
