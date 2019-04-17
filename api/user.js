@@ -86,7 +86,7 @@ router.post('/usage', async (req, res) => {
   }
 })
 
-router.get('/delete/:id', async (req, res) => {
+router.post('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const response = await User.destroy({

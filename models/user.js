@@ -1,3 +1,6 @@
+'use strict';
+const bcrypt = require('bcrypt');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     username: {
@@ -8,8 +11,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+
     description: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: true
     },
 
     usageTime: {
@@ -27,7 +36,25 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: sequelize.fn('NOW'),
     },
 
+  },
+  {
+    freezeTableName: true,
+    hooks: {
+      beforeCreate:function(user) {
+        user.password = bcrypt.hashSync(user.password, 10);
+      }, 
+      beforeBulkCreate:function(users) {
+        users.map(u => {
+          u.password = bcrypt.hashSync(u.password, 10);
+          return u;
+        })
+      }
+    }
   });
+
+  User.prototype.validPassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+  }
 
   User.associate = (models) => {
     // User can have many blueprints that they belong to. 

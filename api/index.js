@@ -2,10 +2,12 @@ const router = require('express').Router();
 const dummyUsers = require('../dummy/users.json');
 const dummyBlueprints = require('../dummy/blueprints.json');
 const { User, Blueprint, Space } = require('../models');
+const AuthRouter = require('./authRouter');
 
-router.use('/user', require('./user'));
-router.use('/blueprint', require('./blueprint'));
-router.use('/space', require('./space'));
+router.use('/user', AuthRouter, require('./user'));
+router.use('/blueprint', AuthRouter, require('./blueprint'));
+router.use('/space', AuthRouter, require('./space'));
+router.use(require('./auth'));
 
 router.get('/populate', async (req, res, next) => {
   try {
@@ -15,10 +17,6 @@ router.get('/populate', async (req, res, next) => {
   } catch (err) {
     res.sendStatus(404);
   }
-})
-
-router.post('/login/', async(req, res) => {
-  res.send(404);
 })
 
 module.exports = router;
