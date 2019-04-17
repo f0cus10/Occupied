@@ -45,7 +45,7 @@ class CardExampleCard extends Component {
               {status}
             </a>
             <div>
-              <Link to="/view">View </Link>
+              {/* <Link to="/view">View </Link> */}
               {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>}
             </div>
           </Card.Content>

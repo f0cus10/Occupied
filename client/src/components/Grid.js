@@ -29,7 +29,7 @@ class BlueprintGrid extends Component {
 
     return (
       <div className="card-container">
-        {cards}
+        {/* {cards} */}
       </div>
     );
   }

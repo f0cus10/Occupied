@@ -2,6 +2,29 @@ const router = require('express').Router();
 const { User, Blueprint, Space } = require('../models');
 const { Op } = require('sequelize');
 
+/**
+  Gets username information from currently logged in user solely from their JWT token
+ */
+router.get('/get', async (req, res, next) => {
+  const { username } = req.decoded;
+  try {
+    const found = await User.findOne({ 
+      where: { username },
+      include: [{
+        model: Blueprint
+      }, {
+        model: Space
+      }]
+    });
+    if (found) {
+      res.send(found)
+    }
+  } catch (err) {
+    res.sendStatus(404);
+    console.error(err);
+  }
+})
+
 router.get('/all', async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -50,7 +73,12 @@ router.get('/:id', async(req, res) => {
     const found = await User.findOne({
       where: {
         id
-      }
+      },
+      include: [{
+        model: Blueprint
+      }, {
+        model: Space
+      }]
     });
     if (found) {
       foundBp = await found.getBlueprints();

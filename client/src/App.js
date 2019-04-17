@@ -1,35 +1,35 @@
 import React, { Component } from "react";
+import {
+  BrowserRouter,
+  Route,
+  Redirect
+} from "react-router-dom";
+
+import { connect } from "react-redux";
+
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Home from "./components/Home";
-import Navbar from "./components/Navbar";
-import "semantic-ui-css/semantic.min.css";
-import {
-  BrowserRouter,
-  Route
-} from "react-router-dom";
-import { connect } from "react-redux";
 import CreateBlueprint from "./components/CreateBlueprint";
 import JoinBlueprint from "./components/JoinBlueprint";
 import ViewBlueprint from "./components/ViewBlueprint";
 import EditBlueprint from "./components/EditBlueprint";
+import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
 class App extends Component {
   render() {
-    const { isAuth } = this.props;
     return (
       <BrowserRouter>
         <div className="App">
-          <h1> Occupied </h1>
-          {isAuth && <Navbar />}
           <Route exact path="/" component={Login} />
-          <Route path="/home" component={Home} isAuth={isAuth} />
-          <Route path="/create" component={CreateBlueprint} isAuth={isAuth} />
-          <Route path="/join" component={JoinBlueprint} isAuth={isAuth} />
-          <Route path="/view" component={ViewBlueprint} isAuth={isAuth} />
-          <Route path="/edit" component={EditBlueprint} isAuth={isAuth} />
-          <Route path="/register" component={Registration} isAuth={isAuth} />
+          {/* <Route path="/home" render={(props) => <ProtectedRoute {...props} component={Home}/>} /> */}
+          <Route path="/home" component={Home} />
+          <Route path="/create" component={CreateBlueprint} />
+          <Route path="/join" component={JoinBlueprint} />
+          <Route path="/view" component={ViewBlueprint} />
+          <Route path="/edit" component={EditBlueprint} />
+          <Route path="/register" component={Registration} />
         </div>
       </BrowserRouter>
     );
