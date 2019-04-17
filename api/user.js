@@ -2,30 +2,10 @@ const router = require('express').Router();
 const { User, Blueprint, Space } = require('../models');
 const { Op } = require('sequelize');
 
-/**
-  Gets username information from currently logged in user solely from their JWT token
- */
-router.get('/get', async (req, res, next) => {
-  const { username } = req.decoded;
-  try {
-    const found = await User.findOne({ 
-      where: { username },
-      include: [{
-        model: Blueprint
-      }, {
-        model: Space
-      }]
-    });
-    if (found) {
-      res.send(found)
-    }
-  } catch (err) {
-    res.sendStatus(404);
-    console.error(err);
-  }
-})
-
+// Gets everybody
 router.get('/all', async (req, res, next) => {
+  const { decoded } = req;
+  console.log(decoded)
   try {
     const users = await User.findAll({
       include: [{
@@ -39,6 +19,45 @@ router.get('/all', async (req, res, next) => {
     console.error(err);
     res.sendStatus(404);
   }
+})
+
+/**
+  Gets username information from currently logged in user solely from their JWT token
+ */
+router.get('/', async (req, res, next) => {
+  const { username } = req.decoded;
+  try {
+    const found = await User.findOne({
+      where: { username },
+      include: [{
+        model: Blueprint
+      }, {
+        model: Space
+      }]
+    })
+    res.send(found);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(404);
+  }
+  // console.log('username')
+  // console.log(username)
+  // try {
+  //   const found = await User.findOne({ 
+  //     where: { username },
+  //     include: [{
+  //       model: Blueprint
+  //     }, {
+  //       model: Space
+  //     }]
+  //   });
+  //   if (found) {
+  //     res.send(found)
+  //   }
+  // } catch (err) {
+  //   res.sendStatus(404);
+  //   console.error(err);
+  // }
 })
 
 /**
@@ -67,7 +86,7 @@ router.get('/query', async(req, res) => {
 /**
   Get's username information by id
  */
-router.get('/:id', async(req, res) => {
+router.get('/id/:id', async(req, res) => {
   const { id } = req.params;
   try {
     const found = await User.findOne({

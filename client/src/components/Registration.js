@@ -11,6 +11,7 @@ class Registration extends Component {
             password: '', 
             firstName: '',
             lastName: '',
+            message: ''
         }
     }
 
@@ -25,6 +26,11 @@ class Registration extends Component {
         axios.post('/api/signup', data)
             .then(res => {
                 console.log(res);
+                if (res.status === 201) {
+                    this.setState({ message: "Created Successfully! "})
+                } else {
+                    this.setState({ message: "Error has occured" })
+                }
             })
     }
 
@@ -36,12 +42,13 @@ class Registration extends Component {
 
     render() {
         //grab the variables from the state
-        const { username, password, firstName, lastName } = this.state;
+        const { username, password, firstName, lastName, message } = this.state;
 
         return (
             <body>
                 <div className="container">
                     <div id="logbox">
+                        <h2> {message} </h2>
                         <form id="signup" method="post" action="/signup">
                             <input className="input pass" onChange={this.onChange} name="firstName" type="text" value={firstName} placeholder="First Name" autoFocus="autofocus" required={false} />
                             <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />

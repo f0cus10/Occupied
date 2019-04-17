@@ -12,13 +12,16 @@ class CreateBlueprint extends Component {
     }
   }
 
+  componentDidMount() {
+    
+  }
+
   createBlueprint = (name, description) => {
     let data = { name, description, isPublic: true, userId: 1, blueprintId: 10, username: 'miguel', category: 'House'};
     fetch('/api/blueprint/create', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
-        // "Content-Type": "application/x-www-form-urlencoded",
       },
       body: JSON.stringify(data)
     })

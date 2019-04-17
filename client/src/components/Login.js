@@ -3,13 +3,15 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAuth } from '../store';
 import '../styles/Login.css';
-import Axios from 'axios';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 class Login extends Component {
   constructor(props) {
     super(props);
   }
-
+  componentDidMount() {
+  }
   render() {
     const { setUsername, isAuth, warning } = this.props;
     if (isAuth) {

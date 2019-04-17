@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Card, Icon, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import '../styles/Card.css';
 
-class CardExampleCard extends Component {
+class CardContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,19 +18,20 @@ class CardExampleCard extends Component {
 
   render() {
     const {
-      isAdminOf,
+      address,
+      category,
       status,
       time,
       name,
       description,
-      img_url,
+      imageUrl,
       id
     } = this.props;
 
     return (
       <div className="card-box">
         <Card>
-          <Image src={img_url} className="card-image"/>
+          <Image src={imageUrl} className="card-image"/>
           <Card.Content>
             <Card.Header>{name}</Card.Header>
             <Card.Meta>
@@ -45,8 +45,9 @@ class CardExampleCard extends Component {
               {status}
             </a>
             <div>
-              {/* <Link to="/view">View </Link> */}
-              {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>}
+              <Link to="/view">View </Link>
+              {/* {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>} */}
+              <Link to="/edit"> Edit </Link>
             </div>
           </Card.Content>
         </Card>
@@ -54,11 +55,5 @@ class CardExampleCard extends Component {
     );
   }
 }
-const mapState = state => {
-  console.log(state);
-  return {
-    isAdminOf: state.user.isAdminOf
-  };
-};
 
-export default connect(mapState)(CardExampleCard);
+export default CardContainer;
