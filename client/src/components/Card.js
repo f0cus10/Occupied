@@ -15,7 +15,6 @@ class CardExampleCard extends Component {
 
   componentDidMount() {
     this.setState({ posts: data });
-    console.log(this.posts);
   }
 
   render() {

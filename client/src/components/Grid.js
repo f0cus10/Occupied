@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import CardExampleCard from "./Card";
 import '../styles/Grid.css';
-import { Link } from "react-router-dom";
 
 class BlueprintGrid extends Component {
   constructor(props) {

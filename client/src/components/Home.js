@@ -4,12 +4,9 @@ import BlueprintGrid from "./Grid";
 import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import MediaQuery from 'react-responsive';
+import { connect } from 'react-redux';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>
@@ -17,12 +14,12 @@ class Home extends Component {
           <div className="body">
             <div className="row">
                 <Link to="/create">
-                  <button type="button" class="btn btn-primary btn-lg m-2">
+                  <button type="button" className="btn btn-primary btn-lg m-2">
                     CREATE BLUEPRINT
                   </button>
                 </Link>
                 <Link to="/join">
-                  <button type="button" class="btn btn-primary btn-lg m-2">
+                  <button type="button" className="btn btn-primary btn-lg m-2">
                     JOIN BLUEPRINT
                   </button>
                 </Link>
@@ -36,12 +33,12 @@ class Home extends Component {
             {/* <Image src="https://react.semantic-ui.com/images/wireframe/image.png" /> */}
             <div className="row">
               <Link to="/create">
-                <button type="button" class="btn btn-primary btn-lg m-2">
+                <button type="button" className="btn btn-primary btn-lg m-2">
                   CREATE BLUEPRINT
                 </button>
               </Link>
               <Link to="/join">
-                <button type="button" class="btn btn-primary btn-lg m-2">
+                <button type="button" className="btn btn-primary btn-lg m-2">
                   JOIN BLUEPRINT
                 </button>
               </Link>
@@ -50,7 +47,11 @@ class Home extends Component {
 
           <Grid.Row>
             <Grid.Column width={3}>
-              <Image src="https://media.licdn.com/dms/image/C5103AQGwk9g4oFaQcQ/profile-displayphoto-shrink_800_800/0?e=1559779200&v=beta&t=YI9uL4Bht2N16C29-PMGfyrcNSO-UCJwlOq0iVQjfmg"/>
+              <Image
+                src="https://media.licdn.com/dms/image/C5103AQGwk9g4oFaQcQ/profile-displayphoto-shrink_800_800/0?e=1559779200&v=beta&t=YI9uL4Bht2N16C29-PMGfyrcNSO-UCJwlOq0iVQjfmg"
+                size="medium"
+                circular
+              />
             </Grid.Column>
             <Grid.Column width={13}>
               {/* <Link to="/create"> Hello</Link> */}
@@ -64,4 +65,12 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapState = state => {
+  return {
+    username: state.user.user,
+    isAuth: state.user.isAuth,
+    blueprints: state.user.blueprints
+  }
+}
+
+export default connect(mapState)(Home);
