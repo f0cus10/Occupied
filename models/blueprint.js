@@ -7,9 +7,24 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
 
+    address: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+
     description: {
       type: DataTypes.STRING,
       defaultValue: "this is a place",
+    },
+
+    address: {
+      type: DataTypes.STRING,
+      defaultValue: "123 Nothing Avenue",
+    },
+
+    category: {
+      type: DataTypes.STRING,
+      defaultValue: "Place"
     },
 
     imageUrl: {
@@ -26,12 +41,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Blueprint.associate = (models) => {
+    // Blueprint can have many Spaces. One-To-Many associations.
+    Blueprint.hasMany(models.Space);
     //A user can be part of many blueprints
     Blueprint.belongsToMany(models.User, {
-      as: "Members",
-      through: 'member',
-      foreignKey: 'memberId',
+      through    : 'member',
+      foreignKey : 'blueprintId'
     });
+    // this is the owner of the blueprint. this will create userId column in blueprint table.
     Blueprint.belongsTo(models.User);
   };
 

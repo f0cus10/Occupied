@@ -3,6 +3,7 @@ import { Card, Icon, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import '../styles/Card.css';
 
 class CardExampleCard extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class CardExampleCard extends Component {
 
   componentDidMount() {
     this.setState({ posts: data });
-    console.log(this.posts);
   }
 
   render() {
@@ -29,9 +29,9 @@ class CardExampleCard extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div className="card-box">
         <Card>
-          <Image src={img_url} />
+          <Image src={img_url} className="card-image"/>
           <Card.Content>
             <Card.Header>{name}</Card.Header>
             <Card.Meta>

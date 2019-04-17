@@ -20,7 +20,10 @@ class JoinBlueprint extends Component {
       method: 'GET'
     })
     .then(res => res.json())
-    .then(data => this.setState({blueprints : data}))
+    .then(data => {
+      console.log(data);
+      this.setState({blueprints : data})
+    })
   }
 
   renderblueprints = blueprint => {
@@ -64,6 +67,26 @@ class JoinBlueprint extends Component {
               />
             </Menu.Item>
             <div>Search for your Blueprints here!</div>
+            <section class="container">
+              <div class="dropdown">
+                <select name="one" class="dropdown-select">
+                  <option value="">Categories</option>
+                  <option value="1">School</option>
+                  <option value="2">Home</option>
+                  <option value="3">Library</option>
+                  <option value="4">Office</option>
+                  <option value="5">Library</option>
+                </select>
+              </div>
+              <div class="dropdown dropdown-dark">
+                <select name="two" class="dropdown-select">
+                  <option value="">Size</option>
+                  <option value="1">Small</option>
+                  <option value="2">Medium</option>
+                  <option value="3">Large</option>
+                </select>
+              </div>
+            </section>
           </Grid.Column>
         </Grid.Row>
 
