@@ -2,16 +2,42 @@
 const router = require('express').Router();
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 const { User } = require('../models');
 
 //read the keys
 const privateKEY = fs.readFileSync('./private.key', 'utf8');
 
+//Error handler
+const errorHandler = (err, models) => {
+  if (err instanceof models.sequelize.ValidationError){
+    //use lodash to pick between the key-value pairs in the object
+    return err.errors.map(x => _.pick(x, ['path', 'message']));
+  }
+  return [{ path: 'authorization', message: 'Unknown Error' }];
+}
+
 /*
  *
  * a POST request to create a user in the database. This requires username and password from the http request
  * @input: username, password 
- * @output: token
+ * @output: a JSON is sent in the following format
+ * 
+ * 
+ * -------------------------- RESPONSE SCHEMATIC -------------------------------------------
+ * 
+ * {
+ *   registered: Bool,
+ *   errors: [
+ *     {
+ *       path: String or null,
+ *       message: String or null
+ *     }
+ *   ],
+ * }
+ * 
+ * ------------------------------------------------------------------------------------------
+ * 
  * @modify: add database entry
  * 
  */
@@ -28,27 +54,62 @@ router.post('/signup', async (req, res) => {
       //if (user) respond user found
       if (found){
         console.log(found.get({ plain: true }));
-        res.status(409).json({ message: "Username already exists" });
+        //edit standard error
+        const resObject = {
+          registered: false,
+          errors: [{path: "user", message:"Username already exists"}]
+        }
+        res.status(409).json(resObject);
       }
       else{
         //create the user with the password
         //TODO: add more options to the user
-        const newUser = await User.create({
-          username: req.body.username,
-          password: req.body.password,
-        });
-        console.log(newUser.get({plain: true}));
-        res.status(201).json({ message: "User created" });
+        try{
+          if (req.body.password.length < 8 || req.body.password.length > 50){
+            const resObject = {
+              registered: false,
+              errors: [{path:"password", message: "The password must be between 8 and 50 characters long"}]
+            }
+            return res.status(401).json(resObject);
+          }
+          const newUser = await User.create({
+            username: req.body.username,
+            password: req.body.password,
+            description: req.body.description,
+          });
+          console.log(newUser.get({plain: true}));
+          const resObject = {
+            registered: true,
+            errors:[{path:null, message: null}]
+          }
+          res.status(201).json(resObject);
+        }
+        catch (err){
+          //There has been an error
+          const resObject = {
+            registered: false,
+            errors: errorHandler(err, User),
+          }
+          res.status(401).json(resObject);
+        } 
       }
     }
     catch (err){
       console.log(err);
-      res.status(400).json({ message: "Database error" });
+      const resObject = {
+        registered: false,
+        errors: [{ path: "database", message: "Database Error"}]
+      }
+      res.status(400).json(resObject);
     }
   }
   else {
     //no username or password
-    res.status(400).json({ message: "Missing username or password" });
+    const resObject = {
+      registered: false,
+      errors: [{ path: "incomplete", messsage: "Missing username or password" }]
+    }
+    res.status(400).json(resObject);
   }
 })
 
