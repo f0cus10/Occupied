@@ -1,45 +1,48 @@
-// async function ProtectedRoute ({ component: Component, ...rest }) {
-//   const authenticated = await axios.get('/api/user/get', {
-//     headers: {
-//       'access-token': Cookies.get('token')
-//     }
-//   });
-//   if (authenticated.status === 200) {
-//     return (<>
-//       <h1> Occupied </h1>
-//       <Navbar />
-//       <Route {...rest} render={(props) => <Component {...props} data={authenticated.data} />} />
-//     </>)
-//   } else {
-//     return (<Redirect to="/" />)
-//   }
-// }
-// export default ProtectedRoute;
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import Navbar from './Navbar';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
 function ProtectedRoute({ component: Component }) {
+  const [loaded, setLoad] = useState(false);
   const [auth, setAuth] = useState(false);
   const [data, setData] = useState({});
-  useEffect(async () => {
-    const authenticated = await axios.get('/api/user/get', {
-      headers: {
-        'access-token': Cookies.get('token')
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.get('/api/user/', {
+          headers: {
+            'access-token': Cookies.get('token')
+          }
+        })
+
+        if (result.status === 200) {
+          setData(result.data);
+          setAuth(true)
+        }
+
+        setLoad(true);
+      } catch (err) {
+        setLoad(true);
+        console.error(err);
       }
-    })
-    if (authenticated.status === 200) {
-      setAuth(true)
-      setData(authenticated.data);
-    } 
+    }
+    fetchData();
   }, [])
-  if (auth) {
-    return (
-      <Component data={data} />
-    )
+
+  if (loaded) {
+    if (auth) {
+      return (<>
+        <h1> Occupied </h1>
+        <Navbar />
+        <Component data={data} />
+      </>)
+    } else {
+      return (<Redirect to="/" />)
+    }
   } else {
-    return (<Redirect to="/" />)
+    return "Loading..."
   }
 }
 

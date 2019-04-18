@@ -3,6 +3,8 @@ import { Card, Icon, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import { Link } from "react-router-dom";
 import '../styles/Card.css';
+import axios from "axios";
+import Cookies from "js-cookie";
 
 class CardContainer extends Component {
   constructor(props) {
@@ -15,6 +17,19 @@ class CardContainer extends Component {
   componentDidMount() {
     this.setState({ posts: data });
   }
+  
+  deleteBlueprint = (e) => {
+    e.preventDefault();
+    axios.get(`/api/blueprint/delete/${this.props.id}`, { 
+      headers: {
+        'access-token': Cookies.get('token')
+      }
+    })
+    .then(res => {
+      if (res.status === 201) {
+      }
+    })
+  }
 
   render() {
     const {
@@ -25,6 +40,7 @@ class CardContainer extends Component {
       name,
       description,
       imageUrl,
+      isOwner,
       id
     } = this.props;
 
@@ -46,8 +62,12 @@ class CardContainer extends Component {
             </a>
             <div>
               <Link to="/view">View </Link>
-              {/* {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>} */}
-              <Link to="/edit"> Edit </Link>
+              { isOwner && (
+                <>
+                  <Link to="/edit"> Edit </Link>
+                  <a onClick={this.deleteBlueprint}>Delete</a>
+                </>
+              )}
             </div>
           </Card.Content>
         </Card>

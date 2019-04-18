@@ -7,6 +7,7 @@ import {
 
 import { connect } from "react-redux";
 
+import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import Home from "./components/Home";
@@ -23,11 +24,11 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Route exact path="/" component={Login} />
-          <Route path="/home" component={Home} />
-          <Route path="/create" component={CreateBlueprint} />
-          <Route path="/join" component={JoinBlueprint} />
-          <Route path="/view" component={ViewBlueprint} />
-          <Route path="/edit" component={EditBlueprint} />
+          <Route path="/home" render={props => <ProtectedRoute component={Home} {...props} />} />
+          <Route path="/create" render={props => <ProtectedRoute component={CreateBlueprint} {...props} />} />
+          <Route path="/join" render={props => <ProtectedRoute component={JoinBlueprint} {...props} />} />
+          <Route path="/view" render={props => <ProtectedRoute component={ViewBlueprint} {...props} />} />
+          <Route path="/edit" render={props => <ProtectedRoute component={EditBlueprint} {...props} />} />
           <Route path="/register" component={Registration} />
           {/* <Route path="/profile" component={Profile} /> */}
         </div>

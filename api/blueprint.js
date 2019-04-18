@@ -151,6 +151,22 @@ router.post('/create', async (req, res) => {
   }
 })
 
+router.post('/edit/', async (req, res) => {
+  const { blueprintId, userId, name, description, address, category, imageUrl, isPublic } = req.body;
+  try {
+    const foundBlueprint = await Blueprint.findOne({ where: { id: blueprintId }});
+    if (foundBlueprint.userId === userId) {
+      foundBlueprint.update({ name, description, address, category, imageUrl, isPublic });
+      res.send(201)
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (err) {
+    res.sendStatus(404);
+    console.error(err);
+  }
+})
+
 router.get('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {

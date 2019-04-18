@@ -12,26 +12,11 @@ class CreateBlueprint extends Component {
       name: '',
       description: '',
       message: '',
-      data: {}
     }
   }
 
-  componentDidMount() {
-    axios.get('api/user/', {
-      headers: {
-        'access-token': Cookies.get('token')
-      }
-    })
-    .then(res => {
-      if (res.status === 200) {
-        this.setState({ auth: true, data: res.data });
-        console.log(this.state)
-      }
-    })
-  }
-
   createBlueprint = (name, description) => {
-    const { username, id } = this.state.data;
+    const { username, id } = this.props.data;
     let data = { name, description, isPublic: true, userId: id, username, category: 'House'};
     fetch('/api/blueprint/create', {
       method: 'POST',
@@ -42,31 +27,33 @@ class CreateBlueprint extends Component {
       body: JSON.stringify(data)
     })
     .then(res => {
-      console.log(res)
       if (res.status === 201) {
-        console.log('success!')
+        this.setState({ message: 'Create Successfull!' });
+      } else {
+        this.setState({ message: 'An error has occured' })
       }
     })
   }
 
   render() {
-    const { username } = this.state.data;
-    const { name, description } = this.state;
+    const { username } = this.props.data;
+    const { name, description, message } = this.state;
     return (
       <div>
         <h1>Create Blueprint</h1>
         <h2>Welcome {username} !</h2>
+        <h3 className="warning"> {message} </h3>
         <Form onSubmit={() => this.createBlueprint(name, description)}>
-        <Form.Field>
-          <label className="label"> Building Name</label>
-          <input onChange={(e) => this.setState({name: e.target.value})} placeholder='Building Name'/>
-        </Form.Field>
-        <Form.Field>
-          <label>Address</label>
-          <input placeholder='Address' />
-        </Form.Field>
-        <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
-        <Button type='submit'>Submit</Button>
+          <Form.Field>
+            <label className="label"> Building Name</label>
+            <input onChange={(e) => this.setState({name: e.target.value})} placeholder='Building Name'/>
+          </Form.Field>
+          <Form.Field>
+            <label>Address</label>
+            <input placeholder='Address' />
+          </Form.Field>
+          <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
+          <Button type='submit'>Submit</Button>
         </Form>
         <Link to="/home">GO TO HOME</Link>
       </div>
@@ -74,10 +61,4 @@ class CreateBlueprint extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    username: state.user.user
-  };
-};
-
-export default connect(mapState)(CreateBlueprint);
+export default CreateBlueprint;

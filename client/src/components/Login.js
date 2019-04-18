@@ -10,8 +10,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-  }
   render() {
     const { setUsername, isAuth, warning } = this.props;
     if (isAuth) {

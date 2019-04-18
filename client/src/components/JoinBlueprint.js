@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Grid, Image } from 'semantic-ui-react';
 import { Input, Menu } from 'semantic-ui-react';
-// import publicBlueprints from '../publicBlueprints.json';
-import CardExampleCard from './Card.js';
+import CardContainer from './Card.js';
+import axios from 'axios';
+import Cookies from 'js-cookie'
 
 class JoinBlueprint extends Component {
   constructor(props) {
@@ -13,16 +14,13 @@ class JoinBlueprint extends Component {
     }
   }
   componentDidMount() {
-    // var obj = publicBlueprints[0];
-    // this.setState({blueprints : publicBlueprints});
-    // console.log(obj.description);
-    fetch('/api/blueprint/public', {
-      method: 'GET'
+    axios.get('/api/blueprint/public', {
+      headers: {
+        'access-token': Cookies.get('token')
+      }
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      this.setState({blueprints : data})
+    .then(res => {
+      this.setState({blueprints : res.data})
     })
   }
 
@@ -31,7 +29,7 @@ class JoinBlueprint extends Component {
     var code = blueprint.name.toLowerCase();
     return(
       <Grid.Column width={3}>
-      <CardExampleCard
+      <CardContainer
         name={blueprint.name}
         description={blueprint.description}
         img_url={blueprint.imageUrl}
@@ -45,7 +43,6 @@ class JoinBlueprint extends Component {
   onchange = e => {
     this.setState({ search: e.target.value });
   };
-
 
   render() {
     const { blueprints, search } = this.state;
