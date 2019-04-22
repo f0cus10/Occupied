@@ -1,0 +1,19 @@
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-content: center;
+}
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.card-box {
+  margin: 10px;
+}
+
+.card-image {
+  height: 200px;
+  width: 300px;
+}
