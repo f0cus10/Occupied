@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import axios from 'axios';
 import '../styles/Registration.css';
 
-class Registration extends Component {
+class Registration extends PureComponent {
     //keep track of the variables
     constructor(props){
         super(props);
