@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
 
     description: {
       type: DataTypes.STRING,
+      defaultValue: ""
+    },
+
+    category: {
+      type: DataTypes.STRING,
+      defaultValue: ""
     },
 
     occupied: {
