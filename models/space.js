@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    }
   }, {
     timestamps: false
   });

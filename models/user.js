@@ -35,11 +35,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-
     description: {
       type: DataTypes.STRING,
       allowNull: true
@@ -48,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
     usageTime: {
       type: DataTypes.FLOAT,
       defaultValue: 0.00
+    },
+
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: ""
     },
 
     createdAt: {

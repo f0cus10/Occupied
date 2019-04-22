@@ -1,2 +1,6 @@
 {
+  "name": "Room 107C",
+  "description": "Empty classroom to reserve..",
+  "occupied": false,
+  "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG"
 }

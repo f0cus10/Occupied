@@ -11,7 +11,7 @@ class Home extends Component {
     super(props);
   }
   render() {
-    const { blueprints, id } = this.props.data;
+    const { blueprints, id, imageUrl } = this.props.data;
     return (
       <>
         <MediaQuery query="(max-width: 767px)">
@@ -51,11 +51,19 @@ class Home extends Component {
 
           <Grid.Row>
             <Grid.Column width={3}>
-              <Image
-                src="https://media.licdn.com/dms/image/C5103AQGwk9g4oFaQcQ/profile-displayphoto-shrink_800_800/0?e=1559779200&v=beta&t=YI9uL4Bht2N16C29-PMGfyrcNSO-UCJwlOq0iVQjfmg"
-                size="medium"
-                circular
-              />
+              { imageUrl ? (
+                <Image
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxFTfDWP1_UzRnpPSdI4Ue5ZZ-0uHLAuiJt-w5YtNjM2VMcZW0"
+                  size="medium"
+                  circular
+                />
+              ) : (
+                <Image
+                  src="https://media.licdn.com/dms/image/C5103AQGwk9g4oFaQcQ/profile-displayphoto-shrink_800_800/0?e=1559779200&v=beta&t=YI9uL4Bht2N16C29-PMGfyrcNSO-UCJwlOq0iVQjfmg"
+                  size="medium"
+                  circular
+                />
+              )}
             </Grid.Column>
             <Grid.Column width={13}>
               <BlueprintGrid ownerIdProp={id} blueprints={blueprints} />
@@ -71,8 +79,7 @@ class Home extends Component {
 const mapState = state => {
   return {
     username: state.user.user,
-    isAuth: state.user.isAuth,
-    blueprints: state.user.blueprints
+    auth: state.user.auth,
   }
 }
 

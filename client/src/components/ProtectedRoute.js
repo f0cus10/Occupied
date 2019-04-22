@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { setAuth } from '../store/user';
-import { connect } from 'react-redux';
+import Loading from '../components/Loading';
 
 import Navbar from './Navbar';
 import Cookies from 'js-cookie';
@@ -45,7 +44,11 @@ function ProtectedRoute({ component: Component }) {
       return (<Redirect to="/" />)
     }
   } else {
-    return "Loading..."
+    return (<>
+      <h1> Occupied </h1>
+      <Navbar username={data.username}/>
+      <Loading loading />
+    </>)
   }
 }
 

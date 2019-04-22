@@ -5,6 +5,18 @@
       "blueprint": "Hunter College"
     },
     {
+      "user": "miguel",
+      "blueprint": "Baruch College"
+    },
+    {
+      "user": "miguel",
+      "blueprint": "My House"
+    },
+    {
+      "user": "miguel",
+      "blueprint": "JP Morgan & Chase"
+    },
+    {
       "user": "jia",
       "blueprint": "Hunter College"
     }
@@ -12,13 +24,13 @@
   "blueprintToSpace": [
     {
       "blueprint": "Hunter College",
-      "space": "my bathroom"
+      "space": "Room 107C"
     }
   ],
   "userToSpace": [
     {
       "user": "miguel",
-      "space": "my bathroom"
+      "space": "Room 107C"
     }
   ],
   "ownerToBlueprint": [

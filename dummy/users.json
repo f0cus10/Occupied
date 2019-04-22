@@ -1,17 +1,41 @@
 [
   {
     "username": "miguel",
+    "email": "miguelacero528@gmail.com",
     "password": "lmaolmao",
-    "description": "a boi"
+    "description": "Team leader guy",
+    "imageUrl": "https://res.cloudinary.com/practicaldev/image/fetch/s--eCDHwwsl--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/134952/defd1b30-a717-4a8b-b44a-2d894ad1b97d.png",
+    "usageTime": 420.69
   },
   {
     "username": "jia",
-    "password": "okay",
-    "description": "fashionable boi"
+    "email": "jiajiang@jiajiang.com",
+    "password": "jiajiang",
+    "description": "fashionable boi",
+    "usageTime": 1239.1
   },
   {
     "username": "marjan",
-    "password": "bruh",
-    "description": "uhhh"
+    "email": "mansar16@huntersoe.org",
+    "password": "marjanansar",
+    "description": "what do i even do"
+  },
+  {
+    "username": "anupam",
+    "email": "anupamdas@gmail.com",
+    "password": "anupamdas",
+    "description": ""
+  },
+  {
+    "username": "ifti",
+    "email": "iftikharkhan@gmail.com",
+    "password": "lmaolmao",
+    "description": "it's ifti!"
+  },
+  {
+    "username": "simon",
+    "email": "simonayzman@simonayzman.com",
+    "password": "simon",
+    "description": "The best teacher alive"
   }
 ]
