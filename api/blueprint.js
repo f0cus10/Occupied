@@ -188,17 +188,22 @@ router.get('/delete/:id', async (req, res) => {
   Get's blueprint information by ID
  */
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
+  let { id } = req.params;
+  id = parseInt(id);
   try {
     const found = await Blueprint.findOne({
-      where: {
-        id
-      }
-    }, {
+      where: { id },
       include: [{
-        model: Blueprint
+        model: User
+      }, {
+        model: Space
       }]
-    })
+    });
+    if (found) {
+      res.send(found);
+    } else {
+      res.sendStatus(404);
+    }
   } catch (err) {
     console.error(err);
   }

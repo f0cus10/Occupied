@@ -10,6 +10,10 @@ class Home extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    console.log("this is my data:")
+    console.log(this.props.data);
+  }
   render() {
     const { blueprints, id, imageUrl } = this.props.data;
     return (

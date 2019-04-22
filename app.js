@@ -4,6 +4,7 @@ const db = require('./models');
 const { User, Blueprint, Space } = require('./models');
 const dummyUsers = require('./dummy/users.json');
 const dummyBlueprints = require('./dummy/blueprints.json');
+const dummySpaces = require('./dummy/spaces.json');
 const dummyAssociations = require('./dummy/associations.json');
 
 const app = express();
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
         setTimeout(async () => {
             const users = await User.bulkCreate(dummyUsers);
             const blueprints = await Blueprint.bulkCreate(dummyBlueprints);
+            const spaces = await Space.bulkCreate(dummySpaces);
             const { userToBlueprint, blueprintToSpace, userToSpace } = dummyAssociations;
             for (let a of userToBlueprint) {
                 const { user, blueprint } = a;
