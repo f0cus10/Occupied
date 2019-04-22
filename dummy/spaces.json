@@ -1,7 +1,18 @@
-{
-  "name": "Room 107C",
-  "category": "Classroom",
-  "description": "Empty classroom to reserve..",
-  "occupied": false,
-  "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG"
-}
+[
+  {
+    "name": "Room 107C",
+    "category": "Classroom",
+    "description": "Empty classroom to reserve..",
+    "occupied": false,
+    "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG",
+    "blueprintId": 3
+  },
+  {
+    "name": "Hunter bathoomroom",
+    "category": "Bathroom",
+    "description": " thi sis a bathroom",
+    "occupied": false,
+    "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG",
+    "blueprintId": 3
+  }
+]

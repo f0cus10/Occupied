@@ -192,14 +192,13 @@ router.get('/:id', async (req, res) => {
   id = parseInt(id);
   try {
     const found = await Blueprint.findOne({
-      where: {
-        id
-      }
-    }, {
+      where: { id },
       include: [{
-        model: Blueprint
+        model: User
+      }, {
+        model: Space
       }]
-    })
+    });
     if (found) {
       res.send(found);
     } else {

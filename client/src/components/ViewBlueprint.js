@@ -27,6 +27,7 @@ class ViewBlueprint extends Component {
     .then(res => {
       if (res.status === 200) {
         this.setState({ blueprint: res.data })
+        console.log(this.state.blueprint)
         console.log(this.props.data.username)
       } else {
         this.setState({ message: "ERROR FETCHING BLUEPRINT" })
