@@ -125,7 +125,7 @@ router.post('/login', async(req, res) => {
     });
     if(!foundUser){
       //user not found
-      res.json({ message: "Authentication Failed" });
+      res.status(404).json({ message: "Authentication Failed" });
     }
     else if (foundUser){
       //check for password

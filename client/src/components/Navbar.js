@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Input, Menu } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import '../styles/Navbar.css';
@@ -14,8 +13,9 @@ class Navbar extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
   handleLogin = () => {
-    Cookies.remove('token')
-    Cookies.remove('cookie')
+    Cookies.remove('token');
+    Cookies.remove('cookie');
+    window.location.href = '/';
   }
   render() {
     const { username } = this.props;
@@ -42,12 +42,11 @@ class Navbar extends Component {
               </div>
             </Menu.Item>
             </Link>
-            <Link onClick={this.handleLogin} to="/">
             <Menu.Item
+              onClick={this.handleLogin}
               name='Log out'
               active={activeItem === 'Log out'}
             />
-            </Link>
           </Menu.Menu>
         </Menu>
       </div>
@@ -55,10 +54,4 @@ class Navbar extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    username: state.user.user
-  }
-}
-
-export default connect(mapState)(Navbar);
+export default Navbar;

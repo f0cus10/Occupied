@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { setAuth } from '../store/user';
+import { connect } from 'react-redux';
+
 import Navbar from './Navbar';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -35,7 +38,7 @@ function ProtectedRoute({ component: Component }) {
     if (auth) {
       return (<>
         <h1> Occupied </h1>
-        <Navbar />
+        <Navbar username={data.username}/>
         <Component data={data} />
       </>)
     } else {

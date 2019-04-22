@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loginAuth } from '../store';
-import '../styles/Login.css';
-import axios from 'axios';
+import { loginAuth, setWarning, setAuth } from '../store';
 import Cookies from 'js-cookie';
+import '../styles/Login.css';
 
 class Login extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount() {
+    if (Cookies.get('token')) {
+      this.props.changeAuth()
+    }
+  }
   render() {
-    const { setUsername, isAuth, warning } = this.props;
+    const { setUsername, warning, isAuth } = this.props;
     if (isAuth) {
       return <Redirect to='/Home' />
     }
@@ -43,23 +47,27 @@ class Login extends Component {
 
 const mapState = state => {
   return {
-    username: state.user.user,
-    isAuth: state.user.isAuth
+    username : state.user.user,
+    isAuth   : state.user.auth,
+    warning  : state.user.warning
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    setUsername(e) {
+    setUsername: (e) => {
       e.preventDefault();
       const username = e.target.username.value;
       const password = e.target.password.value;
-      const isLogin = dispatch(loginAuth(username, password));
-      console.log('isLogin')
-      console.log(isLogin)
-      if (!isLogin) {
-        this.setState({ warning: "User does not exist!" })
-      }
+      dispatch(loginAuth(username, password))
+      .then(res => {
+        if (!res) {
+          dispatch(setWarning("User does not exist!"));
+        }
+      })
+    },
+    changeAuth: () => {
+      dispatch(setAuth());
     }
   }
 }
