@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import {
   BrowserRouter,
   Route,
@@ -18,7 +18,7 @@ import EditBlueprint from "./components/EditBlueprint";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     return (
       <BrowserRouter>
