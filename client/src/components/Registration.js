@@ -14,7 +14,6 @@ class Registration extends PureComponent {
             passwordError: '',
             firstName: '',
             lastName: '',
-            err: ''
         }
     }
 
@@ -60,7 +59,7 @@ class Registration extends PureComponent {
 
     render() {
         //grab the variables from the state
-        const { username, password, firstName, lastName, usernameError, passwordError, err } = this.state;
+        const { username, password, firstName, lastName, usernameError, passwordError } = this.state;
 
         //Describe an error list 
         const errList = [];
@@ -74,7 +73,6 @@ class Registration extends PureComponent {
             <body>
                 <div className="container">
                     <div id="logbox">
-                        <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
                             <input 
                                 className="input pass transparent" 
