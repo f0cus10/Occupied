@@ -73,7 +73,7 @@ class Registration extends PureComponent {
                             />
                             <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
                             <input 
-                                //error={!!usernameError} // the !! casts it as a boolean
+                                error={!!usernameError ? "true" : undefined } // the !! casts it as a boolean
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="username" type="text" 
@@ -82,7 +82,7 @@ class Registration extends PureComponent {
                                 required="required" 
                             />
                             <input
-                                //error={!!passwordError}
+                                error={!!passwordError ? "true": undefined }
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="password" 
