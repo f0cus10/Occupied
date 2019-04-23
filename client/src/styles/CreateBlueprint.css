@@ -4,10 +4,11 @@
 
 
 .blueprint{
-    margin-right: 90px;
-    margin-left: 90px;
+    margin-right: 450px;
+    margin-left: 460px;
     margin-bottom: 90px;
     margin-top: 10px;
-    /*background-color: #9acef5;*/
     background-color: #9acef5;
+    height: 600px;
+    width: 450px;
 }
