@@ -64,7 +64,7 @@ class CreateBlueprint extends Component {
               onChange={(e) => {
                 if (e.target.value == "1") {
                   this.setState({ isPublic: true })
-                }else if(e.target.value=="0"){
+                }else if(e.target.value=="2"){
                   this.setState({ isPublic: false })
                 }
               }}
