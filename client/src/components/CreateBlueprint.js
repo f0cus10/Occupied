@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import '../styles/CreateBlueprint.css';
 
 class CreateBlueprint extends Component {
   constructor(props) {
@@ -12,12 +13,16 @@ class CreateBlueprint extends Component {
       name: '',
       description: '',
       message: '',
+      imageUrl:'',
+      address:'',
+      isPublic: false,
+      category:''
     }
   }
 
-  createBlueprint = (name, description) => {
-    const { username, id } = this.props.data;
-    let data = { name, description, isPublic: true, userId: id, username, category: 'House'};
+  createBlueprint = (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
+    const { username, id } = this.props.data;  
+    let data = { name, description, imageUrl, address, isPublic, userId: id, username, address, category};
     fetch('/api/blueprint/create', {
       method: 'POST',
       headers: {
@@ -37,24 +42,62 @@ class CreateBlueprint extends Component {
 
   render() {
     const { username } = this.props.data;
-    const { name, description, message } = this.state;
+    const { name, description, message, imageUrl, address, isPublic , category} = this.state;
     return (
       <div>
         <h1>Create Blueprint</h1>
         <h2>Welcome {username} !</h2>
         <h3 className="warning"> {message} </h3>
-        <Form onSubmit={() => this.createBlueprint(name, description)}>
+        <Form className="blueprint"onSubmit={() => this.createBlueprint(name, description, imageUrl, address, isPublic, category)}>
           <Form.Field>
             <label className="label"> Building Name</label>
             <input onChange={(e) => this.setState({name: e.target.value})} placeholder='Building Name'/>
           </Form.Field>
           <Form.Field>
-            <label>Address</label>
-            <input placeholder='Address' />
+            <label className="label">Address</label>
+            <input onChange={(e) => this.setState({address: e.target.value})} placeholder='Address' />
+          </Form.Field>
+          <Form.Field>
+            <label className="label">Blueprint Type</label>
+            <select
+              //value={isPublic}
+              onChange={(e) => {
+                if (e.target.value == "1") {
+                  this.setState({ isPublic: true })
+                }else if(e.target.value=="0"){
+                  this.setState({ isPublic: false })
+                }
+              }}
+              class="ui dropdown"
+            >
+              <option value=""></option>
+              <option value="1">Public</option>
+              <option value="2">Private</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label className="label">Categories</label>
+            <select
+                  onChange={(e) =>
+                  this.setState({ category: e.target.value })
+              } 
+              class="ui dropdown"
+            >
+              <option value=""></option>
+              <option value="School">School</option>
+              <option value="Home">Home</option>
+              <option value="Office">Office</option>
+              <option value="Building">Building</option>
+              <option value="Building">Other</option>
+            </select>
+          </Form.Field>
+          <Form.Field>
+            <label className="label">Image URL</label>
+            <input onChange={(e) => this.setState({imageUrl: e.target.value})} placeholder='Image url' />
           </Form.Field>
           <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
-          <Button type='submit'>Submit</Button>
-        </Form>
+            <Button type='submit'>Submit</Button>
+          </Form>
         <Link to="/home">GO TO HOME</Link>
       </div>
     );
