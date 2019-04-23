@@ -105,7 +105,7 @@ class Registration extends PureComponent {
                                 placeholder="Password"  
                                 required="required"
                             />
-                            <Button className="button" onClick={this.onSubmit}> Sign me up! </Button>
+                            <input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
                             
                             { usernameError || passwordError ? (<Message
                                 error //show error only if it exits 
