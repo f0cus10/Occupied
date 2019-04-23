@@ -14,6 +14,7 @@ class Registration extends PureComponent {
             passwordError: '',
             firstName: '',
             lastName: '',
+            incompleteError: '',
         }
     }
 
@@ -22,9 +23,19 @@ class Registration extends PureComponent {
         //when the submit button is pressed, all the errors should be cleared
         this.setState({
             usernameError: '',
-            passwordError: ''
+            passwordError: '',
+            incompleteError: '',
         })
         const { username, password, firstName, lastName } = this.state;
+
+        //Make a frontend optimization on null data
+        if (!username || !password){
+            this.setState({
+                incompleteError: "Username or Password is empty",
+            })
+            return;
+        }
+
         const data = {
             username,
             password,
@@ -59,7 +70,7 @@ class Registration extends PureComponent {
 
     render() {
         //grab the variables from the state
-        const { username, password, firstName, lastName, usernameError, passwordError } = this.state;
+        const { username, password, firstName, lastName, usernameError, passwordError, incompleteError } = this.state;
 
         //Describe an error list 
         const errList = [];
@@ -68,6 +79,10 @@ class Registration extends PureComponent {
         }
         if (passwordError){
             errList.push(passwordError);
+        }
+
+        if(incompleteError) {
+            errList.push(incompleteError);
         }
         return (
             <body>
@@ -85,7 +100,7 @@ class Registration extends PureComponent {
                             />
                             <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
                             <input 
-                                error={!!usernameError ? "true" : undefined } // the !! casts it as a boolean
+                                error={(!!usernameError || !!incompleteError) ? "true" : undefined } // the !! casts it as a boolean
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="username" type="text" 
@@ -94,7 +109,7 @@ class Registration extends PureComponent {
                                 required="required" 
                             />
                             <input
-                                error={!!passwordError ? "true": undefined }
+                                error={(!!passwordError || !!incompleteError) ? "true": undefined }
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="password" 
@@ -105,11 +120,12 @@ class Registration extends PureComponent {
                             />
                             <input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
                             
-                            { usernameError || passwordError ? (<Message
+                            { usernameError || passwordError || incompleteError ? (<Message
                                 error //show error only if it exits 
-                                header="There were some errors with your submission"
+                                header="Sign up unsuccessful" 
                                 list={errList}
-                            />) : null
+                            />
+                            ) : null
                             }
 
                             </form>
