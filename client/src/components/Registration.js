@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
-import {Input, Button, } from 'semantic-ui-react';
+import {Input, Button, Message } from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -62,6 +62,14 @@ class Registration extends PureComponent {
         //grab the variables from the state
         const { username, password, firstName, lastName, usernameError, passwordError, err } = this.state;
 
+        //Describe an error list 
+        const errList = [];
+        if (usernameError){
+            errList.push(usernameError);
+        }
+        if (passwordError){
+            errList.push(passwordError);
+        }
         return (
             <body>
                 <div className="container">
@@ -98,6 +106,14 @@ class Registration extends PureComponent {
                                 required="required"
                             />
                             <Button className="inputButton" onClick={this.onSubmit}> Sign me up! </Button>
+                            
+                            { usernameError || passwordError ? (<Message
+                                error //show error only if it exits 
+                                header="There were some errors with your submission"
+                                list={errList}
+                            />) : null
+                            }
+
                             </form>
                             <p className="message">Already have a account? <a href="/">Back to login</a></p>
                     </div>
