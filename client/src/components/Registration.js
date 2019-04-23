@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
-import {Input, Button, Message } from 'semantic-ui-react';
+import { Message, Button } from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -85,19 +85,19 @@ class Registration extends PureComponent {
                                 autoFocus="autofocus" 
                                 required={false} 
                             />
-                            <Input className="input pass transparent" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
-                            <Input
-                                error={!!usernameError} // the !! casts it as a boolean
-                                className="input pass transparent" 
+                            <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
+                            <input 
+                                error={!!usernameError ? "true" : undefined } // the !! casts it as a boolean
+                                className="input pass" 
                                 onChange={this.onChange} 
                                 name="username" type="text" 
                                 value={username} 
                                 placeholder="Username"  
                                 required="required" 
                             />
-                            <Input
-                                error={!!passwordError}
-                                className="input pass transparent" 
+                            <input
+                                error={!!passwordError ? "true": undefined }
+                                className="input pass" 
                                 onChange={this.onChange} 
                                 name="password" 
                                 type="password" 

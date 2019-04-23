@@ -56,6 +56,9 @@
   .input:invalid.input:valid {
     box-shadow: none;
   }
+  .input[error="true"] {
+    border-bottom-color: red !important;
+  }
   .pass:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset;
   }
