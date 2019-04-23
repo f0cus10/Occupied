@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
+import {Input} from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -62,8 +63,8 @@ class Registration extends PureComponent {
                     <div id="logbox">
                         <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
-                            <input 
-                                className="input pass" 
+                            <Input 
+                                className="input pass transparent" 
                                 onChange={this.onChange} 
                                 name="firstName" 
                                 type="text" value={firstName} 
@@ -71,9 +72,9 @@ class Registration extends PureComponent {
                                 autoFocus="autofocus" 
                                 required={false} 
                             />
-                            <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
-                            <input 
-                                //error={!!usernameError} // the !! casts it as a boolean
+                            <Input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
+                            <Input
+                                error={!!usernameError} // the !! casts it as a boolean
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="username" type="text" 
@@ -81,8 +82,8 @@ class Registration extends PureComponent {
                                 placeholder="Username"  
                                 required="required" 
                             />
-                            <input
-                                //error={!!passwordError}
+                            <Input
+                                error={!!passwordError}
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="password" 
@@ -91,7 +92,7 @@ class Registration extends PureComponent {
                                 placeholder="Password"  
                                 required="required"
                             />
-                            <input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
+                            <Input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
                             </form>
                             <p className="message">Already have a account? <a href="/">Back to login</a></p>
                     </div>
