@@ -11,10 +11,14 @@ const SET_AUTH = "SET_AUTH";
 const GET_WARNING = "GET_WARNING";
 const SET_WARNING = "SET_WARNING";
 
+const GET_VIEWING = "GET_VIEWING";
+const SET_VIEWING = "SET_VIEWING";
+
 const initialUser = {
   username : '',
   warning  : '',
-  auth     : false
+  auth     : false,
+  viewing  : 1
 };
 
 const axios = require('axios');
@@ -25,10 +29,15 @@ const Cookies = require('js-cookie');
  */
 export const getUser = user => ({ type: GET_USER, user });
 export const setUser = user => ({ type: SET_USER, user });
+
 export const getAuth = auth => ({ type: GET_AUTH, auth });
 export const setAuth = auth => ({ type: SET_AUTH, auth });
+
 export const getWarning = warning => ({ type: GET_WARNING, warning });
 export const setWarning = warning => ({ type: SET_WARNING, warning });
+
+export const getViewing = editing => ({ type: GET_VIEWING, editing });
+export const setViewing = editing => ({ type: SET_VIEWING, editing });
 
 export const loginAuth = (username, password) => async dispatch => {
   try {
@@ -69,6 +78,12 @@ export default function(state = initialUser, action) {
       return Object.assign({}, state, {
         warning: action.warning
       });
+    case GET_VIEWING:
+      return action.viewing;
+    case SET_VIEWING:
+      return Object.assign({}, state, {
+        viewing:  action.viewingk
+      })
     default:
       return state;
   }

@@ -4,8 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@shopify/polaris": "^3.13.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
+    "classnames": "^2.2.6",
     "js-cookie": "^2.2.0",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",

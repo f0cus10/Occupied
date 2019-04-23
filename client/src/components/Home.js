@@ -5,14 +5,11 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import "../styles/Home.css";
 import MediaQuery from 'react-responsive';
+import Modal from '../components/Modal'
 
 class Home extends Component {
   constructor(props) {
     super(props);
-  }
-  componentDidMount() {
-    console.log("this is my data:")
-    console.log(this.props.data);
   }
   render() {
     const { blueprints, id, imageUrl } = this.props.data;

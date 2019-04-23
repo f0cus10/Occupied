@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { Card, Icon, Image } from "semantic-ui-react";
 import data from "../dummydata.json";
 import { Link } from "react-router-dom";
 import '../styles/Card.css';
+import Modal from './Modal';
+import { setUser } from '../store/user';
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -10,16 +13,16 @@ class CardContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      posts: [],
+      active: false
     };
   }
 
   componentDidMount() {
     this.setState({ posts: data });
   }
-  
-  deleteBlueprint = (e) => {
-    e.preventDefault();
+
+  handleDelete = () => {
     axios.get(`/api/blueprint/delete/${this.props.id}`, { 
       headers: {
         'access-token': Cookies.get('token')
@@ -27,9 +30,31 @@ class CardContainer extends Component {
     })
     .then(res => {
       if (res.status === 201) {
+        this.setState(({ active }) => ({ active: !active }));
+      } else {
+        this.setState({ message: "ERROR DELETING COMPONENT" })
+        this.setState(({ active }) => ({ active: !active }));
       }
     })
   }
+
+  handleEdit = () => {
+    return Promise.resolve(
+      axios.get(`/api/blueprint/${this.props.id}`, { 
+        headers: {
+          'access-token': Cookies.get('token')
+        }
+      })
+      .then(res => {
+        if (res.status === 201) {
+          this.setState(({ active }) => ({ active: !active }));
+        } else {
+          this.setState({ message: "ERROR DELETING COMPONENT" })
+          this.setState(({ active }) => ({ active: !active }));
+        }
+      })
+    )
+  };
 
   render() {
     const {
@@ -64,8 +89,25 @@ class CardContainer extends Component {
               <Link to="/view">View </Link>
               { isOwner && (
                 <>
-                  <Link to="/edit"> Edit </Link>
-                  <a onClick={this.deleteBlueprint}>Delete</a>
+                  {/* <Link to="/edit"> Edit </Link> */}
+                  <Modal
+                    component={({ onClick }) => <a onClick={onClick}> Edit </a>}
+                    active={this.state.active}
+                    func={this.handleEdit}
+                    title="Occupied App"
+                    body=""
+                    id={id}
+                    refresh
+                  />
+                  <Modal
+                    component={({ onClick }) => <a onClick={onClick}> Edit </a>}
+                    active={this.state.active}
+                    func={this.handleDelete}
+                    title="Occupied App"
+                    body="Successfully Deleted!"
+                    id={id}
+                    refresh
+                  />
                 </>
               )}
             </div>
@@ -76,4 +118,17 @@ class CardContainer extends Component {
   }
 }
 
-export default CardContainer;
+const mapState = state => {
+  return {
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    refresh() {
+      dispatch(setUser(""))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(CardContainer);
