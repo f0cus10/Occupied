@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
 ::selection {
     background-color: #b5e2e7;
   }
@@ -18,7 +16,6 @@
     padding: 50px 0 50px 0;
     margin: 50px auto;
     width: 340px;
-    text-align: center;
     background-color: #fff;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -35,34 +32,31 @@
     font-weight: 300;
   }
   h1, input {
-    font-family: "Roboto", Helvetica, sans-serif;
+    font-family: "Open Sans", Helvetica, sans-serif;
   }
-  .input.input {
+  .input {
     width: 75%;
     height: 50px;
-    display: inline-block;
+    display: block;
     margin: 0 auto 15px;
     padding: 0 15px;
     border: none;
     border-bottom: 2px solid #ebebeb;
   }
-  .input:focus.input:focus {
+  .input:focus {
     outline: none;
     border-bottom-color: #589dd2 !important;
   }
-  .input:hover.input:hover {
+  .input:hover {
     border-bottom-color: #dcdcdc;
   }
-  .input:invalid.input:valid {
+  .input:invalid {
     box-shadow: none;
-  }
-  .input[error="true"] {
-    border-bottom-color: red !important;
   }
   .pass:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset;
   }
-  .button.button.button {
+  .inputButton {
     position: relative;
     width: 85%;
     height: 50px;
@@ -79,17 +73,17 @@
     -moz-box-shadow: 0 5px 0 #589dd2;
     box-shadow: 0 5px 0 #589dd2;
   }
-  .button:hover.button:hover.button:hover {
+  .inputButton:hover {
     top: 2px;
     -webkit-box-shadow: 0 3px 0 #589dd2;
     -moz-box-shadow: 0 3px 0 #589dd2;
     box-shadow: 0 3px 0 #589dd2;
   }
-  .button:active.button:active.button:active {
+  .inputButton:active {
     top: 5px;
     box-shadow: none;
   }
-  .button:focus.button:focus.button:focus {
+  .inputButton:focus {
     outline: none;
   }
   .message {

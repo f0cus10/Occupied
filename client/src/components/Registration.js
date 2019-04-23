@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
-import { Message, Button } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -76,7 +76,7 @@ class Registration extends PureComponent {
                     <div id="logbox">
                         <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
-                            <Input 
+                            <input 
                                 className="input pass transparent" 
                                 onChange={this.onChange} 
                                 name="firstName" 
