@@ -14,10 +14,17 @@ const SET_WARNING = "SET_WARNING";
 const GET_VIEWING = "GET_VIEWING";
 const SET_VIEWING = "SET_VIEWING";
 
+const GET_MODALCONTENT = "GET_MODALCONTENT";
+const SET_MODALCONTENT = "SET_MODALCONTENT";
+
 const initialUser = {
   username : '',
   warning  : '',
   auth     : false,
+  modal    : {
+    title : "",
+    body  : ""
+  },
   viewing  : 1
 };
 
@@ -38,6 +45,9 @@ export const setWarning = warning => ({ type: SET_WARNING, warning });
 
 export const getViewing = editing => ({ type: GET_VIEWING, editing });
 export const setViewing = editing => ({ type: SET_VIEWING, editing });
+
+export const getModalContent = content => ({ type: GET_MODALCONTENT, content });
+export const setModalContent = content => ({ type: SET_MODALCONTENT, content });
 
 export const loginAuth = (username, password) => async dispatch => {
   try {
@@ -82,7 +92,13 @@ export default function(state = initialUser, action) {
       return action.viewing;
     case SET_VIEWING:
       return Object.assign({}, state, {
-        viewing:  action.viewingk
+        viewing:  action.viewing
+      })
+    case GET_MODALCONTENT:
+      return action.content;
+    case SET_MODALCONTENT:
+      return Object.assign({}, state, {
+        modal:  action.content
       })
     default:
       return state;

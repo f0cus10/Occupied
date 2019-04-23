@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Button, Modal, TextContainer } from "@shopify/polaris";
 
-// TODO pass in two functions one for handleFunc and the other for when you click th
-export default class ModalCard extends React.Component {
+//TODO fix broken active state here
+class ModalCard extends React.Component {
   state = {
     active: false
   };
@@ -16,8 +17,8 @@ export default class ModalCard extends React.Component {
   }
 
   render() {
-    const { message } = this.state;
-    const { active, title, body, func, component: Component } = this.props;
+    const { active, modal, func, component: Component } = this.props;
+    const { title, body } = modal;
     return (
       <div>
         { Component ? (
@@ -34,7 +35,7 @@ export default class ModalCard extends React.Component {
           <Modal.Section>
             <TextContainer>
               <p>
-              { message ? message : body }
+                { body }
               </p>
             </TextContainer>
           </Modal.Section>
@@ -43,3 +44,16 @@ export default class ModalCard extends React.Component {
     );
   }
 }
+
+const mapState = state => {
+  return {
+    modal: state.user.modal
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+  }
+}
+
+export default connect(mapState, mapDispatch)(ModalCard);

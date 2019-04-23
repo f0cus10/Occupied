@@ -29,7 +29,7 @@ class Home extends Component {
                 </button>
               </Link>
             </div>
-            <BlueprintGrid blueprints={blueprints} />
+            <BlueprintGrid ownerIdProp={id} blueprints={blueprints} />
           </div>
         </MediaQuery>
         <MediaQuery query="(min-width: 768px)">

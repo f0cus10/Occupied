@@ -5,7 +5,8 @@ import data from "../dummydata.json";
 import { Link } from "react-router-dom";
 import '../styles/Card.css';
 import Modal from './Modal';
-import { setUser } from '../store/user';
+import EditModal from './EditModal';
+import { setModalContent } from '../store/user';
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -30,30 +31,30 @@ class CardContainer extends Component {
     })
     .then(res => {
       if (res.status === 201) {
+        this.props.setModal('OCCUPIED - DELETE', 'SUCCESSFULLY DELETED');
         this.setState(({ active }) => ({ active: !active }));
       } else {
-        this.setState({ message: "ERROR DELETING COMPONENT" })
+        this.props.setModal('OCCUPIED - DELETE', 'AN ERROR OCCURED WHILE DELETING');
         this.setState(({ active }) => ({ active: !active }));
       }
     })
   }
 
   handleEdit = () => {
-    return Promise.resolve(
-      axios.get(`/api/blueprint/${this.props.id}`, { 
-        headers: {
-          'access-token': Cookies.get('token')
-        }
-      })
-      .then(res => {
-        if (res.status === 201) {
-          this.setState(({ active }) => ({ active: !active }));
-        } else {
-          this.setState({ message: "ERROR DELETING COMPONENT" })
-          this.setState(({ active }) => ({ active: !active }));
-        }
-      })
-    )
+    axios.get(`/api/blueprint/${this.props.id}`, { 
+      headers: {
+        'access-token': Cookies.get('token')
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        this.setState(({ active }) => ({ active: !active }));
+        this.props.setModal('Occupied - EDIT', <EditModal data={res.data} />);
+      } else {
+        this.setState(({ active }) => ({ active: !active }));
+        this.props.setModal('Occupied - EDIT', 'An error has occurred...');
+      }
+    })
   };
 
   render() {
@@ -79,6 +80,8 @@ class CardContainer extends Component {
               <span className="date">{time}</span>
             </Card.Meta>
             <Card.Description>{description}</Card.Description>
+            <Card.Description>Category: {category}</Card.Description>
+            <Card.Description>{address}</Card.Description>
           </Card.Content>
           <Card.Content extra>
             <a>
@@ -91,20 +94,20 @@ class CardContainer extends Component {
                 <>
                   {/* <Link to="/edit"> Edit </Link> */}
                   <Modal
-                    component={({ onClick }) => <a onClick={onClick}> Edit </a>}
+                    component={({ onClick }) => <a onClick={onClick}> Delete </a>}
                     active={this.state.active}
-                    func={this.handleEdit}
-                    title="Occupied App"
-                    body=""
+                    func={this.handleDelete}
+                    title="Occupied App - Delete"
+                    body="Successfully Deleted!"
                     id={id}
                     refresh
                   />
                   <Modal
                     component={({ onClick }) => <a onClick={onClick}> Edit </a>}
                     active={this.state.active}
-                    func={this.handleDelete}
-                    title="Occupied App"
-                    body="Successfully Deleted!"
+                    func={this.handleEdit}
+                    title="Occupied App - Edit"
+                    body="Welcome to Edit"
                     id={id}
                     refresh
                   />
@@ -125,8 +128,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    refresh() {
-      dispatch(setUser(""))
+    setModal: (title,body) => {
+      const content = { title, body };
+      dispatch(setModalContent(content));
     }
   }
 }
