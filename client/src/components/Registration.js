@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
+import { Message, Button } from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -19,6 +20,11 @@ class Registration extends PureComponent {
 
     onSubmit = async (e) => {
         e.preventDefault();
+        //when the submit button is pressed, all the errors should be cleared
+        this.setState({
+            usernameError: '',
+            passwordError: ''
+        })
         const { username, password, firstName, lastName } = this.state;
         const data = {
             username,
@@ -56,14 +62,22 @@ class Registration extends PureComponent {
         //grab the variables from the state
         const { username, password, firstName, lastName, usernameError, passwordError, err } = this.state;
 
+        //Describe an error list 
+        const errList = [];
+        if (usernameError){
+            errList.push(usernameError);
+        }
+        if (passwordError){
+            errList.push(passwordError);
+        }
         return (
             <body>
                 <div className="container">
                     <div id="logbox">
                         <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
-                            <input 
-                                className="input pass" 
+                            <Input 
+                                className="input pass transparent" 
                                 onChange={this.onChange} 
                                 name="firstName" 
                                 type="text" value={firstName} 
@@ -91,7 +105,15 @@ class Registration extends PureComponent {
                                 placeholder="Password"  
                                 required="required"
                             />
-                            <input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
+                            <Button className="button" onClick={this.onSubmit}> Sign me up! </Button>
+                            
+                            { usernameError || passwordError ? (<Message
+                                error //show error only if it exits 
+                                header="There were some errors with your submission"
+                                list={errList}
+                            />) : null
+                            }
+
                             </form>
                             <p className="message">Already have a account? <a href="/">Back to login</a></p>
                     </div>
