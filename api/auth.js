@@ -57,7 +57,7 @@ router.post('/signup', async (req, res) => {
         //edit standard error
         const resObject = {
           registered: false,
-          errors: [{path: "user", message:"Username already exists"}]
+          errors: [{path: "username", message:"Username already exists"}]
         }
         res.json(resObject);
       }
