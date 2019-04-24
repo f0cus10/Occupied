@@ -17,8 +17,8 @@ class ModalCard extends React.Component {
   }
 
   render() {
-    const { active, modal, func, component: Component } = this.props;
-    const { title, body } = modal;
+    const { bodyComp, active, modal, func, component: Component } = this.props;
+    const { title, body, data } = modal;
     return (
       <div>
         { Component ? (
@@ -34,9 +34,15 @@ class ModalCard extends React.Component {
         >
           <Modal.Section>
             <TextContainer>
-              <p>
-                { body }
-              </p>
+              { data.id ? (
+                <>
+                  {bodyComp}
+                </>
+              ) : (
+                <p>
+                  { body }
+                </p>
+              )}
             </TextContainer>
           </Modal.Section>
         </Modal>

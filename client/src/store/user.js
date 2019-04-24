@@ -23,7 +23,8 @@ const initialUser = {
   auth     : false,
   modal    : {
     title : "",
-    body  : ""
+    body  : "",
+    data  : false
   },
   viewing  : 1
 };
