@@ -23,6 +23,7 @@ class BlueprintGrid extends Component {
             status={post.status}
             time={post.time}
             id={post.id}
+            ownerIdProp={ownerIdProp}
             isOwner={isOwner}
           />
         )
