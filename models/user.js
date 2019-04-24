@@ -65,7 +65,15 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     hooks: {
       beforeCreate:function(user) {
-        user.password = bcrypt.hashSync(user.password, 10);
+        return new Promise((resolve, reject) => {
+          bcrypt.hash(user.password, 10).then((hashed) => {
+            if(hashed === null){
+              reject("Password cannot be generated");
+            }
+            user.password = hashed;
+            resolve(user);
+          })
+        })
       }, 
       beforeBulkCreate:function(users) {
         users.map(u => {
