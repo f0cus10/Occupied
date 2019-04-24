@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import axios from 'axios';
+import { Message } from 'semantic-ui-react';
 import '../styles/Registration.css';
 
 class Registration extends PureComponent {
@@ -13,13 +14,28 @@ class Registration extends PureComponent {
             passwordError: '',
             firstName: '',
             lastName: '',
-            err: ''
+            incompleteError: '',
         }
     }
 
     onSubmit = async (e) => {
         e.preventDefault();
+        //when the submit button is pressed, all the errors should be cleared
+        this.setState({
+            usernameError: '',
+            passwordError: '',
+            incompleteError: '',
+        })
         const { username, password, firstName, lastName } = this.state;
+
+        //Make a frontend optimization on null data
+        if (!username || !password){
+            this.setState({
+                incompleteError: "Username or Password is empty",
+            })
+            return;
+        }
+
         const data = {
             username,
             password,
@@ -54,16 +70,27 @@ class Registration extends PureComponent {
 
     render() {
         //grab the variables from the state
-        const { username, password, firstName, lastName, usernameError, passwordError, err } = this.state;
+        const { username, password, firstName, lastName, usernameError, passwordError, incompleteError } = this.state;
 
+        //Describe an error list 
+        const errList = [];
+        if (usernameError){
+            errList.push(usernameError);
+        }
+        if (passwordError){
+            errList.push(passwordError);
+        }
+
+        if(incompleteError) {
+            errList.push(incompleteError);
+        }
         return (
             <body>
                 <div className="container">
                     <div id="logbox">
-                        <h2> {err} </h2>
                         <form id="signup" method="post" action="/signup">
                             <input 
-                                className="input pass" 
+                                className="input pass transparent" 
                                 onChange={this.onChange} 
                                 name="firstName" 
                                 type="text" value={firstName} 
@@ -73,7 +100,7 @@ class Registration extends PureComponent {
                             />
                             <input className="input pass" onChange={this.onChange} name="lastName" type="text" value={lastName} placeholder="Last Name" required={false} />
                             <input 
-                                //error={!!usernameError} // the !! casts it as a boolean
+                                error={(!!usernameError || !!incompleteError) ? "true" : undefined } // the !! casts it as a boolean
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="username" type="text" 
@@ -82,7 +109,7 @@ class Registration extends PureComponent {
                                 required="required" 
                             />
                             <input
-                                //error={!!passwordError}
+                                error={(!!passwordError || !!incompleteError) ? "true": undefined }
                                 className="input pass" 
                                 onChange={this.onChange} 
                                 name="password" 
@@ -92,6 +119,15 @@ class Registration extends PureComponent {
                                 required="required"
                             />
                             <input className="inputButton" type="submit" onClick={this.onSubmit} value="Sign me up!" />
+                            
+                            { usernameError || passwordError || incompleteError ? (<Message
+                                error //show error only if it exits 
+                                header="Sign up unsuccessful" 
+                                list={errList}
+                            />
+                            ) : null
+                            }
+
                             </form>
                             <p className="message">Already have a account? <a href="/">Back to login</a></p>
                     </div>
