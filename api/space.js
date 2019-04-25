@@ -33,7 +33,7 @@ router.post('/occupy', async (req, res, next) => {
 
 /**
  * @param spaceID
- * @returns {Space}
+ * @returns [Space, Blueprint]
  */
 async function findBlueprint(spaceID){
   // find the space through an async call
@@ -42,18 +42,14 @@ async function findBlueprint(spaceID){
       space_id: spaceID,
     }
   })
-  //return null if not found
-  if (!space){
-    return null;
-  }
   //wait for the blueprint
   const blueprint = await space.getBlueprint();
   return blueprint;
 }
 
 /**
- * @param {username}
- * @returns {User}
+ * @param username
+ * @returns User
  */
 async function findUser(username){
   const user = await User.findOne({
@@ -80,10 +76,23 @@ router.post('/occupy', async(req, res) => {
     })
   }
   try{
-    const blueprint = findBlueprint(spaceId); //async call
-    const user = findUser(username);
-    await blueprint;
-    await user;
+    Promise.all([
+      findBlueprint(spaceId),
+      findUser(username)
+    ])
+    .then(async (values) => {
+      //TODO: null check
+      // values = [Blueprint, User]
+      const result = await values[0].hasUser(values[1]);
+      if (result){
+        const updatePromise = Space.update({ occupied, username }, {where: {space_id: spaceId }});
+        res.json({
+          occupied: true,
+          message: "Successfully Occupied",
+        })
+        await updatePromise;
+      }
+    })
   } catch{
     res.json({
       occupied: false,

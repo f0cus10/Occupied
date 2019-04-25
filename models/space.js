@@ -59,9 +59,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'blueprintId',
     });
     // current user that occupies space
-    Space.belongsTo(models.User, {
-      foreignKey: 'occupantId',
-    });
+    Space.belongsTo(models.User);
   };
 
   return Space;
