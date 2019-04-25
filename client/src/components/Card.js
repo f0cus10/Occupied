@@ -57,16 +57,16 @@ class CardContainer extends Component {
     })
   };
 
-  handleUpdate = (name, description, category) => {
+  handleUpdate = (name, description, category, address, imageUrl, isPublic) => {
     axios.post(`/api/blueprint/edit`, {
       userId: this.props.ownerIdProp,
       blueprintId: this.props.id,
       description,
       name,
-      category
-      // address: '',
-      // imageUrl: '',
-      // isPublic: false
+      category,
+      address,
+      imageUrl,
+      isPublic
     }, {
       headers: {'access-token': Cookies.get('token')}
     })
@@ -129,7 +129,7 @@ class CardContainer extends Component {
                   />
                   <Modal
                     component={({ onClick }) => <a onClick={onClick}> Edit </a>}
-                    bodyComp={<EditModal handleUpdate={this.handleUpdate} data={data} />}
+                    bodyComp={<EditModal handleUpdate={this.handleUpdate} data={data} uniqueCategories={this.props.uniqueCategories} />}
                     active={this.state.active}
                     func={this.handleEdit}
                     title="Occupied App - Edit"

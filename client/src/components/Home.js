@@ -12,7 +12,7 @@ class Home extends Component {
     super(props);
   }
   render() {
-    const { blueprints, id, imageUrl } = this.props.data;
+    const { blueprints, id, imageUrl, categories } = this.props.data;
     return (
       <>
         <MediaQuery query="(max-width: 767px)">
@@ -29,7 +29,7 @@ class Home extends Component {
                 </button>
               </Link>
             </div>
-            <BlueprintGrid ownerIdProp={id} blueprints={blueprints} />
+            <BlueprintGrid ownerIdProp={id} blueprints={blueprints} uniqueCategories={categories} />
           </div>
         </MediaQuery>
         <MediaQuery query="(min-width: 768px)">
@@ -67,7 +67,7 @@ class Home extends Component {
               )}
             </Grid.Column>
             <Grid.Column width={13}>
-              <BlueprintGrid ownerIdProp={id} blueprints={blueprints} />
+              <BlueprintGrid ownerIdProp={id} blueprints={blueprints} uniqueCategories={categories} />
             </Grid.Column>
           </Grid.Row>
         </Grid>

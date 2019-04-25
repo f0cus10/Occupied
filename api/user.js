@@ -24,7 +24,7 @@ router.get('/all', async (req, res, next) => {
 /**
   Gets username information from currently logged in user solely from their JWT token
  */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   const { username } = req.decoded;
   try {
     const found = await User.findOne({
@@ -35,29 +35,13 @@ router.get('/', async (req, res, next) => {
         model: Space
       }]
     })
+    const categories = found.blueprints.map(m => m.category).filter((val, idx, arr) => arr.indexOf(val) === idx);
+    found.dataValues.categories = categories;
     res.send(found);
   } catch (err) {
     console.error(err);
     res.sendStatus(404);
   }
-  // console.log('username')
-  // console.log(username)
-  // try {
-  //   const found = await User.findOne({ 
-  //     where: { username },
-  //     include: [{
-  //       model: Blueprint
-  //     }, {
-  //       model: Space
-  //     }]
-  //   });
-  //   if (found) {
-  //     res.send(found)
-  //   }
-  // } catch (err) {
-  //   res.sendStatus(404);
-  //   console.error(err);
-  // }
 })
 
 /**
