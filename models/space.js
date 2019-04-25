@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
     space_id: {
       type: DataTypes.UUID,
+      primaryKey: true,
       defaultValue: DataTypes.UUIDV1,
       validate: {
         isUUID:{
@@ -58,7 +59,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'blueprintId',
     });
     // current user that occupies space
-    Space.belongsTo(models.User);
+    Space.belongsTo(models.User, {
+      foreignKey: 'occupantId',
+    });
   };
 
   return Space;

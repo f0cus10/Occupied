@@ -45,9 +45,35 @@ router.post('/occupy', async(req, res) => {
       message: "Incomplete input",
     })
   }
-  // find space
-  // find blueprint
-  // find if user is part of blueprint
+  try{
+    const spacePromise = Space.findOne({
+      where: {
+        space_id: spaceId,
+      }
+    });
+
+    const userPromise = User.findOne({
+      where: {
+        username
+      }
+    });
+
+    const space = await spacePromise;
+    if(!space){
+      //return that it doesn't exist
+      res.json({
+        occupied: false,
+        message: "Space not found",
+      });
+    }
+    //else, ask the space to give us a blueprint
+  } catch{
+    res.json({
+      occupied: false,
+      message: "Unknown Error",
+    })
+  }
+
 })
 /**
   Get's all spaces
