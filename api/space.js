@@ -32,6 +32,24 @@ router.post('/occupy', async (req, res, next) => {
 })
 
 /**
+ * @param HTTP Request with the space id in the request body
+ * @returns {occupied: Boolean, message: null or String}  
+ */
+router.post('/occupy', async(req, res) => {
+  const { spaceId } = req.body;
+  const { username } = req.decoded;
+  //validate inputs
+  if (!spaceId || !username) {
+    res.json({
+      occupied: false,
+      message: "Incomplete input",
+    })
+  }
+  // find space
+  // find blueprint
+  // find if user is part of blueprint
+})
+/**
   Get's all spaces
  */
 router.get('/all', async (req, res, next) => {
