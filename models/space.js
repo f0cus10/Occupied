@@ -3,9 +3,17 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
-        // allowNull: false,
-      }
+        //Letters and Numbers only
+        isAlpha: {
+          args: true,
+          msg: "The name can only contain letters and numbers",
+        },
+        //Cannot be empty string
+        notEmpty: {
+          args: true,
+          msg: "The name cannot be empty",
+        }
+      },
     },
 
     description: {
