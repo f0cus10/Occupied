@@ -3,31 +3,112 @@ const { Space, User, Blueprint } = require('../models');
 const { Op } = require('sequelize');
 
 /**
-  * @param {boolean} occupied - the occupied status
-  * @returns status 201 or 404
-  */
- // todo: first check if the user is a member of that blueprint space
-router.post('/occupy', async (req, res, next) => {
-  const { userId, spaceId, occupied } = req.body;
-  try {
-    const foundUser = User.findOne({
-      where: {
-        id: userId
-      }
-    });
-    const foundSpace = Space.findOne({
-      where: {
-        id: spaceId
-      }
-    });
-    if (foundUser && foundSpace) {
-      await Space.update({ occupied, userId }, { where: { id: spaceId }});
-      res.sendStatus(201);
-    } else {
-      res.status(404).send('can\'t find user or space')
+ * @param spaceID
+ * @returns [Space, Blueprint]
+ */
+async function findBlueprint(spaceID){
+  // find the space through an async call
+  const space = await Space.findOne({
+    where: {
+      space_id: spaceID,
     }
+  })
+  //wait for the blueprint
+  const blueprint = await space.getBlueprint();
+  return blueprint;
+}
+
+/**
+ * @param username
+ * @returns User
+ */
+async function findUser(username){
+  const user = await User.findOne({
+    where: {
+      username
+    }
+  })
+
+  return user;
+}
+
+/**
+ * @param HTTP Request with the space id in the request body
+ * @returns {occupied: Boolean, message: null or String}  
+ */
+router.post('/occupy', async(req, res) => {
+  const { spaceId } = req.body;
+  const { username } = req.decoded;
+  //validate inputs
+  if (!spaceId || !username) {
+    res.json({
+      occupied: false,
+      message: "Incomplete input",
+    })
+  }
+  try{
+    Promise.all([
+      findBlueprint(spaceId),
+      findUser(username)
+    ])
+    .then(async (values) => {
+      //TODO: null check
+      // values = [Blueprint, User]
+      const result = await values[0].hasUser(values[1]);
+      if (result){
+        const updatePromise = Space.update({ occupied: true, userId: values[1].id }, {where: {space_id: spaceId }});
+        res.json({
+          occupied: true,
+          message: "Successfully Occupied",
+        })
+        await updatePromise;
+      }
+    })
   } catch (err) {
-    console.error(err);
+    res.statusCode(404).json({
+      occupied: false,
+      message: err,
+    })
+  }
+})
+
+/**
+ * This endpoint is called when the user is finished occupying a space
+ * @param HTTP Request with the space id in the request body
+ * @returns {occupied: Boolean, message: null or String}  
+ */
+router.post('/finished', async (req, res) => {
+  const { spaceId } = req.body;
+  const { username } = req.decoded;
+  if (!spaceId || !username) {
+    res.json({
+      occupied: false,
+      message: "Incomplete input",
+    })
+  }
+  try{
+    Promise.all([
+      findBlueprint(spaceId),
+      findUser(username)
+    ])
+    .then(async (values) => {
+      //TODO: null check
+      // values = [Blueprint, User]
+      const result = await values[0].hasUser(values[1]);
+      if (result){
+        const updatePromise = Space.update({ occupied: false, userId: null }, {where: {space_id: spaceId }});
+        res.json({
+          occupied: false,
+          message: "Successfully Unoccupied",
+        })
+        await updatePromise;
+      }
+    })
+  } catch (err) {
+    res.statusCode(404).json({
+      occupied: true,
+      message: err,
+    })
   }
 })
 

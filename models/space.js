@@ -1,21 +1,37 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
+    space_id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV1,
+      validate: {
+        isUUID:{
+          args: 1,
+          msg: "Must be a valid UUIDv1",
+        },
+      },
+    },
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
-        // allowNull: false,
-      }
+        //Cannot be empty string
+        notEmpty: {
+          args: true,
+          msg: "The name cannot be empty",
+        }
+      },
     },
 
     description: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
     },
 
+    //TODO: Add more depth to category
     category: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
     },
 
     occupied: {
@@ -25,7 +41,13 @@ module.exports = (sequelize, DataTypes) => {
 
     imageUrl: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
+      validate: {
+        isUrl: {
+          args: true,
+          msg: "Must be a valid URL",
+        }
+      }
     }
   }, {
     timestamps: false
