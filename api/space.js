@@ -80,28 +80,10 @@ router.post('/occupy', async(req, res) => {
     })
   }
   try{
-    const spacePromise = Space.findOne({
-      where: {
-        space_id: spaceId,
-      }
-    });
-
-    const userPromise = User.findOne({
-      where: {
-        username
-      }
-    });
-
-    const space = await spacePromise;
-    if(!space){
-      //return that it doesn't exist
-      res.json({
-        occupied: false,
-        message: "Space not found",
-      });
-    }
-    //else, ask the space to give us a blueprint
-    space.getBlueprint()
+    const blueprint = findBlueprint(spaceId); //async call
+    const user = findUser(username);
+    await blueprint;
+    await user;
   } catch{
     res.json({
       occupied: false,
