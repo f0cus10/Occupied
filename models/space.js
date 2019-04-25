@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
     name: {
@@ -21,9 +22,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: ""
     },
 
+    //TODO: Add more depth to category
     category: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
     },
 
     occupied: {
@@ -33,7 +35,13 @@ module.exports = (sequelize, DataTypes) => {
 
     imageUrl: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "",
+      validate: {
+        isUrl: {
+          args: true,
+          msg: "Must be a valid URL",
+        }
+      }
     }
   }, {
     timestamps: false
