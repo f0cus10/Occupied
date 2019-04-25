@@ -52,6 +52,20 @@ async function findBlueprint(spaceID){
 }
 
 /**
+ * @param {username}
+ * @returns {User}
+ */
+async function findUser(username){
+  const user = await User.findOne({
+    where: {
+      username
+    }
+  })
+
+  return user;
+}
+
+/**
  * @param HTTP Request with the space id in the request body
  * @returns {occupied: Boolean, message: null or String}  
  */
