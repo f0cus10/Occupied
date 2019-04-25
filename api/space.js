@@ -3,35 +3,6 @@ const { Space, User, Blueprint } = require('../models');
 const { Op } = require('sequelize');
 
 /**
-  * @param {boolean} occupied - the occupied status
-  * @returns status 201 or 404
-  */
- // todo: first check if the user is a member of that blueprint space
-router.post('/occupy', async (req, res, next) => {
-  const { userId, spaceId, occupied } = req.body;
-  try {
-    const foundUser = User.findOne({
-      where: {
-        id: userId
-      }
-    });
-    const foundSpace = Space.findOne({
-      where: {
-        id: spaceId
-      }
-    });
-    if (foundUser && foundSpace) {
-      await Space.update({ occupied, userId }, { where: { id: spaceId }});
-      res.sendStatus(201);
-    } else {
-      res.status(404).send('can\'t find user or space')
-    }
-  } catch (err) {
-    console.error(err);
-  }
-})
-
-/**
  * @param spaceID
  * @returns [Space, Blueprint]
  */
@@ -100,6 +71,8 @@ router.post('/occupy', async(req, res) => {
     })
   }
 })
+
+
 /**
   Get's all spaces
  */
