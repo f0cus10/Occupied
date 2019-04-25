@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
-    spaceID: {
+    space_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       validate: {
