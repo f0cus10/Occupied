@@ -32,6 +32,26 @@ router.post('/occupy', async (req, res, next) => {
 })
 
 /**
+ * @param spaceID
+ * @returns {Space}
+ */
+async function findBlueprint(spaceID){
+  // find the space through an async call
+  const space = await Space.findOne({
+    where: {
+      space_id: spaceID,
+    }
+  })
+  //return null if not found
+  if (!space){
+    return null;
+  }
+  //wait for the blueprint
+  const blueprint = await space.getBlueprint();
+  return blueprint;
+}
+
+/**
  * @param HTTP Request with the space id in the request body
  * @returns {occupied: Boolean, message: null or String}  
  */
@@ -67,13 +87,13 @@ router.post('/occupy', async(req, res) => {
       });
     }
     //else, ask the space to give us a blueprint
+    space.getBlueprint()
   } catch{
     res.json({
       occupied: false,
       message: "Unknown Error",
     })
   }
-
 })
 /**
   Get's all spaces
