@@ -41,30 +41,37 @@ class ViewBlueprint extends Component {
       });
   }
 
-  handleSort() {
-    if (this.state.category == "Categories") {
+  handleSort = e => {
+    if (e.target.value == "Categories") {
       this.handleSortByAll();
     } else {
-      this.handleSortByCategory(this.state.category);
+      this.handleSortByCategory(e.target.value);
     }
-  }
+  };
 
-  handleSortByCategory(category) {
+  handleSortByCategory = category => {
     const { data } = this.props;
     const { username, id } = data;
     const { spaces, sortByCategory } = this.state;
+
+    console.log(spaces);
+
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
       if (space.category == category) {
-        categories.push(space.category);
+        categories.push(space);
       }
     });
+    console.log(categories);
+
     dict[category] = categories;
     categories.sort();
 
+    console.log(dict);
+
     this.setState({ sortByCategory: dict });
-  }
+  };
 
   handleSortByAll() {
     const { data } = this.props;
@@ -141,9 +148,8 @@ class ViewBlueprint extends Component {
                   <select
                     onChange={e => {
                       this.setState({ category: e.target.value });
-                      this.handleSort();
+                      this.handleSort(e);
                     }}
-                    value={this.state.category}
                     name="one"
                     className="dropdown-select"
                     text="Sort By"
