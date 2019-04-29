@@ -41,6 +41,7 @@ function ProtectedRoute({ component: Component }) {
         <Component data={data} />
       </>)
     } else {
+      Cookies.remove('token');
       return (<Redirect to="/" />)
     }
   } else {

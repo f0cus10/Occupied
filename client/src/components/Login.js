@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAuth, setWarning, setAuth } from '../store';
 import Cookies from 'js-cookie';
+import Modal from '../components/Modal';
+import { DisplayText } from '@shopify/polaris';
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -22,7 +24,7 @@ class Login extends Component {
 
     return (
       <div className="login-page">
-        <h1> Occupied Login </h1>
+        <DisplayText size="extraLarge"> Occupied Login </DisplayText>
         <div className="form">
           <h2> {warning} </h2>
           <form className="register-form">

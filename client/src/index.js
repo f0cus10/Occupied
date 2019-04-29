@@ -4,13 +4,18 @@ import "./index.css";
 import App from "./App";
 import store from "./store";
 import { Provider } from "react-redux";
+import { AppProvider } from "@shopify/polaris";
 import * as serviceWorker from "./serviceWorker";
+
 import "bootstrap/dist/css/bootstrap.css";
+import "@shopify/polaris/styles.css"
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <AppProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </AppProvider>,
   document.getElementById("root")
 );
 

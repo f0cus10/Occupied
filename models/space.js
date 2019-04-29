@@ -1,25 +1,45 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Space = sequelize.define(
-    "space",
-    {
-      name: {
-        type: DataTypes.STRING,
-        validate: {
-          notEmpty: true
-          // allowNull: false,
+  const Space = sequelize.define('space', {
+    space_id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV1,
+      validate: {
+        isUUID:{
+          args: 1,
+          msg: "Must be a valid UUIDv1",
+        },
+      },
+    },
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        //Cannot be empty string
+        notEmpty: {
+          args: true,
+          msg: "The name cannot be empty",
         }
       },
+    },
 
-      description: {
-        type: DataTypes.STRING,
-        defaultValue: ""
-      },
+    description: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
+
+    //TODO: Add more depth to category
+    category: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+    },
 
       category: {
         type: DataTypes.STRING,
         defaultValue: ""
       },
 
+<<<<<<< HEAD
       occupied: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
@@ -32,6 +52,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false
+=======
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: "",
+      validate: {
+        isUrl: {
+          args: true,
+          msg: "Must be a valid URL",
+        }
+      }
+>>>>>>> c45c6517df82c244bf3b5c5252170807acd67824
     }
   );
 
@@ -45,4 +76,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return Space;
+<<<<<<< HEAD
 };
+=======
+}
+>>>>>>> c45c6517df82c244bf3b5c5252170807acd67824

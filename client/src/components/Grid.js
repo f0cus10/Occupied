@@ -7,7 +7,7 @@ class BlueprintGrid extends Component {
     super(props);
   }
   render() {
-    const { blueprints, ownerIdProp } = this.props;
+    const { blueprints, ownerIdProp, uniqueCategories } = this.props;
     let cards;
     if (blueprints) {
       cards = blueprints.map(post => {
@@ -23,6 +23,8 @@ class BlueprintGrid extends Component {
             status={post.status}
             time={post.time}
             id={post.id}
+            uniqueCategories={uniqueCategories}
+            ownerIdProp={ownerIdProp}
             isOwner={isOwner}
           />
         )

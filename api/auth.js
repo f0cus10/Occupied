@@ -57,7 +57,7 @@ router.post('/signup', async (req, res) => {
         //edit standard error
         const resObject = {
           registered: false,
-          errors: [{path: "user", message:"Username already exists"}]
+          errors: [{path: "username", message:"Username already exists"}]
         }
         res.json(resObject);
       }
@@ -72,17 +72,21 @@ router.post('/signup', async (req, res) => {
             }
             return res.json(resObject);
           }
-          const newUser = await User.create({
+          const newUserPromise = User.create({
             username: req.body.username,
             password: req.body.password,
             description: req.body.description,
           });
-          console.log(newUser.get({plain: true}));
+          
           const resObject = {
             registered: true,
             errors:[{path:null, message: null}]
           }
           res.json(resObject);
+
+          //Defer async/await hell
+          const newUser = await newUserPromise;
+          console.log(newUser.get({plain: true}))
         }
         catch (err){
           //There has been an error

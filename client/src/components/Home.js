@@ -5,17 +5,14 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import "../styles/Home.css";
 import MediaQuery from 'react-responsive';
+import Modal from '../components/Modal'
 
 class Home extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount() {
-    console.log("this is my data:")
-    console.log(this.props.data);
-  }
   render() {
-    const { blueprints, id, imageUrl } = this.props.data;
+    const { blueprints, id, imageUrl, categories } = this.props.data;
     return (
       <>
         <MediaQuery query="(max-width: 767px)">
@@ -32,7 +29,7 @@ class Home extends Component {
                 </button>
               </Link>
             </div>
-            <BlueprintGrid blueprints={blueprints} />
+            <BlueprintGrid ownerIdProp={id} blueprints={blueprints} uniqueCategories={categories} />
           </div>
         </MediaQuery>
         <MediaQuery query="(min-width: 768px)">
@@ -70,7 +67,7 @@ class Home extends Component {
               )}
             </Grid.Column>
             <Grid.Column width={13}>
-              <BlueprintGrid ownerIdProp={id} blueprints={blueprints} />
+              <BlueprintGrid ownerIdProp={id} blueprints={blueprints} uniqueCategories={categories} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
