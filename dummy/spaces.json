@@ -4,7 +4,7 @@
     "category": "Classroom",
     "description": "Empty classroom to reserve..",
     "occupied": false,
-    "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG",
+    "imageUrl": "https://www.tes.com/tesv2/files/styles/news_article_ml_x2/public/media/image/2018-08/Empty%20classroom%20-%20primary.jpg?h=9e499333&itok=MTrkesaG",
     "blueprintId": 3
   },
   {
@@ -12,7 +12,63 @@
     "category": "Bathroom",
     "description": " thi sis a bathroom",
     "occupied": false,
-    "imageUrl": "http://marc.hunter.cuny.edu/sites/default/files/Steve.JPG",
+    "imageUrl": "https://kingfisher.scene7.com/is/image/Kingfisher/Category_Image_Bathroom_Suites?$PROMO_460_460$",
     "blueprintId": 3
+  },
+  {
+    "name": "Place1",
+    "imageUrl": "https://kingfisher.scene7.com/is/image/Kingfisher/Category_Image_Bathroom_Suites?$PROMO_460_460$",
+    "category": "Bathroom",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place2",
+    "imageUrl": "https://ace.fsu.edu/sites/g/files/upcbnu296/files/Study%20Room%20w%20Interactive%20White%20Board.JPG",
+    "category": "Study Room",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place3",
+    "imageUrl": "https://lda.lowes.com/is/image/Lowes/content-panel-desktop?src=Lowes/DP18-38994_Bathroom_dt_cp_BathroomPaint",
+    "category": "Bathroom",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place4",
+    "imageUrl": "https://3dexport.com/items/2017/02/15/438569/138903/study_room_home_library_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1633581_o.jpg",
+    "category": "Study Room",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place5",
+    "imageUrl": "https://3dexport.com/items/2017/02/15/438569/138903/study_room_home_library_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1633581_o.jpg",
+    "category": "Study Room",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place6",
+    "imageUrl": "https://3dexport.com/items/2017/02/15/438569/138903/study_room_home_library_3d_model_c4d_max_obj_fbx_ma_lwo_3ds_3dm_stl_1633581_o.jpg",
+    "category": "Study Room",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
+  },
+  {
+    "name": "Place7",
+    "imageUrl": "https://www.cmu.edu/cohon-university-center/center-facilities/danforth-conference/danforth_conference_images/CA_SA_Danfoth%20Conference%20Room_2016_3668-min-min.jpg",
+    "category": "Conference Room",
+    "occupied": false,
+    "blueprintId": 3,
+    "description": "description"
   }
 ]
