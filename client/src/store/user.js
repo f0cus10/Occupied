@@ -18,19 +18,19 @@ const GET_MODALCONTENT = "GET_MODALCONTENT";
 const SET_MODALCONTENT = "SET_MODALCONTENT";
 
 const initialUser = {
-  username : '',
-  warning  : '',
-  auth     : false,
-  modal    : {
-    title : "",
-    body  : "",
-    data  : false
+  username: "",
+  warning: "",
+  auth: false,
+  modal: {
+    title: "",
+    body: "",
+    data: false
   },
-  viewing  : 1
+  viewing: 3
 };
 
-const axios = require('axios');
-const Cookies = require('js-cookie');
+const axios = require("axios");
+const Cookies = require("js-cookie");
 
 /**
  * Action Creators
@@ -55,10 +55,10 @@ export const loginAuth = (username, password) => async dispatch => {
     const login = await axios.post(`/api/login`, { username, password });
     if (login.status === 200) {
       const { token } = login.data;
-      Cookies.set('token', token);
+      Cookies.set("token", token);
       dispatch(setAuth());
     } else {
-      return false
+      return false;
     }
   } catch (err) {
     console.error(err);
@@ -93,14 +93,14 @@ export default function(state = initialUser, action) {
       return action.viewing;
     case SET_VIEWING:
       return Object.assign({}, state, {
-        viewing:  action.viewing
-      })
+        viewing: action.editing
+      });
     case GET_MODALCONTENT:
       return action.content;
     case SET_MODALCONTENT:
       return Object.assign({}, state, {
-        modal:  action.content
-      })
+        modal: action.content
+      });
     default:
       return state;
   }

@@ -3,7 +3,10 @@ import { Card, Icon, Image } from "semantic-ui-react";
 import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import classNames from "classnames";
 import "../styles/SpaceCard.css";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 class SpaceCard extends Component {
   constructor(props) {
@@ -42,6 +45,24 @@ class SpaceCard extends Component {
     }
   }
 
+  handleOccupy = e => {
+    e.preventDefault();
+    const { id, username } = this.props;
+    axios
+      .post("api/space/occupy", {
+        spaceId: id,
+        username,
+        headers: { "access-token": Cookies.get("token") }
+      })
+      .then(res => {
+        console.log(res);
+        alert("Occupied");
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     const {
       isAdminOf,
@@ -52,9 +73,11 @@ class SpaceCard extends Component {
       id,
       description
     } = this.props;
+
+    const mstyle = classNames({ red: occupied, green: !occupied });
     return (
       <div className="card-box">
-        <Card style={this.state.curStyle}>
+        <Card className={mstyle}>
           <Image src={imageUrl} className="card-image" />
           <Card.Content>
             <Card.Header>{name}</Card.Header>
@@ -71,7 +94,7 @@ class SpaceCard extends Component {
               <Link to="/view">View </Link>
               {/* {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>} */}
             </div>
-            <button onClick={this.handleColor}> {this.state.text} </button>
+            <button onClick={this.handleOccupy}> {this.state.text} </button>
           </Card.Content>
         </Card>
       </div>
