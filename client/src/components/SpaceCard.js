@@ -45,21 +45,15 @@ class SpaceCard extends Component {
     }
   }
 
-  handleOccupy = e => {
-    e.preventDefault();
+  handleOccupy = () => {
     const { id, username } = this.props;
-    axios
-      .post("api/space/occupy", {
-        spaceId: id,
-        username,
-        headers: { "access-token": Cookies.get("token") }
-      })
+    axios.post("../api/space/occupy", { spaceId: id, username, }, { headers: { 'access-token': Cookies.get('token')}})
       .then(res => {
         console.log(res);
         alert("Occupied");
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
       });
   };
 
@@ -71,7 +65,8 @@ class SpaceCard extends Component {
       category,
       imageUrl,
       id,
-      description
+      description,
+      handleClick
     } = this.props;
 
     const mstyle = classNames({ red: occupied, green: !occupied });
@@ -94,7 +89,7 @@ class SpaceCard extends Component {
               <Link to="/view">View </Link>
               {/* {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>} */}
             </div>
-            <button onClick={this.handleOccupy}> {this.state.text} </button>
+            <button onClick={() => this.handleOccupy()}> {this.state.text} </button>
           </Card.Content>
         </Card>
       </div>

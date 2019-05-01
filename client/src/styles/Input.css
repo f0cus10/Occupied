@@ -1,0 +1,56 @@
+
+  .input {
+    width: 75%;
+    height: 50px;
+    display: block;
+    margin: 0 auto 15px;
+    padding: 0 15px;
+    border: none;
+    border-bottom: 2px solid #ebebeb;
+  }
+  .input:focus {
+    outline: none;
+    border-bottom-color: #589dd2 !important;
+  }
+  .input:hover {
+    border-bottom-color: #dcdcdc;
+  }
+  .input:invalid {
+    box-shadow: none;
+  }
+  .input[error="true"] {
+    border-bottom-color: red !important;
+  }
+  .pass:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+  .inputButton {
+    position: relative;
+    width: 85%;
+    height: 50px;
+    display: block;
+    margin: 30px auto 30px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    color: white;
+    background-color: #589dd2;
+    border: none;
+    -webkit-box-shadow: 0 5px 0 #589dd2;
+    -moz-box-shadow: 0 5px 0 #589dd2;
+    box-shadow: 0 5px 0 #589dd2;
+  }
+  .inputButton:hover {
+    top: 2px;
+    -webkit-box-shadow: 0 3px 0 #589dd2;
+    -moz-box-shadow: 0 3px 0 #589dd2;
+    box-shadow: 0 3px 0 #589dd2;
+  }
+  .inputButton:active {
+    top: 5px;
+    box-shadow: none;
+  }
+  .inputButton:focus {
+    outline: none;
+  }
