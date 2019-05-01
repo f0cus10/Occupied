@@ -15,6 +15,7 @@ import CreateBlueprint from "./components/CreateBlueprint";
 import JoinBlueprint from "./components/JoinBlueprint";
 import ViewBlueprint from "./components/ViewBlueprint";
 import EditBlueprint from "./components/EditBlueprint";
+import Profile from "./components/Profile";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
 
@@ -29,6 +30,7 @@ class App extends PureComponent {
           <Route path="/join" render={props => <ProtectedRoute component={JoinBlueprint} {...props} />} />
           <Route path="/view" render={props => <ProtectedRoute component={ViewBlueprint} {...props} />} />
           <Route path="/edit" render={props => <ProtectedRoute component={EditBlueprint} {...props} />} />
+          <Route path="/profile" render={props => <ProtectedRoute component={Profile} {...props} />} />
           <Route path="/register" component={Registration} />
           {/* <Route path="/profile" component={Profile} /> */}
         </div>
