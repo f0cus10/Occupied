@@ -20,16 +20,21 @@ class ViewBlueprint extends Component {
     };
   }
   componentDidMount() {
+    let id = window.location.href.split("/");
+    id = id.slice(-1);
     axios
-      .get("/api/blueprint/3", {
+      .get(`/api/blueprint/${id}`, {
         headers: {
           "access-token": Cookies.get("token")
         }
       })
       .then(res => {
+        console.log(res);
         if (res.status === 200) {
           this.setState({ blueprint: res.data });
-          console.log("blueprint");
+          if (res.data.spaces.length === 0) {
+            this.setState({ message: "NOBODY HERE" });
+          }
           this.setState({ spaces: this.state.blueprint.spaces });
           this.handleSortByAll();
         } else {
@@ -53,9 +58,6 @@ class ViewBlueprint extends Component {
     const { data } = this.props;
     const { username, id } = data;
     const { spaces, sortByCategory } = this.state;
-
-    console.log(spaces);
-
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
@@ -77,8 +79,6 @@ class ViewBlueprint extends Component {
     const { data } = this.props;
     const { username, id } = data;
     const { message, blueprint, spaces, sortByCategory } = this.state;
-    console.log("SPACES");
-    console.log(spaces);
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
@@ -111,6 +111,8 @@ class ViewBlueprint extends Component {
     for (let i in sortByCategory) {
       sortByCategory[i] = sortByCategory[i].map(space => (
         <SpaceCard
+          username={username}
+          handleOccupy={this.handleOccupy}
           id={space.spaces_id}
           name={space.name}
           imageUrl={space.imageUrl}
@@ -177,6 +179,7 @@ class ViewBlueprint extends Component {
 
 const mapState = state => {
   return {
+    viewing: state.user.viewing,
     username: state.user.user
   };
 };
