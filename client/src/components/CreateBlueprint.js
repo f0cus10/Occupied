@@ -95,8 +95,11 @@ class CreateBlueprint extends Component {
             <label className="label">Image URL</label>
             <input onChange={(e) => this.setState({imageUrl: e.target.value})} placeholder='Image url' />
           </Form.Field>
-          <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
-            <Button type='submit'>Submit</Button>
+          <Form.Field>
+            <label className="label">Description</label>   
+            <Form.TextArea onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
+          </Form.Field>
+          <Button type='submit'>Submit</Button>
           </Form>
         <Link to="/home">GO TO HOME</Link>
       </div>
