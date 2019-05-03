@@ -53,6 +53,8 @@ export const setModalContent = content => ({ type: SET_MODALCONTENT, content });
 export const loginAuth = (username, password) => async dispatch => {
   try {
     const login = await axios.post(`/api/login`, { username, password });
+    console.log('login')
+    console.log(login)
     if (login.status === 200) {
       const { token } = login.data;
       Cookies.set("token", token);
