@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
+import PageLayout from '../components/PageLayout'
 
-import Navbar from './Navbar';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-function ProtectedRoute({ component: Component }) {
+function ProtectedRoute({ component: Component, back, match }) {
   const [loaded, setLoad] = useState(false);
   const [auth, setAuth] = useState(false);
   const [data, setData] = useState({});
@@ -35,10 +35,16 @@ function ProtectedRoute({ component: Component }) {
 
   if (loaded) {
     if (auth) {
+      const { blueprintId, profileId } = match.params;
       return (<>
         <h1> Occupied </h1>
-        <Navbar username={data.username}/>
-        <Component data={data} />
+        <PageLayout
+          data={data}
+          back={back}
+          component={Component}
+          blueprintId={blueprintId}
+          profileId={profileId}
+        />
       </>)
     } else {
       Cookies.remove('token');
@@ -47,7 +53,6 @@ function ProtectedRoute({ component: Component }) {
   } else {
     return (<>
       <h1> Occupied </h1>
-      <Navbar username={data.username}/>
       <Loading loading />
     </>)
   }

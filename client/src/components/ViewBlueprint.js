@@ -6,6 +6,7 @@ import SpaceCard from "./SpaceCard";
 import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
+import PageContainer from './PageContainer'
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -20,10 +21,8 @@ class ViewBlueprint extends Component {
     };
   }
   componentDidMount() {
-    let id = window.location.href.split("/");
-    id = id.slice(-1);
-    axios
-      .get(`/api/blueprint/${id}`, {
+    console.log(this.props);
+    axios.get(`/api/blueprint/${this.props.blueprintId}`, {
         headers: {
           "access-token": Cookies.get("token")
         }
@@ -139,8 +138,7 @@ class ViewBlueprint extends Component {
     }
 
     return (
-      <div className="body">
-        <h1>View Blueprint</h1>
+      <PageContainer title="View Blueprint">
         <h2>{message}</h2>
         <div className="card-container">
           <Grid celled>
@@ -172,7 +170,7 @@ class ViewBlueprint extends Component {
         </div>
 
         <Link to="/home">GO TO HOME</Link>
-      </div>
+      </PageContainer>
     );
   }
 }

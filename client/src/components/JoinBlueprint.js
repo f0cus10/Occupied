@@ -4,6 +4,7 @@ import { Input, Menu } from 'semantic-ui-react';
 import CardContainer from './Card.js';
 import axios from 'axios';
 import Cookies from 'js-cookie'
+import PageContainer from './PageContainer';
 
 class JoinBlueprint extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class JoinBlueprint extends Component {
       <CardContainer
         name={blueprint.name}
         description={blueprint.description}
-        img_url={blueprint.imageUrl}
+        imageUrl={blueprint.imageUrl}
         status={blueprint.status}
         time={blueprint.time}
       />
@@ -50,55 +51,12 @@ class JoinBlueprint extends Component {
       return blueprints.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
     });
     return (
-      <Grid celled>
-        <Grid.Row>
-          <Grid.Column width={3}>
-            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-          </Grid.Column>
-          <Grid.Column width={13}>
-            <Menu.Item>
-              <Input
-                label="Search blueprints"
-                icon="search"
-                onChange={this.onchange}
-              />
-            </Menu.Item>
-            <div>Search for your Blueprints here!</div>
-            <section class="container">
-              <div class="dropdown">
-                <select name="one" class="dropdown-select">
-                  <option value="">Categories</option>
-                  <option value="1">School</option>
-                  <option value="2">Home</option>
-                  <option value="3">Library</option>
-                  <option value="4">Office</option>
-                  <option value="5">Library</option>
-                </select>
-              </div>
-              <div class="dropdown dropdown-dark">
-                <select name="two" class="dropdown-select">
-                  <option value="">Size</option>
-                  <option value="1">Small</option>
-                  <option value="2">Medium</option>
-                  <option value="3">Large</option>
-                </select>
-              </div>
-            </section>
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column width={3}>
-            <Image src='https://react.semantic-ui.com/images/wireframe/image.png' />
-          </Grid.Column>
-          {filteredblueprints.map(blueprints => {
-            console.log(blueprints)
-            return this.renderblueprints(blueprints);
-          })}
-          <Grid.Column width={13}>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <PageContainer title="Join Blueprint">
+        {filteredblueprints.map(blueprints => {
+          console.log(blueprints);
+          return this.renderblueprints(blueprints);
+        })}
+      </PageContainer>
     );
   }
 }

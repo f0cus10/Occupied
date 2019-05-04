@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
+import PageLayout from './components/PageLayout';
 import Registration from "./components/Registration";
 import Home from "./components/Home";
 import CreateBlueprint from "./components/CreateBlueprint";
@@ -24,13 +25,13 @@ class App extends PureComponent {
     return (
       <BrowserRouter>
         <div className="App">
+          {/* <Route exact path="/" render={props => <PageLayout component={Login} {...props} />} /> */}
           <Route exact path="/" component={Login} />
           <Route path="/home" render={props => <ProtectedRoute component={Home} {...props} />} />
-          <Route path="/create" render={props => <ProtectedRoute component={CreateBlueprint} {...props} />} />
-          <Route path="/join" render={props => <ProtectedRoute component={JoinBlueprint} {...props} />} />
-          <Route path="/view" render={props => <ProtectedRoute component={ViewBlueprint} {...props} />} />
-          <Route path="/edit" render={props => <ProtectedRoute component={EditBlueprint} {...props} />} />
-          <Route path="/profile" render={props => <ProtectedRoute component={Profile} {...props} />} />
+          <Route path="/create" render={props => <ProtectedRoute component={CreateBlueprint} {...props} back={'Home'} />} />
+          <Route path="/join" render={props => <ProtectedRoute component={JoinBlueprint} {...props} back={'Home'} />} />
+          <Route path="/view/:blueprintId" render={props => <ProtectedRoute component={ViewBlueprint} {...props} back={'Home'} />} />
+          <Route path="/profile/:profileId" render={props => <ProtectedRoute component={Profile} {...props} back={'Home'} />} />
           <Route path="/register" component={Registration} />
           {/* <Route path="/profile" component={Profile} /> */}
         </div>

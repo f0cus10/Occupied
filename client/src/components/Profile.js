@@ -1,16 +1,38 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import '../styles/Profile.css';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 
 class Profile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: {}
+    }
+  }
+
+  componentDidMount() {
+    axios.get(`/api/user/id/${this.props.profileId}`, {
+      headers: {
+        'access-token': Cookies.get('token')
+      }
+    })
+    .then(res => {
+      this.setState({ data : res.data });
+    })
   }
 
   render(){
-    const { username, email, description, imageUrl} = this.props.data;
+    // const { data, profileId } = this.props;
+    const { data } = this.state;
+    let username, email, description, imageUrl;
+    if (data) {
+      username = data.username;
+      email = data.email;
+      description = data.description;
+      imageUrl = data.imageUrl;
+    }
     
     return (
       <div >
@@ -33,15 +55,8 @@ class Profile extends Component {
           </div>
         </div>
       </div>
-      
     );
   }
 }
 
-const mapState = state => {
-    return {
-      username: state.user.user
-    };
-};
-
-export default connect(mapState) (Profile);
+export default Profile;
