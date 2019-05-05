@@ -115,7 +115,7 @@ class CreateBlueprint extends Component {
       if (field == "isPublic"){
         if(value == "1"){
          return this.setState({ isPublic: true });
-        }else if(value == 2){
+        }else if(value == "2"){
          return this.setState({ isPublic: false });
         }
       }
