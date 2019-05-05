@@ -6,6 +6,7 @@ import SpaceCard from "./SpaceCard";
 import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
+import PageContainer from "./PageContainer";
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -20,16 +21,20 @@ class ViewBlueprint extends Component {
     };
   }
   componentDidMount() {
+    console.log(this.props);
     axios
-      .get("/api/blueprint/3", {
+      .get(`/api/blueprint/${this.props.blueprintId}`, {
         headers: {
           "access-token": Cookies.get("token")
         }
       })
       .then(res => {
+        console.log(res);
         if (res.status === 200) {
           this.setState({ blueprint: res.data });
-          console.log("blueprint");
+          if (res.data.spaces.length === 0) {
+            this.setState({ message: "NOBODY HERE" });
+          }
           this.setState({ spaces: this.state.blueprint.spaces });
           this.handleSortByAll();
         } else {
@@ -41,15 +46,15 @@ class ViewBlueprint extends Component {
       });
   }
 
-  handleSort() {
-    if (this.state.category == "Categories") {
+  handleSort = e => {
+    if (e.target.value == "Categories") {
       this.handleSortByAll();
     } else {
-      this.handleSortByCategory(this.state.category);
+      this.handleSortByCategory(e.target.value);
     }
-  }
+  };
 
-  handleSortByCategory(category) {
+  handleSortByCategory = category => {
     const { data } = this.props;
     const { username, id } = data;
     const { spaces, sortByCategory } = this.state;
@@ -57,21 +62,23 @@ class ViewBlueprint extends Component {
     let dict = {};
     spaces.forEach(space => {
       if (space.category == category) {
-        categories.push(space.category);
+        categories.push(space);
       }
     });
+    console.log(categories);
+
     dict[category] = categories;
     categories.sort();
 
+    console.log(dict);
+
     this.setState({ sortByCategory: dict });
-  }
+  };
 
   handleSortByAll() {
     const { data } = this.props;
     const { username, id } = data;
     const { message, blueprint, spaces, sortByCategory } = this.state;
-    console.log("SPACES");
-    console.log(spaces);
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
@@ -104,6 +111,8 @@ class ViewBlueprint extends Component {
     for (let i in sortByCategory) {
       sortByCategory[i] = sortByCategory[i].map(space => (
         <SpaceCard
+          username={username}
+          handleOccupy={this.handleOccupy}
           id={space.spaces_id}
           name={space.name}
           imageUrl={space.imageUrl}
@@ -130,8 +139,7 @@ class ViewBlueprint extends Component {
     }
 
     return (
-      <div className="body">
-        <h1>View Blueprint</h1>
+      <PageContainer title="View Blueprint">
         <h2>{message}</h2>
         <div className="card-container">
           <Grid celled>
@@ -141,9 +149,8 @@ class ViewBlueprint extends Component {
                   <select
                     onChange={e => {
                       this.setState({ category: e.target.value });
-                      this.handleSort();
+                      this.handleSort(e);
                     }}
-                    value={this.state.category}
                     name="one"
                     className="dropdown-select"
                     text="Sort By"
@@ -164,13 +171,14 @@ class ViewBlueprint extends Component {
         </div>
 
         <Link to="/home">GO TO HOME</Link>
-      </div>
+      </PageContainer>
     );
   }
 }
 
 const mapState = state => {
   return {
+    viewing: state.user.viewing,
     username: state.user.user
   };
 };

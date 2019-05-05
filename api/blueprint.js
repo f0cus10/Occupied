@@ -116,8 +116,9 @@ router.post('/invite', async(req, res) => {
     console.error(err);
     res.status(404).send(err);
   }
-})
+});
 
+// router.post('/schedule')
 
 router.post('/create', async (req, res) => {
   let {

@@ -5,7 +5,7 @@ import { Button, Form } from 'semantic-ui-react'
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../styles/CreateBlueprint.css';
-
+import PageContainer from '../components/PageContainer';
 class CreateBlueprint extends Component {
   constructor(props) {
     super(props);
@@ -44,33 +44,49 @@ class CreateBlueprint extends Component {
     const { username } = this.props.data;
     const { name, description, message, imageUrl, address, isPublic , category} = this.state;
     return (
-      <div>
-        <h1>Create Blueprint</h1>
-        <h2>Welcome {username} !</h2>
+      <PageContainer title="Create Blueprint">
         <h3 className="warning"> {message} </h3>
-        <Form className="blueprint"onSubmit={() => this.createBlueprint(name, description, imageUrl, address, isPublic, category)}>
+        <Form
+          className="blueprint"
+          onSubmit={() =>
+            this.createBlueprint(
+              name,
+              description,
+              imageUrl,
+              address,
+              isPublic,
+              category
+            )
+          }
+        >
           <Form.Field>
             <label className="label"> Building Name</label>
-            <input onChange={(e) => this.setState({name: e.target.value})} placeholder='Building Name'/>
+            <input
+              onChange={e => this.setState({ name: e.target.value })}
+              placeholder="Building Name"
+            />
           </Form.Field>
           <Form.Field>
             <label className="label">Address</label>
-            <input onChange={(e) => this.setState({address: e.target.value})} placeholder='Address' />
+            <input
+              onChange={e => this.setState({ address: e.target.value })}
+              placeholder="Address"
+            />
           </Form.Field>
           <Form.Field>
             <label className="label">Blueprint Type</label>
             <select
               //value={isPublic}
-              onChange={(e) => {
+              onChange={e => {
                 if (e.target.value == "1") {
-                  this.setState({ isPublic: true })
-                }else if(e.target.value=="2"){
-                  this.setState({ isPublic: false })
+                  this.setState({ isPublic: true });
+                } else if (e.target.value == "2") {
+                  this.setState({ isPublic: false });
                 }
               }}
               class="ui dropdown"
             >
-              <option value=""></option>
+              <option value="" />
               <option value="1">Public</option>
               <option value="2">Private</option>
             </select>
@@ -78,12 +94,10 @@ class CreateBlueprint extends Component {
           <Form.Field>
             <label className="label">Categories</label>
             <select
-                  onChange={(e) =>
-                  this.setState({ category: e.target.value })
-              } 
+              onChange={e => this.setState({ category: e.target.value })}
               class="ui dropdown"
             >
-              <option value=""></option>
+              <option value="" />
               <option value="School">School</option>
               <option value="Home">Home</option>
               <option value="Office">Office</option>
@@ -93,13 +107,21 @@ class CreateBlueprint extends Component {
           </Form.Field>
           <Form.Field>
             <label className="label">Image URL</label>
-            <input onChange={(e) => this.setState({imageUrl: e.target.value})} placeholder='Image url' />
+            <input
+              onChange={e => this.setState({ imageUrl: e.target.value })}
+              placeholder="Image url"
+            />
           </Form.Field>
-          <Form.TextArea label='Description' onChange={(e) => this.setState({description: e.target.value})} placeholder='Add description...' />
-            <Button type='submit'>Submit</Button>
-          </Form>
-        <Link to="/home">GO TO HOME</Link>
-      </div>
+          <Form.Field>
+            <label className="label">Description</label>
+            <Form.TextArea
+              onChange={e => this.setState({ description: e.target.value })}
+              placeholder="Add description..."
+            />
+          </Form.Field>
+          <Button type="submit">Submit</Button>
+        </Form>
+      </PageContainer>
     );
   }
 }

@@ -136,7 +136,7 @@ router.post('/login', async(req, res) => {
       try{
         const match = await foundUser.validPassword(req.body.password);
         if(!match){
-          res.json({ message: "Authentication failed" });
+          res.status(404).json({ message: "Authentication failed" });
         }
         else{
           //issue a token

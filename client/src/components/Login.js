@@ -64,7 +64,7 @@ const mapDispatch = dispatch => {
       dispatch(loginAuth(username, password))
       .then(res => {
         if (!res) {
-          dispatch(setWarning("User does not exist!"));
+          dispatch(setWarning("Incorrect Username/Password."));
         }
       })
     },

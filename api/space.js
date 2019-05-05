@@ -13,6 +13,9 @@ async function findBlueprint(spaceID){
       space_id: spaceID,
     }
   })
+  if (space.occupied){
+    return null;
+  }
   //wait for the blueprint
   const blueprint = await space.getBlueprint();
   return blueprint;
@@ -53,10 +56,16 @@ router.post('/occupy', async(req, res) => {
     ])
     .then(async (values) => {
       //TODO: null check
+      if (values[0] == null){
+        res.json({
+          occupied: false,
+          message: "Space already occupied"
+        })
+      }
       // values = [Blueprint, User]
       const result = await values[0].hasUser(values[1]);
       if (result){
-        const updatePromise = Space.update({ occupied: true, userId: values[1].id }, {where: {space_id: spaceId }});
+        const updatePromise = Space.update({ occupied: true, userId: values[1].id }, {where: {space_id: spaceId, occupied: false }});
         res.json({
           occupied: true,
           message: "Successfully Occupied",
