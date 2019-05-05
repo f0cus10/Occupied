@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Image } from 'semantic-ui-react';
-import { Input, Menu } from 'semantic-ui-react';
 import CardContainer from './Card.js';
 import axios from 'axios';
 import Cookies from 'js-cookie'
@@ -27,17 +26,21 @@ class JoinBlueprint extends Component {
 
   renderblueprints = blueprint => {
     const { search } = this.state;
-    var code = blueprint.name.toLowerCase();
-    return(
+    const isMember = this.props.data.blueprints.findIndex(m => m.id === blueprint.id) > -1;
+    return (
       <Grid.Column width={3}>
-      <CardContainer
-        name={blueprint.name}
-        description={blueprint.description}
-        imageUrl={blueprint.imageUrl}
-        status={blueprint.status}
-        time={blueprint.time}
-      />
-    </Grid.Column>
+        <CardContainer
+          ownerIdProp={this.props.data.id}
+          id={blueprint.id}
+          name={blueprint.name}
+          description={blueprint.description}
+          imageUrl={blueprint.imageUrl}
+          status={blueprint.status}
+          time={blueprint.time}
+          isMember={isMember}
+          join
+        />
+      </Grid.Column>
     );
   };
 
@@ -53,7 +56,6 @@ class JoinBlueprint extends Component {
     return (
       <PageContainer title="Join Blueprint">
         {filteredblueprints.map(blueprints => {
-          console.log(blueprints);
           return this.renderblueprints(blueprints);
         })}
       </PageContainer>

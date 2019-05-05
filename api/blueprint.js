@@ -85,6 +85,35 @@ router.get('/query', async (req, res) => {
   }
 })
 
+//joins a blueprint
+router.post('/join/', async(req, res) => {
+  const { blueprintId, userId } = req.body;
+  try {
+    const foundUser = await User.findOne({
+      where: {
+        id: userId
+      }
+    });
+    const foundBlueprint = await Blueprint.findOne({
+      where: {
+        id: blueprintId
+      }
+    });
+    if (foundUser && foundBlueprint) {
+      try {
+        await foundBlueprint.addUser(foundUser);
+        res.sendStatus(201);
+      } catch (err) {
+        throw err;
+      }
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(404).send(err);
+  }
+});
 
 // only the owner of 
 router.post('/invite', async(req, res) => {
