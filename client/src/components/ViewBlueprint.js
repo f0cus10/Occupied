@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
 import PageContainer from "./PageContainer";
+import {Card, Label, Select, Tabs} from '@shopify/polaris';
 
 class ViewBlueprint extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selected: 0,
       blueprint: {},
       message: "",
       spaces: [],
@@ -21,9 +23,7 @@ class ViewBlueprint extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
-    axios
-      .get(`/api/blueprint/${this.props.blueprintId}`, {
+    axios.get(`/api/blueprint/${this.props.blueprintId}`, {
         headers: {
           "access-token": Cookies.get("token")
         }
@@ -97,6 +97,10 @@ class ViewBlueprint extends Component {
     this.setState({ sortByCategory: dict });
   }
 
+  handleTabChange = (selectedTabIndex) => {
+    this.setState({selected: selectedTabIndex});
+  };
+
   render() {
     const { data } = this.props;
     const { username, id } = data;
@@ -140,8 +144,7 @@ class ViewBlueprint extends Component {
 
     return (
       <PageContainer title="View Blueprint">
-        <h2>{message}</h2>
-        <div className="card-container">
+        <Card>
           <Grid celled>
             <Grid.Row>
               <Grid.Column width={5}>
@@ -168,9 +171,7 @@ class ViewBlueprint extends Component {
             <Grid.Row />
             <Grid.Row>{cat}</Grid.Row>
           </Grid>
-        </div>
-
-        <Link to="/home">GO TO HOME</Link>
+        </Card>
       </PageContainer>
     );
   }
@@ -178,7 +179,6 @@ class ViewBlueprint extends Component {
 
 const mapState = state => {
   return {
-    viewing: state.user.viewing,
     username: state.user.user
   };
 };
