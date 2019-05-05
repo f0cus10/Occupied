@@ -6,7 +6,7 @@ import SpaceCard from "./SpaceCard";
 import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
-import PageContainer from './PageContainer'
+import PageContainer from "./PageContainer";
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -22,7 +22,8 @@ class ViewBlueprint extends Component {
   }
   componentDidMount() {
     console.log(this.props);
-    axios.get(`/api/blueprint/${this.props.blueprintId}`, {
+    axios
+      .get(`/api/blueprint/${this.props.blueprintId}`, {
         headers: {
           "access-token": Cookies.get("token")
         }

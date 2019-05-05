@@ -34,11 +34,25 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "",
     },
 
-    occupied: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
+      category: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      },
 
+<<<<<<< HEAD
+      occupied: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+
+      imageUrl: {
+        type: DataTypes.STRING,
+        defaultValue: ""
+      }
+    },
+    {
+      timestamps: false
+=======
     imageUrl: {
       type: DataTypes.STRING,
       defaultValue: "",
@@ -48,19 +62,22 @@ module.exports = (sequelize, DataTypes) => {
           msg: "Must be a valid URL",
         }
       }
+>>>>>>> c45c6517df82c244bf3b5c5252170807acd67824
     }
-  }, {
-    timestamps: false
-  });
+  );
 
-  Space.associate = (models) => {
+  Space.associate = models => {
     // space can only belong to one blueprint through blueprintId
     Space.belongsTo(models.Blueprint, {
-      foreignKey: 'blueprintId',
+      foreignKey: "blueprintId"
     });
     // current user that occupies space
     Space.belongsTo(models.User);
   };
 
   return Space;
+<<<<<<< HEAD
+};
+=======
 }
+>>>>>>> c45c6517df82c244bf3b5c5252170807acd67824
