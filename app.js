@@ -14,12 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api', require('./api'));
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
-    app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
-}
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 //populates users and creates associations
 (async () => {
@@ -57,6 +55,6 @@ if (process.env.NODE_ENV === 'production') {
     }
 })();
 
-const port = 5000;
+var PORT = process.env.PORT || 5000;
 
-app.listen(port, () => console.log('listening on 5000'));
+app.listen(PORT, () => console.log('listening on 5000'));
