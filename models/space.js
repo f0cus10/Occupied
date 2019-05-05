@@ -39,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: ""
       },
 
-<<<<<<< HEAD
       occupied: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
@@ -52,17 +51,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false
-=======
-    imageUrl: {
-      type: DataTypes.STRING,
-      defaultValue: "",
-      validate: {
-        isUrl: {
-          args: true,
-          msg: "Must be a valid URL",
-        }
-      }
->>>>>>> c45c6517df82c244bf3b5c5252170807acd67824
     }
   );
 
