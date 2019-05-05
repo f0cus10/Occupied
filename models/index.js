@@ -5,7 +5,7 @@ pg.defaults.ssl = true;
 var Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('defaultdb', 'doadmin', process.env.PGPASSWORD, {
-  host: 'db-postgresql-nyc1-21295-do-user-6000584-0.db.ondigitalocean.com',
+  host: process.env.DB_URL,
   dialect: 'postgresql',
   dialectOptions: { "ssl": {"require":true } },
   port: 25060,
