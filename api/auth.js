@@ -6,7 +6,12 @@ const _ = require('lodash');
 const { User } = require('../models');
 
 //read the keys
-const privateKEY = fs.readFileSync('./private.key', 'utf8');
+let privateKEY;
+if (process.env.NODE_ENV === 'production') {
+  privateKEY = process.env.PRIVATE_KEY;
+} else {
+  privateKEY = fs.readFileSync('./private.key', 'utf8');
+}
 
 //Error handler
 const errorHandler = (err, models) => {

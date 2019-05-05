@@ -5,7 +5,12 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 
 //read the keys
-const publicKEY = fs.readFileSync('./public.key', 'utf8');
+let publicKEY;
+if (process.env.NODE_ENV === 'production') {
+  publicKEY = process.env.PUBLIC_KEY;
+} else {
+  publicKEY = fs.readFileSync('./public.key', 'utf8');
+}
 
 /*
  * a Middleware for validating the JSON Web Token and allowing
