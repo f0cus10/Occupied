@@ -1,17 +1,15 @@
 'use strict';
+var pg = require('pg');
+pg.defaults.ssl = true;
+
 var Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('Occupied', process.env.PGUSER, process.env.PGPASSWORD, {
-  host: 'localhost',
-  dialect: 'postgres',
-  operatorsAliases: false,
-
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
+const sequelize = new Sequelize('defaultdb', 'doadmin', process.env.PGPASSWORD, {
+  host: 'db-postgresql-nyc1-21295-do-user-6000584-0.db.ondigitalocean.com',
+  dialect: 'postgresql',
+  dialectOptions: { "ssl": {"require":true } },
+  port: 25060,
+  ssl: true
 });
 
 /*
