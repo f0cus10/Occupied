@@ -50,8 +50,8 @@ class CreateBlueprint extends Component {
       {label: 'Bathroom', value: 'Bathroom'}
     ];
     const type = [
-      {label: 'Public', value: '1'},
-      {label: 'Private', value: '2'}
+      {label: 'Public', value: true},
+      {label: 'Private', value: false}
     ];
     return (
       <Card className="CBcard" title="Create Blueprint" sectioned>
@@ -109,16 +109,8 @@ class CreateBlueprint extends Component {
       </Card>
     );
   }
-  handleChange=(field, value)=>{
-    
+  handleChange=(field)=>{
     return (value) =>{ 
-      if (field == "isPublic"){
-        if(value == "1"){
-         return this.setState({ isPublic: true });
-        }else if(value == "2"){
-         return this.setState({ isPublic: false });
-        }
-      }
       this.setState({[field]: value})};
   }
 }
