@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button, Form } from 'semantic-ui-react'
+import { Card, TextField, FormLayout, Layout, Select, Button, Form} from "@shopify/polaris";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../styles/CreateBlueprint.css';
@@ -43,87 +43,86 @@ class CreateBlueprint extends Component {
   render() {
     const { username } = this.props.data;
     const { name, description, message, imageUrl, address, isPublic , category} = this.state;
+    const blueprintCategory = [
+      {label: 'School', value: 'school'},
+      {label: 'Office', value: 'office'},
+      {label: 'Home', value: 'home'},
+      {label: 'Bathroom', value: 'Bathroom'}
+    ];
+    const type = [
+      {label: 'Public', value: '1'},
+      {label: 'Private', value: '2'}
+    ];
     return (
-      <PageContainer title="Create Blueprint">
-        <h3 className="warning"> {message} </h3>
-        <Form
-          className="blueprint"
-          onSubmit={() =>
-            this.createBlueprint(
-              name,
-              description,
-              imageUrl,
-              address,
-              isPublic,
-              category
-            )
-          }
-        >
-          <Form.Field>
-            <label className="label"> Building Name</label>
-            <input
-              onChange={e => this.setState({ name: e.target.value })}
-              placeholder="Building Name"
+      <Card className="CBcard" title="Create Blueprint" sectioned>
+        <PageContainer title="">
+          <h3 className="warning"> {message} </h3>
+          <Form className="blueprint"
+            onSubmit={() =>
+              this.createBlueprint(
+                name,
+                description,
+                imageUrl,
+                address,
+                isPublic,
+                category
+              )
+            } >
+          <FormLayout>
+            <TextField label="Building Name"
+              onChange={ this.handleChange('name')}
+              value={name}
             />
-          </Form.Field>
-          <Form.Field>
-            <label className="label">Address</label>
-            <input
-              onChange={e => this.setState({ address: e.target.value })}
-              placeholder="Address"
+            <TextField label="Address"
+              onChange={this.handleChange('address')}
+              value={address}
             />
-          </Form.Field>
-          <Form.Field>
-            <label className="label">Blueprint Type</label>
-            <select
-              //value={isPublic}
-              onChange={e => {
-                if (e.target.value == "1") {
-                  this.setState({ isPublic: true });
-                } else if (e.target.value == "2") {
-                  this.setState({ isPublic: false });
-                }
-              }}
-              class="ui dropdown"
-            >
-              <option value="" />
-              <option value="1">Public</option>
-              <option value="2">Private</option>
-            </select>
-          </Form.Field>
-          <Form.Field>
-            <label className="label">Categories</label>
-            <select
-              onChange={e => this.setState({ category: e.target.value })}
-              class="ui dropdown"
-            >
-              <option value="" />
-              <option value="School">School</option>
-              <option value="Home">Home</option>
-              <option value="Office">Office</option>
-              <option value="Building">Building</option>
-              <option value="Building">Other</option>
-            </select>
-          </Form.Field>
-          <Form.Field>
-            <label className="label">Image URL</label>
-            <input
-              onChange={e => this.setState({ imageUrl: e.target.value })}
-              placeholder="Image url"
+            <FormLayout.Group>    
+              <Select
+                label="Blueprint Type"
+                options={type}
+                onChange={this.handleChange('isPublic')}
+                value={isPublic}
+              />
+              <Select
+                label="Category"
+                options={blueprintCategory}
+                onChange={this.handleChange('category')}
+                value={category}
+              />
+            </FormLayout.Group>
+            <TextField
+              label="Image Url"
+              onChange={this.handleChange('imageUrl')}
+              value={imageUrl}
             />
-          </Form.Field>
-          <Form.Field>
-            <label className="label">Description</label>
-            <Form.TextArea
-              onChange={e => this.setState({ description: e.target.value })}
-              placeholder="Add description..."
+            <TextField
+              label="Description"
+              onChange={this.handleChange('description')}
+              value={description}
+              multiline
             />
-          </Form.Field>
-          <Button type="submit">Submit</Button>
-        </Form>
-      </PageContainer>
+            <Button submit>Submit</Button>
+          </FormLayout>
+          </Form>
+        </PageContainer>
+      </Card>
     );
   }
+  handleChange=(field, value)=>{
+    
+    return (value) =>{ 
+      if (field == "isPublic"){
+        if(value == "1"){
+         return this.setState({ isPublic: true });
+        }else if(value == 2){
+         return this.setState({ isPublic: false });
+        }
+      }
+      this.setState({[field]: value})};
+  }
 }
+
+
 
 export default CreateBlueprint;
