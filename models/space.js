@@ -64,8 +64,4 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return Space;
-<<<<<<< HEAD
 };
-=======
-}
->>>>>>> c45c6517df82c244bf3b5c5252170807acd67824
