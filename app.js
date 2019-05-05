@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const db = require('./models');
 const { User, Blueprint, Space } = require('./models');
 const dummyUsers = require('./dummy/users.json');
