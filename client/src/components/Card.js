@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card, Icon, Image } from "semantic-ui-react";
+import { Toast } from '@shopify/polaris';
 import data from "../dummydata.json";
 import { Link } from "react-router-dom";
 import "../styles/Card.css";
@@ -15,13 +16,14 @@ class CardContainer extends Component {
     super(props);
     this.state = {
       posts: [],
-      active: false
+      active: false,
+      showToast: false,
+      toastMessage: ''
     };
   }
 
   componentDidMount() {
     this.setState({ posts: data });
-    console.log("id " + this.props.id);
   }
 
   handleDelete = () => {
@@ -72,31 +74,51 @@ class CardContainer extends Component {
       });
   };
 
+  toggleToast = (toastMessage) => {
+    this.setState(({showToast}) => ({showToast: !showToast, toastMessage}));
+  };
+
+  handleJoin = () => {
+    axios.post(`/api/blueprint/join/`, {
+      userId: this.props.ownerIdProp,
+      blueprintId: this.props.id,
+    }, {
+      headers: { "access-token": Cookies.get("token") }
+    })
+    .then(res => {
+      if (res.status === 201) {
+        this.toggleToast('Join successful!');
+      } else {
+        this.toggleToast('There was a problem with your request...');
+      }
+    })
+    .catch(err => {
+      this.toggleToast(String(err));
+    })
+  }
+
   handleUpdate = (name, description, category, address, imageUrl, isPublic) => {
-    axios
-      .post(
-        `/api/blueprint/edit`,
-        {
-          userId: this.props.ownerIdProp,
-          blueprintId: this.props.id,
-          description,
-          name,
-          category,
-          address,
-          imageUrl,
-          isPublic
-        },
-        {
-          headers: { "access-token": Cookies.get("token") }
-        }
-      )
-      .then(res => {
-        window.location.reload();
-      })
-      .catch(err => {
-        console.error(err);
-        window.location.reload();
-      });
+    axios.post( `/api/blueprint/edit`, {
+      userId: this.props.ownerIdProp,
+      blueprintId: this.props.id,
+      description,
+      name,
+      category,
+      address,
+      imageUrl,
+      isPublic
+    },
+    {
+      headers: { "access-token": Cookies.get("token") }
+    }
+    )
+    .then(res => {
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      window.location.reload();
+    });
   };
 
   render() {
@@ -110,15 +132,23 @@ class CardContainer extends Component {
       description,
       imageUrl,
       isOwner,
-      setViewing,
-      id
+      isMember,
+      id,
+      join
     } = this.props;
+
+    const { showToast, toastMessage } = this.state;
+
+    const toastMarkup = showToast ? (
+      <Toast content={toastMessage} onDismiss={() => {this.toggleToast("");window.location.reload()}} />
+    ) : null;
 
     const { data } = modal;
     const viewUrl = `/view/${id}`;
     return (
       <div className="card-box">
         <Card>
+        {toastMarkup}
           <Image src={imageUrl} className="card-image" />
           <Card.Content>
             <Card.Header>{name}</Card.Header>
@@ -136,12 +166,11 @@ class CardContainer extends Component {
             </a>
             <div>
               <Link to={viewUrl}> View </Link>
-              {/* View{" "} */}
-              {/* </Link> */}
-              {/* <a onClick={this.goView}>View </a> */}
+              {join && !isMember && (
+                <a onClick={() => this.handleJoin()}> Join </a>
+              )}
               {isOwner && (
                 <>
-                  {/* <Link to="/edit"> Edit </Link> */}
                   <Modal
                     component={({ onClick }) => (
                       <a onClick={onClick}> Delete </a>
@@ -154,7 +183,9 @@ class CardContainer extends Component {
                     refresh
                   />
                   <Modal
-                    component={({ onClick }) => <a onClick={onClick}> Edit </a>}
+                    component={({ onClick }) => (
+                      <a onClick={onClick}> Edit </a>
+                    )}
                     bodyComp={
                       <EditModal
                         handleUpdate={this.handleUpdate}
