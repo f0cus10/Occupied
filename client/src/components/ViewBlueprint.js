@@ -336,7 +336,7 @@ class ViewBlueprint extends Component {
                       borderWidth: 1,
                       hoverBackgroundColor: "rgba(255,99,132,0.4)",
                       hoverBorderColor: "rgba(255,99,132,1)",
-                      data: this.state.statistics[dateSelected]
+                      data: this.state.statistics[dateSelected] 
                     }
                   ]
                 }}
