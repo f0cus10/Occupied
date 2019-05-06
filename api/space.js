@@ -38,13 +38,13 @@ async function findUser(username){
 /**
  * @param HTTP Request with the space id in the request body
  * @returns {occupied: Boolean, message: null or String}  
- */
+   */
 router.post('/occupy', async(req, res) => {
   const { spaceId } = req.body;
   const { username } = req.decoded;
   //validate inputs
   if (!spaceId || !username) {
-    res.json({
+    res.status(404).json({
       occupied: false,
       message: "Incomplete input",
     })

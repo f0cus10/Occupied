@@ -2,10 +2,6 @@
   "userToBlueprint": [
     {
       "user": "miguel",
-      "blueprint": "Hunter College"
-    },
-    {
-      "user": "miguel",
       "blueprint": "Baruch College"
     },
     {
@@ -18,6 +14,10 @@
     },
     {
       "user": "jia",
+      "blueprint": "Hunter College"
+    },
+    {
+      "user": "miguel",
       "blueprint": "Hunter College"
     }
   ],

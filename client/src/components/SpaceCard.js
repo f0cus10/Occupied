@@ -4,9 +4,10 @@ import { Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import "../styles/SpaceCard.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Toast } from '@shopify/polaris';
+import "../styles/SpaceCard.css";
 
 class SpaceCard extends Component {
   constructor(props) {
@@ -14,10 +15,16 @@ class SpaceCard extends Component {
     this.state = {
       isGreen: true,
       curStyle: {},
-      text: "Occupy"
+      text: "Occupy",
+      showToast: true,
+      toastMessage: 'Hello'
     };
     this.handleColor = this.handleColor.bind(this);
   }
+
+  toggleToast = (toastMessage) => {
+    this.setState(({showToast}) => ({showToast: !showToast, toastMessage}));
+  };
 
   handleColor() {
     const { isGreen } = this.state;
@@ -47,18 +54,20 @@ class SpaceCard extends Component {
 
   handleOccupy = () => {
     const { id, username } = this.props;
-    axios
-      .post(
+    axios.post(
         "../api/space/occupy",
         { spaceId: id, username },
         { headers: { "access-token": Cookies.get("token") } }
       )
       .then(res => {
         console.log(res);
-        alert("Occupied");
+        if (res.status === 200) {
+          this.toggleToast('Successfully occupied!')
+        }
       })
       .catch(err => {
         console.log(err);
+        this.toggleToast(err);
       });
   };
 
@@ -71,14 +80,25 @@ class SpaceCard extends Component {
       imageUrl,
       id,
       description,
-      handleClick
+      handleClick,
+      showToast,
+      toastMessage
     } = this.props;
 
+
     const mstyle = classNames({ red: occupied, green: !occupied });
+    const toastMarkup = showToast ? (
+      <Toast content={toastMessage} onDismiss={() => {this.toggleToast("");window.location.reload()}} />
+    ) : null;
     return (
       <div className="card-box">
         <Card className={mstyle}>
-          <Image src={imageUrl} className="card-image" />
+          {toastMarkup}
+          { !occupied ? (
+            <Image src={imageUrl} className="card-image" />
+          ) : (
+            <Image src={imageUrl} className="card-image" disabled />
+          )}
           <Card.Content>
             <Card.Header>{name}</Card.Header>
             <Card.Meta />
