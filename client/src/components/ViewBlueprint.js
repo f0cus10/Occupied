@@ -23,6 +23,7 @@ class ViewBlueprint extends Component {
       category: "Categories",
       sortedCards: [],
       users: [],
+      statistics: {},
       inviteUser: '',
       showToast: false,
       toastMessage: '',
@@ -45,7 +46,37 @@ class ViewBlueprint extends Component {
               userName: res.data.users.find(u => u.id === v.userId).username,
             }
           })
-          this.setState({ blueprint: res.data, users: res.data.users, spaces: res.data.spaces, visits });
+          let dow = ['sunday', 'monday', 'tuesday', 'thursday', 'friday', 'saturday', 'sunday'];
+          let statistics = {
+            'sunday': [0,0,0,0,0,0],
+            'monday': [0,0,0,0,0,0],
+            'tuesday': [0,0,0,0,0,0],
+            'wednesday': [0,0,0,0,0,0],
+            'thursday': [0,0,0,0,0,0],
+            'friday': [0,0,0,0,0,0],
+            'saturday': [0,0,0,0,0,0],
+            'sunday': [0,0,0,0,0,0]
+          }
+          visits.forEach(v => {
+            var d = new Date(v.from);
+            let day = dow[d.getDay()];
+            let time = d.getHours();
+            if (time >= 0 && time < 9) {
+              statistics[day][0] += 1;
+            } else if (time >= 9 && time < 12) {
+              statistics[day][1] += 1;
+            } else if (time >= 12 && time < 15) {
+              statistics[day][2] += 1;
+            } else if (time >= 15 && time < 18) {
+              statistics[day][3] += 1;
+            } else if (time >= 18 && time < 21) {
+              statistics[day][4] += 1;
+            } else if (time >= 21 && time < 24) {
+              statistics[day][5] += 1;
+            }
+          });
+          this.setState({ blueprint: res.data, users: res.data.users, spaces: res.data.spaces, visits, statistics });
+          console.log(this.state)
           if (res.data.spaces.length === 0) {
             this.setState({ message: "NOBODY HERE" });
           }
@@ -148,6 +179,7 @@ class ViewBlueprint extends Component {
 
     for (let i in sortByCategory) {
       sortByCategory[i] = sortByCategory[i].map(space => {
+        const { users } = this.state;
         return (
           <SpaceCard
             username={username}
@@ -159,6 +191,7 @@ class ViewBlueprint extends Component {
             location={space.location}
             category={space.category}
             occupied={space.occupied}
+            occupiedUser={users.find(u => u.id === space.userId)}
             description={space.description}
           />
         );
@@ -289,23 +322,21 @@ class ViewBlueprint extends Component {
               <Bar
                 data={{
                   labels: [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday",
-                    "Saturday",
-                    "Sunday"
+                    "6am-9am",
+                    "9am-12pm",
+                    "12pm-3pm",
+                    "3pm-6pm:",
+                    "6pm-9pm",
+                    "9pm-12am"
                   ],
                   datasets: [
                     {
-                      // label: 'Days',
                       backgroundColor: "rgba(255,99,132,0.2)",
                       borderColor: "rgba(255,99,132,1)",
                       borderWidth: 1,
                       hoverBackgroundColor: "rgba(255,99,132,0.4)",
                       hoverBorderColor: "rgba(255,99,132,1)",
-                      data: [65, 59, 80, 81, 56, 55, 40]
+                      data: this.state.statistics[dateSelected]
                     }
                   ]
                 }}

@@ -65,10 +65,9 @@ class SpaceCard extends Component {
       imageUrl,
       id,
       description,
-      handleClick
+      handleClick,
+      occupiedUser
     } = this.props;
-
-
     const mstyle = classNames({ red: occupied, green: !occupied });
     return (
       <div className="card-box">
@@ -82,7 +81,12 @@ class SpaceCard extends Component {
             <Card.Header>{name}</Card.Header>
             <Card.Meta />
             <Card.Description>{category}</Card.Description>
-            <Card.Description>{description}</Card.Description>
+            { !occupied ? (
+              <Card.Description>{description}</Card.Description>
+            ) : (<>
+              <Card.Description>{description}</Card.Description>
+              <Card.Description>Currently Occupied by {occupiedUser.username}</Card.Description>
+            </>)}
           </Card.Content>
           <Card.Content extra>
             <a>
