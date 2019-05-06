@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import '../styles/Profile.css';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import {DescriptionList, List, FormLayout} from '@shopify/polaris';
+import PageContainer from '../components/PageContainer';
+
 
 
 class Profile extends Component {
@@ -35,26 +38,35 @@ class Profile extends Component {
     }
     
     return (
-      <div >
+      <FormLayout>
+      <FormLayout.Group>
         <div className="main">
-          <div className="card">
-            <img className="picture"
+          <div className="profileCard">
+            <img className="profilePicture"
               src={imageUrl}
             />
           </div>
-          <div className="card">
-            <div>
-              Username: {username} 
-            </div>
-            <div>
-              Email: {email}
-            </div>
-            <div>
-              Description: {description}
-            </div>
-          </div>
         </div>
-      </div>
+        <div className="profileDescription">
+        <DescriptionList  className="main"
+            items={[
+              {
+                term: 'Username',
+                description: username,
+              },
+              {
+                term: 'email',
+                description: email,
+              },
+              {
+                term: 'Description',
+                description: description,
+              },
+            ]}
+        />
+        </div>
+      </FormLayout.Group>
+      </FormLayout>
     );
   }
 }

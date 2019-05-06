@@ -1,4 +1,4 @@
-/* .card{
+ /*.profileCard{
     height: 300px;
     float: left;
     width: 300px;
@@ -16,11 +16,18 @@
     margin-left: auto;
 }
 
-.visited{
-    float: left;
-    margin-left: auto;
-    margin-right: auto;
+.profileDescription{
+    width: 300px;
+}*/
 
+.profilePicture{
+    width: 350px;
+    height: 300px;
 
-    
-} */
+}
+
+.profileDescription{
+    border-style: solid;
+    width: 350px;
+    height: 300px
+}
