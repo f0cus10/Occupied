@@ -23,7 +23,7 @@ export default class PageLayout extends Component {
     this.toggleState("isLoading");
     let currentHref = window.location.href.split('/');
     currentHref = currentHref.slice(-1);
-    if (!href.includes(currentHref)) {
+    if (!href.toLowerCase().includes(currentHref[0].toLowerCase())) {
       this.setState({ isRedirect: href })
     }
   }
@@ -133,7 +133,7 @@ export default class PageLayout extends Component {
           'http://occupiedvr.com/wordpress/wp-content/uploads/2018/07/occupiedVR_logo_WHITE-01.png',
         contextualSaveBarSource:
           'http://occupiedvr.com/wordpress/wp-content/uploads/2018/07/occupiedVR_logo_WHITE-01.png',
-        url: 'https://google.com',
+        url: 'http://occupied-app.herokuapp.com/',
         accessibilityLabel: 'Occupied',
       },
     };
