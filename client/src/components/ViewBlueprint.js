@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
 import PageContainer from "./PageContainer";
-import {Card, Label, List, ResourceList, TextStyle, Select, Tabs, Avatar, TextField, Button, Toast} from '@shopify/polaris';
+import {ExceptionList, Card, Label, List, ResourceList, TextStyle, Select, Tabs, Avatar, TextField, Button, Toast} from '@shopify/polaris';
+import { Bar } from 'react-chartjs-2';
+import { format, compareDesc } from 'date-fns';
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -23,7 +25,8 @@ class ViewBlueprint extends Component {
       users: [],
       inviteUser: '',
       showToast: false,
-      toastMessage: ''
+      toastMessage: '',
+      dateSelected: 'monday'
     };
   }
   componentDidMount() {
@@ -35,11 +38,17 @@ class ViewBlueprint extends Component {
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          this.setState({ blueprint: res.data, users: res.data.users });
+          let visits = res.data.visits.map(v => {
+            return {
+              ...v,
+              spaceName: res.data.spaces.find(s => s.id === v.spaceId).name,
+              userName: res.data.users.find(u => u.id === v.userId).username,
+            }
+          })
+          this.setState({ blueprint: res.data, users: res.data.users, spaces: res.data.spaces, visits });
           if (res.data.spaces.length === 0) {
             this.setState({ message: "NOBODY HERE" });
           }
-          this.setState({ spaces: this.state.blueprint.spaces });
           this.handleSortByAll();
         } else {
           this.setState({ message: "ERROR FETCHING BLUEPRINT" });
@@ -135,13 +144,16 @@ class ViewBlueprint extends Component {
       sortedCards
     } = this.state;
 
+
+
     for (let i in sortByCategory) {
       sortByCategory[i] = sortByCategory[i].map(space => {
         return (
           <SpaceCard
             username={username}
             handleOccupy={this.handleOccupy}
-            id={space.space_id}
+            handleToast={(val) => this.setState({ showToast : !this.state.showToast , toastMessage: val })}
+            id={space.id}
             name={space.name}
             imageUrl={space.imageUrl}
             location={space.location}
@@ -167,100 +179,159 @@ class ViewBlueprint extends Component {
       );
     }
 
-    const { selected } = this.state;
+    const { selected, dateSelected } = this.state;
 
     const tabs = [
       {
-        id: 'all-blueprints',
-        content: 'Blueprints',
-        render: (<div>
-          <Grid celled>
-            <Grid.Row>
-              <Grid.Column width={5}>
-                <div className="dropdown">
-                  <select
-                    onChange={e => {
-                      this.setState({ category: e.target.value });
-                      this.handleSort(e);
-                    }}
-                    name="one"
-                    className="dropdown-select"
-                    text="Sort By"
-                  >
-                    <option value="Categories">Categories</option>
-                    <option value="Bathroom">Bathroom</option>
-                    <option value="Study Room">Study Room</option>
-                    <option value="Conference Room">
-                      Conference Room
-                    </option>
-                    <option value="Classroom">Classroom</option>
-                    <option value="Library">Library</option>
-                  </select>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row />
-            <Grid.Row>{cat}</Grid.Row>
-          </Grid>
-        </div>),
-        accessibilityLabel: 'All customers',
-        panelID: 'all-customers-content',
+        id: "all-blueprints",
+        content: "Blueprints",
+        render: (
+          <div>
+            <Grid celled>
+              <Grid.Row>
+                <Grid.Column width={5}>
+                  <div className="dropdown">
+                    <select
+                      onChange={e => {
+                        this.setState({ category: e.target.value });
+                        this.handleSort(e);
+                      }}
+                      name="one"
+                      className="dropdown-select"
+                      text="Sort By"
+                    >
+                      <option value="Categories">Categories</option>
+                      <option value="Bathroom">Bathroom</option>
+                      <option value="Study Room">Study Room</option>
+                      <option value="Conference Room">
+                        Conference Room
+                      </option>
+                      <option value="Classroom">Classroom</option>
+                      <option value="Library">Library</option>
+                    </select>
+                  </div>
+                </Grid.Column>
+              </Grid.Row>
+              <Grid.Row />
+              <Grid.Row>{cat}</Grid.Row>
+            </Grid>
+          </div>
+        ),
+        accessibilityLabel: "All customers",
+        panelID: "all-customers-content"
       },
       {
-        id: 'members-tab',
-        content: 'Members',
-        render: (<div>
-          <TextField
-            label="Invite Member"
-            value={this.state.inviteUser}
-            onChange={(val) => this.setState({ inviteUser : val })}
-            placeholder="CoolGuy420"
-            onBlur={() => this.handleInviteBlur(this.state.inviteUser)}
-          />
-          <ResourceList
-            resourceName={{singular: 'memeber', plural: 'members'}}
-            items={this.state.users.map(m => {
-              return {
-                id: m.id,
-                url: m.imageUrl,
-                name: m.username,
-                location: m.description
-              }
-            })}
-            renderItem={(item) => {
-              const {id, url, name, location} = item;
-              const media = <Avatar customer size="medium" name={name} />;
+        id: "members-tab",
+        content: "Members",
+        render: (
+          <div>
+            <TextField
+              label="Invite Member"
+              value={this.state.inviteUser}
+              onChange={val => this.setState({ inviteUser: val })}
+              placeholder="CoolGuy420"
+              onBlur={() => this.handleInviteBlur(this.state.inviteUser)}
+            />
+            <ResourceList
+              resourceName={{ singular: "memeber", plural: "members" }}
+              items={this.state.users.map(m => {
+                return {
+                  id: m.id,
+                  url: m.imageUrl,
+                  name: m.username,
+                  location: m.description
+                };
+              })}
+              renderItem={item => {
+                const { id, url, name, location } = item;
+                const media = <Avatar customer size="medium" name={name} />;
 
-              return (
-                <ResourceList.Item
-                  id={id}
-                  url={url}
-                  media={media}
-                  accessibilityLabel={`View details for ${name}`}
-                >
-                  <h3>
-                    <TextStyle variation="strong">{name}</TextStyle>
-                  </h3>
-                  <div>{location}</div>
-                </ResourceList.Item>
-              );
-            }}
-          />
-        </div>),
-        panelID: 'members',
+                return (
+                  <ResourceList.Item
+                    id={id}
+                    url={url}
+                    media={media}
+                    accessibilityLabel={`View details for ${name}`}
+                  >
+                    <h3>
+                      <TextStyle variation="strong">{name}</TextStyle>
+                    </h3>
+                    <div>{location}</div>
+                  </ResourceList.Item>
+                );
+              }}
+            />
+          </div>
+        ),
+        panelID: "members"
       },
       {
-        id: 'statistics-page',
-        content: 'Statistics',
-        render: (<h1> Statistics </h1>),
-        panelID: 'statistics',
+        id: "statistics-page",
+        content: "Statistics",
+        render: (
+          <div>
+            <h1> Statistics </h1>
+            <Card title="Popular Times">
+              <Select
+                label="Date range"
+                options={[
+                  { label: "Mondays", value: "monday" },
+                  { label: "Tuesdays", value: "tuesday" },
+                  { label: "Wednesdays", value: "wednesday" },
+                  { label: "Thursdays", value: "thursday" },
+                  { label: "Fridays", value: "friday" },
+                  { label: "Saturdays", value: "saturday" },
+                  { label: "Sunday", value: "sunday" }
+                ]}
+                value={dateSelected}
+                onChange={val => this.setState({ dateSelected: val })}
+              />
+              <Bar
+                data={{
+                  labels: [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday"
+                  ],
+                  datasets: [
+                    {
+                      // label: 'Days',
+                      backgroundColor: "rgba(255,99,132,0.2)",
+                      borderColor: "rgba(255,99,132,1)",
+                      borderWidth: 1,
+                      hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                      hoverBorderColor: "rgba(255,99,132,1)",
+                      data: [65, 59, 80, 81, 56, 55, 40]
+                    }
+                  ]
+                }}
+                width={150}
+                height={100}
+                options={{
+                  maintainAspectRatio: false
+                }}
+              />
+            </Card>
+          </div>
+        ),
+        panelID: "statistics"
       },
       {
-        id: 'scheduling-page',
-        content: 'Scheduling',
-        render: (<h1> Scheduling </h1>),
-        panelID: 'scheduling',
-      },
+        id: "scheduling-page",
+        content: "Scheduling",
+        render: (
+          <div>
+            <ExceptionList
+              items={this.state.visits ? this.state.visits.map(v => ({ to: v.to, icon: 'calendar', description: `${v.userName} visited ${v.spaceName} from ${format(new Date(v.from), 'ddd MM/DD HH:MM')} to ${format(new Date(v.to), 'ddd MM/DD HH:MM')}`})).reverse() : []}
+            />
+          </div>
+        ),
+        panelID: "scheduling"
+      }
     ];
 
     const { showToast, toastMessage } = this.state;

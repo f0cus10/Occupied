@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Toast } from '@shopify/polaris';
 import "../styles/SpaceCard.css";
 
 class SpaceCard extends Component {
@@ -15,41 +14,8 @@ class SpaceCard extends Component {
     this.state = {
       isGreen: true,
       curStyle: {},
-      text: "Occupy",
-      showToast: true,
-      toastMessage: 'Hello'
-    };
-    this.handleColor = this.handleColor.bind(this);
-  }
-
-  toggleToast = (toastMessage) => {
-    this.setState(({showToast}) => ({showToast: !showToast, toastMessage}));
-  };
-
-  handleColor() {
-    const { isGreen } = this.state;
-    console.log(this.state);
-    const occupiedStyle = {
-      "background-color": "rgba(255, 0, 0, 0.6)"
-    };
-
-    const vacantStyle = {
-      "background-color": "rgba(76, 175, 80, 0.6)",
       text: "Occupy"
     };
-    if (isGreen) {
-      this.setState({
-        curStyle: occupiedStyle,
-        isGreen: !isGreen,
-        text: "Occupied"
-      });
-    } else {
-      this.setState({
-        curStyle: vacantStyle,
-        isGreen: !isGreen,
-        text: "Occupy"
-      });
-    }
   }
 
   handleOccupy = () => {
@@ -62,12 +28,31 @@ class SpaceCard extends Component {
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          this.toggleToast('Successfully occupied!')
+          this.props.handleToast('Successfully occupied!')
         }
       })
       .catch(err => {
         console.log(err);
-        this.toggleToast(err);
+        this.props.handleToast(String(err));
+      });
+  };
+
+  handleFinished = () => {
+    const { id, username } = this.props;
+    axios.post(
+        "../api/space/finished",
+        { spaceId: id, username },
+        { headers: { "access-token": Cookies.get("token") } }
+      )
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.props.handleToast('Successfully finished!')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.props.handleToast(String(err));
       });
   };
 
@@ -80,20 +65,14 @@ class SpaceCard extends Component {
       imageUrl,
       id,
       description,
-      handleClick,
-      showToast,
-      toastMessage
+      handleClick
     } = this.props;
 
 
     const mstyle = classNames({ red: occupied, green: !occupied });
-    const toastMarkup = showToast ? (
-      <Toast content={toastMessage} onDismiss={() => {this.toggleToast("");window.location.reload()}} />
-    ) : null;
     return (
       <div className="card-box">
         <Card className={mstyle}>
-          {toastMarkup}
           { !occupied ? (
             <Image src={imageUrl} className="card-image" />
           ) : (
@@ -111,13 +90,18 @@ class SpaceCard extends Component {
               {occupied}
             </a>
             <div>
-              <Link to="/view">View </Link>
+              {/* <Link to="/view">View </Link> */}
               {/* {isAdminOf.includes(id) && <Link to="/edit">Edit </Link>} */}
             </div>
-            <button onClick={() => this.handleOccupy()}>
-              {" "}
-              {this.state.text}{" "}
-            </button>
+            { !occupied ? (
+              <button onClick={() => this.handleOccupy()}>
+                Occupy
+              </button>
+            ) : (
+              <button onClick={() => this.handleFinished()}>
+                Finished
+              </button>
+            )}
           </Card.Content>
         </Card>
       </div>

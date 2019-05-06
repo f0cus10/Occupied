@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blueprint, User, Space } = require('../models');
+const { Blueprint, User, Space, Visit } = require('../models');
 const { Op } = require('sequelize');
 
 router.get('/all', async (req, res, next) => {
@@ -233,6 +233,8 @@ router.get('/:id', async (req, res) => {
         model: User
       }, {
         model: Space
+      }, {
+        model: Visit
       }]
     });
     if (found) {

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Space, User, Blueprint } = require('../models');
+const { Space, User, Blueprint, Visit } = require('../models');
 const { Op } = require('sequelize');
 
 /**
@@ -10,12 +10,9 @@ async function findBlueprint(spaceID){
   // find the space through an async call
   const space = await Space.findOne({
     where: {
-      space_id: spaceID,
+      id: spaceID,
     }
   })
-  if (space.occupied){
-    return null;
-  }
   //wait for the blueprint
   const blueprint = await space.getBlueprint();
   return blueprint;
@@ -65,7 +62,7 @@ router.post('/occupy', async(req, res) => {
       // values = [Blueprint, User]
       const result = await values[0].hasUser(values[1]);
       if (result){
-        const updatePromise = Space.update({ occupied: true, userId: values[1].id }, {where: {space_id: spaceId, occupied: false }});
+        const updatePromise = Space.update({ occupiedStart: new Date(), occupied: true, userId: values[1].dataValues.id }, {where: {id : spaceId, occupied: false }});
         res.json({
           occupied: true,
           message: "Successfully Occupied",
@@ -105,7 +102,15 @@ router.post('/finished', async (req, res) => {
       // values = [Blueprint, User]
       const result = await values[0].hasUser(values[1]);
       if (result){
-        const updatePromise = Space.update({ occupied: false, userId: null }, {where: {space_id: spaceId }});
+        const thisSpace = await Space.findOne({ where : { id : spaceId }});
+        const newVisit = await Visit.create({
+          from: thisSpace.dataValues.occupiedStart,
+          to: new Date(),
+          blueprintId: values[0].dataValues.id,
+          spaceId: thisSpace.dataValues.id,
+          userId: values[1].dataValues.id
+        });
+        const updatePromise = await Space.update({ occupied: false, userId: null, occupiedStart: null }, {where: {id: spaceId }});
         res.json({
           occupied: false,
           message: "Successfully Unoccupied",
@@ -114,6 +119,7 @@ router.post('/finished', async (req, res) => {
       }
     })
   } catch (err) {
+    console.log(err);
     res.statusCode(404).json({
       occupied: true,
       message: err,

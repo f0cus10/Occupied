@@ -18,7 +18,8 @@ const sequelize = new Sequelize('defaultdb', 'doadmin', process.env.PGPASSWORD, 
 const db = {
   User: sequelize.import('./user.js'),
   Blueprint: sequelize.import('./blueprint.js'),
-  Space: sequelize.import('./space.js')
+  Space: sequelize.import('./space.js'),
+  Visit: sequelize.import('./visit.js')
 }
 
 /*
