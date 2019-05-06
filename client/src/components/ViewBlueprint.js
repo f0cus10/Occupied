@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
 import PageContainer from "./PageContainer";
-import {Card, Label, Select, Tabs} from '@shopify/polaris';
+import {Card, Label, List, ResourceList, TextStyle, Select, Tabs, Avatar, TextField, Button, Toast} from '@shopify/polaris';
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -19,7 +19,11 @@ class ViewBlueprint extends Component {
       spaces: [],
       sortByCategory: {},
       category: "Categories",
-      sortedCards: []
+      sortedCards: [],
+      users: [],
+      inviteUser: '',
+      showToast: false,
+      toastMessage: ''
     };
   }
   componentDidMount() {
@@ -31,7 +35,7 @@ class ViewBlueprint extends Component {
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          this.setState({ blueprint: res.data });
+          this.setState({ blueprint: res.data, users: res.data.users });
           if (res.data.spaces.length === 0) {
             this.setState({ message: "NOBODY HERE" });
           }
@@ -101,6 +105,25 @@ class ViewBlueprint extends Component {
     this.setState({selected: selectedTabIndex});
   };
 
+  handleInviteBlur = async (name) => {
+    var yes = window.confirm(`Are you sure you want to invite ${name}`)
+    if (yes) {
+      try {
+        const res = await axios.post(`/api/blueprint/invite`, {
+          ownerId: this.props.data.id,
+          blueprintId: this.props.blueprintId,
+          username: name
+        }, {headers: { "access-token": Cookies.get("token") }});
+        if (res.status === 201) {
+          // this.toggleToast('Successfully invited ' + name);
+          this.setState({ showToast : !this.state.showToast , toastMessage: 'Successfully invited ' + name })
+        }
+      } catch (err) {
+        this.setState({ showToast : !this.state.showToast , toastMessage: String(err) })
+      }
+    }
+  }
+
   render() {
     const { data } = this.props;
     const { username, id } = data;
@@ -113,19 +136,21 @@ class ViewBlueprint extends Component {
     } = this.state;
 
     for (let i in sortByCategory) {
-      sortByCategory[i] = sortByCategory[i].map(space => (
-        <SpaceCard
-          username={username}
-          handleOccupy={this.handleOccupy}
-          id={space.spaces_id}
-          name={space.name}
-          imageUrl={space.imageUrl}
-          location={space.location}
-          category={space.category}
-          occupied={space.occupied}
-          description={space.description}
-        />
-      ));
+      sortByCategory[i] = sortByCategory[i].map(space => {
+        return (
+          <SpaceCard
+            username={username}
+            handleOccupy={this.handleOccupy}
+            id={space.space_id}
+            name={space.name}
+            imageUrl={space.imageUrl}
+            location={space.location}
+            category={space.category}
+            occupied={space.occupied}
+            description={space.description}
+          />
+        );
+      });
     }
 
     let cat = [];
@@ -142,9 +167,13 @@ class ViewBlueprint extends Component {
       );
     }
 
-    return (
-      <PageContainer title="View Blueprint">
-        <Card>
+    const { selected } = this.state;
+
+    const tabs = [
+      {
+        id: 'all-blueprints',
+        content: 'Blueprints',
+        render: (<div>
           <Grid celled>
             <Grid.Row>
               <Grid.Column width={5}>
@@ -158,10 +187,12 @@ class ViewBlueprint extends Component {
                     className="dropdown-select"
                     text="Sort By"
                   >
-                    <option value="Categories">Categories </option>
+                    <option value="Categories">Categories</option>
                     <option value="Bathroom">Bathroom</option>
                     <option value="Study Room">Study Room</option>
-                    <option value="Conference Room">Conference Room</option>
+                    <option value="Conference Room">
+                      Conference Room
+                    </option>
                     <option value="Classroom">Classroom</option>
                     <option value="Library">Library</option>
                   </select>
@@ -171,6 +202,89 @@ class ViewBlueprint extends Component {
             <Grid.Row />
             <Grid.Row>{cat}</Grid.Row>
           </Grid>
+        </div>),
+        accessibilityLabel: 'All customers',
+        panelID: 'all-customers-content',
+      },
+      {
+        id: 'members-tab',
+        content: 'Members',
+        render: (<div>
+          <TextField
+            label="Invite Member"
+            value={this.state.inviteUser}
+            onChange={(val) => this.setState({ inviteUser : val })}
+            placeholder="CoolGuy420"
+            onBlur={() => this.handleInviteBlur(this.state.inviteUser)}
+          />
+          <ResourceList
+            resourceName={{singular: 'memeber', plural: 'members'}}
+            items={this.state.users.map(m => {
+              return {
+                id: m.id,
+                url: m.imageUrl,
+                name: m.username,
+                location: m.description
+              }
+            })}
+            renderItem={(item) => {
+              const {id, url, name, location} = item;
+              const media = <Avatar customer size="medium" name={name} />;
+
+              return (
+                <ResourceList.Item
+                  id={id}
+                  url={url}
+                  media={media}
+                  accessibilityLabel={`View details for ${name}`}
+                >
+                  <h3>
+                    <TextStyle variation="strong">{name}</TextStyle>
+                  </h3>
+                  <div>{location}</div>
+                </ResourceList.Item>
+              );
+            }}
+          />
+        </div>),
+        panelID: 'members',
+      },
+      {
+        id: 'statistics-page',
+        content: 'Statistics',
+        render: (<h1> Statistics </h1>),
+        panelID: 'statistics',
+      },
+      {
+        id: 'scheduling-page',
+        content: 'Scheduling',
+        render: (<h1> Scheduling </h1>),
+        panelID: 'scheduling',
+      },
+    ];
+
+    const { showToast, toastMessage } = this.state;
+
+    const toastMarkup = showToast ? (
+      <Toast content={toastMessage} onDismiss={() => {this.setState({ showToast: false });window.location.reload()}} />
+    ) : null;
+
+    return (
+      <PageContainer title={blueprint.name}>
+        {toastMarkup}
+        <Card>
+          <Tabs
+            tabs={tabs}
+            selected={selected}
+            onSelect={this.handleTabChange}
+          >
+            <Card>
+              <Card.Section title={tabs[selected].content}>
+              {/* <p>Tab {selected} selected</p> */}
+              {tabs[selected].render}
+              </Card.Section>
+            </Card>
+          </Tabs>
         </Card>
       </PageContainer>
     );

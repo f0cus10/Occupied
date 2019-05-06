@@ -116,19 +116,25 @@ router.post('/join/', async(req, res) => {
 });
 
 // only the owner of 
-router.post('/invite', async(req, res) => {
+router.post('/invite/', async(req, res) => {
   const { ownerId, blueprintId, userId, username } = req.body;
+  console.log('req.body')
+  console.log(req.body)
   try {
     const foundUser = await User.findOne({
       where: {
         [Op.or]: [{id: userId}, {username}]
       }
     });
+    console.log('foundUser')
+    console.log(foundUser)
     const foundBlueprint = await Blueprint.findOne({
       where: {
         id: blueprintId
       }
     });
+    console.log('foundBlueprint')
+    console.log(foundBlueprint)
     // makes sure that the blueprint and user exists first
     if (foundUser && foundBlueprint) {
       //makes sure that the person inviting is the owner
@@ -136,7 +142,7 @@ router.post('/invite', async(req, res) => {
         await foundBlueprint.addUser(foundUser);
         res.sendStatus(201);
       } else {
-        res.sendStatus(404)
+        res.status(401).send('Error: you are not the owner!');
       }
     } else {
       res.sendStatus(404);
