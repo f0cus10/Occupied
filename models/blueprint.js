@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
   Blueprint.associate = (models) => {
     // Blueprint can have many Spaces. One-To-Many associations.
     Blueprint.hasMany(models.Space);
+    Blueprint.hasMany(models.Visit);
     //A user can be part of many blueprints
     Blueprint.belongsToMany(models.User, {
       through    : 'member',

@@ -1,17 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Space = sequelize.define('space', {
-    space_id: {
-      type: DataTypes.UUID,
-      primaryKey: true,
-      defaultValue: DataTypes.UUIDV1,
-      validate: {
-        isUUID:{
-          args: 1,
-          msg: "Must be a valid UUIDv1",
-        },
-      },
-    },
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -34,20 +23,19 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "",
     },
 
-      category: {
-        type: DataTypes.STRING,
-        defaultValue: ""
-      },
+    occupiedStart: {
+      type: DataTypes.DATE,
+    },
 
-      occupied: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false
-      },
+    occupied: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
 
-      imageUrl: {
-        type: DataTypes.STRING,
-        defaultValue: ""
-      }
+    imageUrl: {
+      type: DataTypes.STRING,
+      defaultValue: ""
+    }
     },
     {
       timestamps: false

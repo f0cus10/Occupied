@@ -2,11 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./models');
-const { User, Blueprint, Space } = require('./models');
+const { User, Blueprint, Space, Visit } = require('./models');
 const dummyUsers = require('./dummy/users.json');
 const dummyBlueprints = require('./dummy/blueprints.json');
 const dummySpaces = require('./dummy/spaces.json');
+const dummyVisits = require('./dummy/visits.json');
 const dummyAssociations = require('./dummy/associations.json');
+const { endOfTomorrow } = require('date-fns');
 
 const app = express();
 db.sequelize.sync({ force: true }).then(() => console.log('synced!'));
@@ -26,6 +28,10 @@ app.get('*', function(req, res) {
             const users = await User.bulkCreate(dummyUsers);
             const blueprints = await Blueprint.bulkCreate(dummyBlueprints);
             const spaces = await Space.bulkCreate(dummySpaces);
+            const visits = await Visit.bulkCreate(dummyVisits);
+
+            // const visit = await Visit.create({ from: new Date(), to: endOfTomorrow() });
+
             const { userToBlueprint, blueprintToSpace, userToSpace } = dummyAssociations;
             for (let a of userToBlueprint) {
                 const { user, blueprint } = a;
