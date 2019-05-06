@@ -27,7 +27,8 @@ class ViewBlueprint extends Component {
       inviteUser: '',
       showToast: false,
       toastMessage: '',
-      dateSelected: 'monday'
+      dateSelected: 'monday',
+      spaceSelected: 'Hunter bathoomroom'
     };
   }
   componentDidMount() {
@@ -175,8 +176,6 @@ class ViewBlueprint extends Component {
       sortedCards
     } = this.state;
 
-
-
     for (let i in sortByCategory) {
       sortByCategory[i] = sortByCategory[i].map(space => {
         const { users } = this.state;
@@ -212,7 +211,7 @@ class ViewBlueprint extends Component {
       );
     }
 
-    const { selected, dateSelected } = this.state;
+    const { selected, dateSelected, spaceSelected } = this.state;
 
     const tabs = [
       {
@@ -282,7 +281,7 @@ class ViewBlueprint extends Component {
                 return (
                   <ResourceList.Item
                     id={id}
-                    url={url}
+                    url={`http://occupied-app.herokuapp.com/Profile/${id}`}
                     media={media}
                     accessibilityLabel={`View details for ${name}`}
                   >
@@ -305,6 +304,17 @@ class ViewBlueprint extends Component {
           <div>
             <h1> Statistics </h1>
             <Card title="Popular Times">
+              <Select
+                label="Space"
+                options={this.state.spaces.map(s => {
+                  return {
+                    label: s.name,
+                    value: s.name
+                  }
+                })}
+                value={spaceSelected}
+                onChange={val => this.setState({ spaceSelected : val })}
+              />
               <Select
                 label="Date range"
                 options={[
