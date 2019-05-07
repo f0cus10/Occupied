@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { loginAuth, setWarning, setAuth } from '../store';
 import Cookies from 'js-cookie';
 import Modal from '../components/Modal';
-import { DisplayText } from '@shopify/polaris';
+import { DisplayText, InlineError } from '@shopify/polaris';
 import '../styles/Login.css';
 
 class Login extends Component {
@@ -26,7 +26,7 @@ class Login extends Component {
       <div className="login-page">
         <DisplayText size="extraLarge"> Occupied Login </DisplayText>
         <div className="form">
-          <h2> {warning} </h2>
+          <InlineError message={warning} fieldId="login" />
           <form className="register-form">
             <input type="text" placeholder="name" />
             <input type="password" placeholder="password" />
