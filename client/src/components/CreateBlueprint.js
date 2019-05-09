@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Card, TextField, FormLayout, Layout, Select, Button, Form} from "@shopify/polaris";
+import { Card, TextField, FormLayout, Banner, Layout, Select, Button, Form} from "@shopify/polaris";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import '../styles/CreateBlueprint.css';
@@ -56,7 +56,15 @@ class CreateBlueprint extends Component {
     return (
       <Card className="CBcard" title="Create Blueprint" sectioned>
         <PageContainer title="">
-          <h3 className="warning"> {message} </h3>
+          { message ? (
+            <Banner
+            title={message}
+            onDismiss={()=>{}}
+            status = {message === 'Create Successfull!' ? "success": "critical"}
+            >
+            </Banner>
+          ) : null 
+          }
           <Form className="blueprint"
             onSubmit={() =>
               this.createBlueprint(
