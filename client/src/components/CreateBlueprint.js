@@ -58,7 +58,7 @@ class CreateBlueprint extends Component {
           { message ? (
             <Banner
             title={message}
-            onDismiss={()=>{}}
+            onDismiss={()=> {this.setState({message: null})}}
             status = {message === 'Create Successfull!' ? "success": "critical"}
             >
             </Banner>
