@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Card, TextField, FormLayout, Layout, Select, Button, Form} from "@shopify/polaris";
-import axios from 'axios';
+import { Card, TextField, FormLayout, Select, Button, Form} from "@shopify/polaris";
 import Cookies from 'js-cookie';
 import '../styles/CreateBlueprint.css';
 import PageContainer from '../components/PageContainer';
