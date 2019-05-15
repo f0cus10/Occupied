@@ -52,7 +52,15 @@ class CreateBlueprint extends Component {
     return (
       <Card className="CBcard" title="Create Blueprint" sectioned>
         <PageContainer title="">
-          <h3 className="warning"> {message} </h3>
+          { message ? (
+            <Banner
+            title={message}
+            onDismiss={()=> {this.setState({message: null})}}
+            status = {message === 'Create Successfull!' ? "success": "critical"}
+            >
+            </Banner>
+          ) : null 
+          }
           <Form className="blueprint"
             onSubmit={() =>
               this.createBlueprint(
