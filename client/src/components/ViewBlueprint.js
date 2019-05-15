@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import SpaceCard from "./SpaceCard";
-import { Link } from "react-router-dom";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
 import PageContainer from "./PageContainer";
-import {ExceptionList, Card, Label, List, ResourceList, TextStyle, Select, Tabs, Avatar, TextField, Button, Toast} from '@shopify/polaris';
+import {ExceptionList, Card, ResourceList, TextStyle, Select, Tabs, Avatar, TextField,Toast} from '@shopify/polaris';
 import { Bar } from 'react-chartjs-2';
-import { format, compareDesc } from 'date-fns';
+import { format } from 'date-fns';
 
 class ViewBlueprint extends Component {
   constructor(props) {
@@ -56,7 +55,6 @@ class ViewBlueprint extends Component {
             'thursday': [0,0,0,0,0,0],
             'friday': [0,0,0,0,0,0],
             'saturday': [0,0,0,0,0,0],
-            'sunday': [0,0,0,0,0,0]
           }
           visits.forEach(v => {
             var d = new Date(v.from);
@@ -100,9 +98,7 @@ class ViewBlueprint extends Component {
   };
 
   handleSortByCategory = category => {
-    const { data } = this.props;
-    const { username, id } = data;
-    const { spaces, sortByCategory } = this.state;
+    const { spaces } = this.state;
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
@@ -121,9 +117,7 @@ class ViewBlueprint extends Component {
   };
 
   handleSortByAll() {
-    const { data } = this.props;
-    const { username, id } = data;
-    const { message, blueprint, spaces, sortByCategory } = this.state;
+    const { spaces } = this.state;
     let categories = [];
     let dict = {};
     spaces.forEach(space => {
@@ -156,7 +150,6 @@ class ViewBlueprint extends Component {
           username: name
         }, {headers: { "access-token": Cookies.get("token") }});
         if (res.status === 201) {
-          // this.toggleToast('Successfully invited ' + name);
           this.setState({ showToast : !this.state.showToast , toastMessage: 'Successfully invited ' + name })
         }
       } catch (err) {
@@ -167,13 +160,10 @@ class ViewBlueprint extends Component {
 
   render() {
     const { data } = this.props;
-    const { username, id } = data;
+    const { username} = data;
     const {
-      message,
       blueprint,
-      spaces,
-      sortByCategory,
-      sortedCards
+      sortByCategory
     } = this.state;
 
     for (let i in sortByCategory) {
@@ -392,7 +382,6 @@ class ViewBlueprint extends Component {
           >
             <Card>
               <Card.Section title={tabs[selected].content}>
-              {/* <p>Tab {selected} selected</p> */}
               {tabs[selected].render}
               </Card.Section>
             </Card>
