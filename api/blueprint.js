@@ -1,7 +1,17 @@
 const router = require('express').Router();
+const _ = require('lodash');
 const { Blueprint, User, Space, Visit } = require('../models');
 const { Op } = require('sequelize');
-const { errorHandler } = require('./auth');
+
+//TODO: Group this into a util function folder
+//Error handler
+const errorHandler = (err, models) => {
+  if (err instanceof models.sequelize.ValidationError){
+    //use lodash to pick between the key-value pairs in the object
+    return err.errors.map(x => _.pick(x, ['path', 'message']));
+  }
+  return [{ path: 'blueprint', message: 'Unknown Error' }];
+}
 
 router.get('/all', async (req, res, next) => {
   try {
@@ -191,18 +201,27 @@ router.post('/create', async (req, res) => {
       }
     });
     if (found) {
-      const newBlueprint = await Blueprint.create({
-        name, description, category, imageUrl, isPublic, address
-      })
-      const adminPromise = found.addBlueprint(newBlueprint);
-      const memberPromise = newBlueprint.addUser(found);
-      const response = {
-        created: true,
-        errors: [{path: null, message: null}]
+      try{
+        const newBlueprint = await Blueprint.create({
+          name, description, category, imageUrl, isPublic, address
+        })
+        const adminPromise = found.addBlueprint(newBlueprint);
+        const memberPromise = newBlueprint.addUser(found);
+        const response = {
+          created: true,
+          errors: [{path: null, message: null}]
+        }
+        res.json(response);
+        await adminPromise;
+        await memberPromise;
       }
-      res.json(response);
-      await adminPromise;
-      await memberPromise;
+      catch (error){
+        const resObject = {
+          created: false,
+          errors: errorHandler(error, Blueprint),
+        }
+        res.json(resObject);
+      }
     } else {
       const response = {
         created: false,
@@ -214,7 +233,7 @@ router.post('/create', async (req, res) => {
     console.error(err);
     const resObject = {
       created: false,
-      errors: errorHandler(err, Blueprint),
+      errors: [{ path: 'database', message: 'Unknown database error' }],
     }
     res.json(resObject);
   }
