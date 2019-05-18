@@ -19,6 +19,10 @@ class CreateBlueprint extends Component {
   createBlueprint = async (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
     const { username, id } = this.props.data;  
     let data = { name, description, imageUrl, address, isPublic, userId: id, username, category};
+    //clear all the errors
+    this.setState({
+      message: null
+    })
     try{
       const response = await fetch('/api/blueprint/create',{
         method: 'POST',
@@ -28,6 +32,24 @@ class CreateBlueprint extends Component {
         },
         body: JSON.stringify(data)
       });
+
+      //Check response status
+      if(response.status !== 201){
+        this.setState({ message: "Something went wrong" });
+        console.log("Response message returned with invalid status");
+        return;
+      }
+
+      //if successfully created, notify the user
+      const { created, errors } = await response.json();
+      if (created){
+        this.setState({ message: "Create Succesful!"});
+      }
+      else{
+        const msg = `${errors[0].path}: ${errors[0].message}`
+        this.setState({ message: msg });
+      }
+      return;
     } catch (err){
       console.error(err);
     }
