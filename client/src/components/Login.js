@@ -23,13 +23,6 @@ class Login extends Component {
         <DisplayText size="extraLarge"> Occupied Login </DisplayText>
         <div className="form">
           <InlineError message={warning} fieldId="login" />
-          <form className="register-form">
-            <input type="text" placeholder="name" />
-            <input type="password" placeholder="password" />
-            <input type="text" placeholder="email address" />
-            <button>create</button>
-            <p className="message">Already registered? <a href="#">Sign In</a></p>
-          </form>
           <form onSubmit={setUsername} className="login-form">
             <input type="text" placeholder="Username" name="username" />
             <input type="password" placeholder="Password" name="password" />
