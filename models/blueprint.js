@@ -1,15 +1,14 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Blueprint = sequelize.define('blueprint', {
     name: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true,
+        notEmpty: {
+          args: true,
+          msg: "The name of the blueprint cannot be empty",
+        }
       }
-    },
-
-    address: {
-      type: DataTypes.STRING,
-      defaultValue: ''
     },
 
     description: {
