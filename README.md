@@ -5,11 +5,14 @@ It represents the structures (e.g. buildings, halls) as **Blueprints** and space
 
 ## Installation
 
-To start hosting your own local setup, you'll need the following prerequisites
+<details><summary> PREREQUISITES </summary>
+<p>
 * Node.JS + NPM
 * PostgreSQL
 * 512 bit (Public, Private) pair
 * Environment Variables
+</p>
+</details>
 
 After gathering all the dependencies,
 
