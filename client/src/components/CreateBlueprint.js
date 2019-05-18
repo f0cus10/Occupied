@@ -34,7 +34,7 @@ class CreateBlueprint extends Component {
       });
 
       //Check response status
-      if(response.status !== 201){
+      if(response.status !== 200){
         this.setState({ message: "Something went wrong" });
         console.log("Response message returned with invalid status");
         return;
@@ -43,10 +43,10 @@ class CreateBlueprint extends Component {
       //if successfully created, notify the user
       const { created, errors } = await response.json();
       if (created){
-        this.setState({ message: "Create Succesful!"});
+        this.setState({ message: "Create Successful!"});
       }
       else{
-        const msg = `${errors[0].path}: ${errors[0].message}`
+        const msg = `${errors[0].path}: ${errors[0].message}`;
         this.setState({ message: msg });
       }
       return;
