@@ -153,8 +153,25 @@ router.post('/invite/', async(req, res) => {
   }
 });
 
-// router.post('/schedule')
-
+/*
+ * a POST request to create a Blueprint in the database. This requires the user to be logged in
+ * @params: {userId, username, name, description, address, category, imageUrl, isPublic}
+ * @output: a JSON is sent in the following format
+ * 
+ * ------------------------ RESPONSE SCHEMATIC ----------------------------
+ * 
+ * {
+ *   created: boolean,
+ *   errors: [
+ *     {
+ *       path: String or null,
+ *       message: String or null
+ *     }
+ *   ]
+ * }
+ * 
+ * 
+ */
 router.post('/create', async (req, res) => {
   let {
     userId,
@@ -176,14 +193,28 @@ router.post('/create', async (req, res) => {
       const newBlueprint = await Blueprint.create({
         name, description, category, imageUrl, isPublic, address
       })
-      await found.addBlueprint(newBlueprint);
-      await newBlueprint.addUser(found);
-      res.sendStatus(201);
+      const adminPromise = found.addBlueprint(newBlueprint);
+      const memberPromise = newBlueprint.addUser(found);
+      const response = {
+        created: true,
+        errors: [{path: null, message: null}]
+      }
+      res.json(response);
+      await adminPromise;
+      await memberPromise;
     } else {
-      res.send(404);
+      const response = {
+        created: false,
+        errors: [{ path: 'user', message: 'User not found'}]
+      };
+      res.json(response);
     }
   } catch (err) {
     console.error(err);
+    const resObject = {
+      created: false,
+    }
+    res.json(resObject);
   }
 })
 
