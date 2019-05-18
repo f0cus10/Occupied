@@ -12,7 +12,7 @@ class CreateBlueprint extends Component {
       imageUrl:'',
       address:'',
       isPublic: false,
-      category:''
+      category:'School'
     }
   }
 
