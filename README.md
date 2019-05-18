@@ -8,10 +8,10 @@ It represents the structures (e.g. buildings, halls) as **Blueprints** and space
 <details>
     <summary> PREREQUISITES </summary>
 
-    * Node.JS + NPM
-    * PostgreSQL
-    * 512 bit (Public, Private) pair
-    * Environment Variables
+    ### Node.JS + NPM
+    ### PostgreSQL
+    ### 512 bit (Public, Private) pair
+    ### Environment Variables
 </details>
 
 After gathering all the dependencies,
