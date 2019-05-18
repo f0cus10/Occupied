@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Blueprint, User, Space, Visit } = require('../models');
 const { Op } = require('sequelize');
+const { errorHandler } = require('./auth');
 
 router.get('/all', async (req, res, next) => {
   try {
@@ -213,6 +214,7 @@ router.post('/create', async (req, res) => {
     console.error(err);
     const resObject = {
       created: false,
+      errors: errorHandler(err, Blueprint),
     }
     res.json(resObject);
   }
