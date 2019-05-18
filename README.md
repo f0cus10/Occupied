@@ -8,6 +8,8 @@ It represents the structures (e.g. buildings, halls) as **Blueprints** and space
 To start hosting your own local setup, you'll need the following prerequisites
 * Node.JS + NPM
 * PostgreSQL
+* 512 bit (Public, Private) pair
+* Environment Variables
 
 After gathering all the dependencies,
 
@@ -22,6 +24,29 @@ node app.js #This will start the backend
 cd client
 npm start #This will start the frontend
 ```
+**Optionally**,
+You could run `npm run dev` but output would be limited
+
 Currently, the build has been tested to work on `Ubuntu >= 18.04`. 
 
 ## Usage
+After running the script, navigate to http://localhost:3000 
+
+**NOTE**: If you have changed the frontend's PORT variable, navigate to that PORT instead. 
+
+## Folder structure
+
+The folders are arranged in the following fashion:
+
+.
++-- api
++-- client
+|   +-- public
+|   +-- src
++-- dummy
++-- models
++-- public.key
++-- private.key
++-- package.json
++-- package-lock.json
++-- app.js
