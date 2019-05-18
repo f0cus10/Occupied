@@ -35,12 +35,11 @@ Currently, the build has been tested to work on `Ubuntu >= 18.04`.
 ## Usage
 After running the script, navigate to http://localhost:3000 
 
-**NOTE**: If you have changed the frontend's PORT variable, navigate to that PORT instead. 
+**NOTE**: If you have changed the frontend's **PORT** variable, navigate to that **PORT** instead. 
 
 ## Folder structure
 
 The folders are arranged in the following fashion:
-
 .
 +-- api
 +-- client
@@ -53,3 +52,10 @@ The folders are arranged in the following fashion:
 +-- package.json
 +-- package-lock.json
 +-- app.js
+
+## LICENSE
+The License is an `MIT` License and applies to the work of all current, future, and past contributors who have worked on the repository
+
+## CONTRIBUTING
+
+***Coming Soon***
