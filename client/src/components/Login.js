@@ -3,14 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAuth, setWarning, setAuth } from '../store';
 import Cookies from 'js-cookie';
-import Modal from '../components/Modal';
 import { DisplayText, InlineError } from '@shopify/polaris';
 import '../styles/Login.css';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     if (Cookies.get('token')) {
       this.props.changeAuth()
