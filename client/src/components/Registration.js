@@ -42,7 +42,7 @@ class Registration extends PureComponent {
             description: firstName+lastName,
         };
         const res = await axios.post('/api/signup', data);
-        if (res.status != 201){
+        if (res.status !== 201){
             console.log("Something went wrong");
         }
 
