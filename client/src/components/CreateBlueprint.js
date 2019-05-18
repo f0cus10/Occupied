@@ -16,24 +16,21 @@ class CreateBlueprint extends Component {
     }
   }
 
-  createBlueprint = (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
+  createBlueprint = async (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
     const { username, id } = this.props.data;  
     let data = { name, description, imageUrl, address, isPublic, userId: id, username, category};
-    fetch('/api/blueprint/create', {
-      method: 'POST',
-      headers: {
-        "access-token": Cookies.get('token'),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => {
-      if (res.status === 201) {
-        this.setState({ message: 'Create Successful!' });
-      } else {
-        this.setState({ message: 'An error has occured' })
-      }
-    })
+    try{
+      const response = await fetch('/api/blueprint/create',{
+        method: 'POST',
+        headers: {
+          "access-token": Cookies.get('token'),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+    } catch (err){
+      console.error(err);
+    }
   }
 
   render() {
