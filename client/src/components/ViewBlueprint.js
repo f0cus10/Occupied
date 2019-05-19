@@ -3,10 +3,13 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
 import SpaceCard from "./SpaceCard";
+import Modal from "./Modal";
 import { Grid } from "semantic-ui-react";
 import "../styles/ViewBlueprint.css";
 import PageContainer from "./PageContainer";
-import {ExceptionList, Card, ResourceList, TextStyle, Select, Tabs, Avatar, TextField,Toast} from '@shopify/polaris';
+import CreateSpaceModal from './CreateSpaceModal';
+import {Button,ExceptionList, Card, ResourceList, TextStyle, Select, Tabs, Avatar, TextField,Toast} from '@shopify/polaris';
+import { setModalContent } from "../store/user";
 import { Bar } from 'react-chartjs-2';
 import { format } from 'date-fns';
 
@@ -14,6 +17,7 @@ class ViewBlueprint extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      active: false,
       selected: 0,
       blueprint: {},
       message: "",
@@ -158,12 +162,39 @@ class ViewBlueprint extends Component {
     }
   }
 
+  handleCreateSpace = () => {
+    this.props.setModal("Occupied - CREATE SPACE", "", {id: 1});
+    this.setState(({ active }) => ({ active: !active }));
+  }
+
+  handleUpdate = (name, description, category, expiration, imageUrl) => {
+    axios.post( `/api/space/create`, {
+      blueprintId: this.props.blueprintId,
+      description,
+      name,
+      category,
+      imageUrl,
+    },
+    {
+      headers: { "access-token": Cookies.get("token") }
+    }
+    )
+    .then(res => {
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      window.location.reload();
+    });
+  }
+
   render() {
     const { data } = this.props;
     const { username} = data;
     const {
       blueprint,
-      sortByCategory
+      sortByCategory,
+      active
     } = this.state;
 
     for (let i in sortByCategory) {
@@ -211,7 +242,7 @@ class ViewBlueprint extends Component {
           <div>
             <Grid celled>
               <Grid.Row>
-                <Grid.Column width={5}>
+                <Grid.Column width={3}>
                   <div className="dropdown">
                     <select
                       onChange={e => {
@@ -231,6 +262,21 @@ class ViewBlueprint extends Component {
                       <option value="Classroom">Classroom</option>
                       <option value="Library">Library</option>
                     </select>
+                    <Modal
+                      component={({ onClick }) => (
+                        <Button onClick={onClick}> Create Space </Button>
+                      )}
+                      bodyComp={
+                        <CreateSpaceModal
+                          handleUpdate={this.handleUpdate}
+                        />
+                      }
+                      active={active}
+                      func={this.handleCreateSpace}
+                      title="Occupied App - Create Space"
+                      body="Create Space"
+                      refresh
+                    />
                   </div>
                 </Grid.Column>
               </Grid.Row>
@@ -394,8 +440,18 @@ class ViewBlueprint extends Component {
 
 const mapState = state => {
   return {
-    username: state.user.user
+    username: state.user.user,
+    modal: state.user.modal
   };
 };
 
-export default connect(mapState)(ViewBlueprint);
+const mapDispatch = dispatch => {
+  return {
+    setModal: (title, body, data) => {
+      const content = { title, body, data };
+      dispatch(setModalContent(content));
+    }
+  };
+};
+
+export default connect(mapState, mapDispatch)(ViewBlueprint);
