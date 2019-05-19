@@ -1,6 +1,18 @@
 const router = require('express').Router();
+const _ = require('lodash');
 const { Space, User, Blueprint, Visit } = require('../models');
 const { Op } = require('sequelize');
+
+
+//TODO: Group this into a util function as well
+//Error Handler Helper function
+const errorHandler = (err, models) => {
+  if (err instanceof models.sequelize.ValidationError){
+    //use lodash to pick between the key-value pairs in the object
+    return err.errors.map(x => _.pick(x, ['path', 'message']));
+  }
+  return [{ path: 'Space', message: 'Unknown Error'}];
+}
 
 /**
  * @param spaceID
@@ -164,29 +176,81 @@ router.get('/:spacesId', async (req, res) => {
   }
 });
 
-/**
-  Create's new space and associates it to a blueprint and user.
+
+/*
+ *
+ * a POST request to create a Space in the database.
+ * @reqs: logged in user, opened blueprint
+ * @returns: a JSON is sent in the following format
+ * 
+ * ------------------------------ RESPONSE SCHEMATIC ----------------------
+ * 
+ * {
+ *    created: boolean,
+ *    errors: [
+ *      {
+ *        path: String or null
+ *        message: String or null
+ *      }
+ *    ]
+ * }
  */
-router.post('/create', async (req, res) => {
-  const { name, blueprintId, blueprintName, description, category, imageUrl } = req.body;
-  try {
+
+router.post('/create', async(req, res) => {
+  let {
+    name,
+    blueprintId,
+    blueprintName,
+    description,
+    category,
+    imageUrl
+  } = req.body;
+
+  try{
     const foundBlueprint = await Blueprint.findOne({
       where: {
-        [Op.or]: [{id: blueprintId}, {name: blueprintName}]
+        [Op.or]: [{ id: blueprintId }, {name: blueprintName}]
       }
     });
-    if (foundBlueprint) {
-      const newSpace = await Space.create({
-        name, description, imageUrl, category
-      })
-      await foundBlueprint.addSpace(newSpace)
-      res.sendStatus(201);
+    if (foundBlueprint){
+      try{
+        const newSpace = await Space.create({
+          name, description, imageUrl, category
+        })
+        const BlueprintToSpacePromise = foundBlueprint.addSpace(newSpace);
+        const response = {
+          created: true,
+          errors: [{ path: null, message: null}]
+        }
+        res.json(response);
+        await BlueprintToSpacePromise;
+      }
+      catch (err){
+        //Creating the space was unsuccessful 
+        const resObject = {
+          created: false,
+          errors: errorHandler(error, Space),
+        }
+        res.json(resObject);
+      }
     } else {
-      res.status(404).send('Cannot associate blueprint to this space!')
+      //the blueprint was not found
+      const response = {
+        created: false,
+        errors: [{ path: 'Blueprint', message: 'Blueprint not found'}]
+      }
+      res.json(response);
     }
-  } catch (err) {
-    console.error(err);
   }
+  catch (err){
+    console.error(err);
+    const resObject = {
+      created: false,
+      errors: [{ path: 'Database', message: 'Unknown database error'}]
+    }
+    res.json(resObject);
+  }
+
 })
 
 router.get('/delete/:id', async (req, res) => {
