@@ -58,6 +58,11 @@ function Nav({ back, username, handleNavigation, id }) {
             onClick: () => handleNavigation('/join')
           },
           {
+            label: "Help",
+            icon: 'help',
+            onClick: () => handleNavigation('/help')
+          },
+          {
             label: "Logout",
             icon: 'logOut',
             onClick: () => {
