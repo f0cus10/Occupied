@@ -282,7 +282,7 @@ class ViewBlueprint extends Component {
                 </Grid.Column>
               </Grid.Row>
               <Grid.Row />
-              <Grid.Row>{cat}</Grid.Row>
+              <Grid.Row>{!!cat.length ? cat : 'No Spaces! Please add spaces using the "Create Space" Button above' }</Grid.Row>
             </Grid>
           </div>
         ),

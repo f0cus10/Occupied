@@ -6,7 +6,7 @@ export default function CreateSpaceModal({handleUpdate}) {
   const [desc, setDesc] = useState('This is a space!');
   const [cat, setCat] = useState('Restroom');
   const [exp, setExp] = useState('30');
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState('http://www.propertybazaar.com/content/img/no-user-Image.png');
   
   return (
     <FormLayout>
