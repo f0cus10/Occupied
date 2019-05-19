@@ -34,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
 
     imageUrl: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: "http://www.propertybazaar.com/content/img/no-user-Image.png"
     }
-    },
-    {
-      timestamps: false
-    }
+  },
+  {
+    timestamps: false
+  }
   );
 
   Space.associate = models => {
