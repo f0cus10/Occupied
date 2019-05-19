@@ -69,6 +69,7 @@ class CreateBlueprint extends Component {
     ];
     return (
       <Card className="CBcard" title="Create Blueprint" sectioned>
+        <title>Create Blueprint</title>
         { message ? (
             <Banner
             title={message}

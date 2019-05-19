@@ -40,6 +40,7 @@ class Profile extends Component {
     
     return (
       <Page title="Profile">
+        <title>My Profile</title>
         <Card>
           <CalloutCard
             title={username}

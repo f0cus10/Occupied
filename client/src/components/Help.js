@@ -9,6 +9,7 @@ class Help extends Component {
       return(
     // const { data, profileId } = this.props;
     <Card title="How Occupied Works">
+      <title>Occupied - Help</title>
       <Card.Section ></Card.Section>
       <Card.Section title="Terms to know:">
         <p className="occupiedContent">
