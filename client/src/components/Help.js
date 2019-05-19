@@ -13,13 +13,13 @@ class Help extends Component {
       <Card.Section title="Terms to know:">
         <p className="occupiedContent">
 	      <div><b><u>Blueprints</u> </b>- The representation of an area, composed of  spaces that a user can join.</div>
-	      <div><b><u>Spaces</u></b> - The various types of rooms such as bathroom or study room that can be marked as occupied.</div>
+	      <div><b><u>Spaces</u></b> - The various types of rooms part of a blueprint that can be marked as occupied.</div>
         </p>
       </Card.Section>
       <Card.Section title="Join Blueprints">
         <p className="occupiedContent">
             In order to use a space in a blueprint, user must join a blueprint.
-            An user can join  a blueprint of their choices in the join blueprints page. 
+            An user can join  a blueprint of their choices in the <a href="join">join blueprints</a> page. 
             After joining, the blueprints are shown in the home page and the user now have 
             the option to use the spaces in that blueprint.
         </p>
@@ -27,7 +27,7 @@ class Help extends Component {
     
       <Card.Section title="Create Blueprints">
         <p className="occupiedContent">
-          Users can create blueprints by going to the create blueprint page and entering the required information. 
+          Users can create blueprints by going to the <a href="/create">create</a> blueprint page and entering the required information. 
           After creating a blueprint the user can create spaces for that blueprint. 
           If the blueprint is private, the creator can go to the blueprint and invite members.
         </p>
