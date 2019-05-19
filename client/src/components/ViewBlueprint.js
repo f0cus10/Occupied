@@ -167,7 +167,7 @@ class ViewBlueprint extends Component {
     this.setState(({ active }) => ({ active: !active }));
   }
 
-  handleUpdate = async (name, description, category, expiration, imageUrl) => {
+  handleUpdate = (name, description, category, expiration, imageUrl) => {
     axios.post( `/api/space/create`, {
       blueprintId: this.props.blueprintId,
       description,
@@ -182,7 +182,7 @@ class ViewBlueprint extends Component {
     .then(res => {
       const { created, errors } = res.data;
       if(created){
-        this.setState({ showToas: !this.state.showToast, toastMessage: 'Successfully created ' + name})
+        this.setState({ showToast: !this.state.showToast, toastMessage: 'Successfully created ' + name})
       }
       else {
         this.setState({ showToast: !this.state.showToast, toastMessage: errors[0].path + errors[0].message})
