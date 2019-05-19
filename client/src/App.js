@@ -13,7 +13,6 @@ import PageLayout from './components/PageLayout';
 import Registration from "./components/Registration";
 import Home from "./components/Home";
 import CreateBlueprint from "./components/CreateBlueprint";
-import CreateSpace from './components/CreateSpace';
 import JoinBlueprint from "./components/JoinBlueprint";
 import ViewBlueprint from "./components/ViewBlueprint";
 import EditBlueprint from "./components/EditBlueprint";
@@ -31,7 +30,6 @@ class App extends PureComponent {
           <Route exact path="/" component={Login} />
           <Route path="/home" render={props => <ProtectedRoute component={Home} {...props} />} />
           <Route path="/create" render={props => <ProtectedRoute component={CreateBlueprint} {...props} back={'Home'} />} />
-          <Route path="/createspace" render={props => <ProtectedRoute component={CreateSpace} {...props} back={'Home'} />} />
           <Route path="/join" render={props => <ProtectedRoute component={JoinBlueprint} {...props} back={'Home'} />} />
           <Route path="/view/:blueprintId" render={props => <ProtectedRoute component={ViewBlueprint} {...props} back={'Home'} />} />
           <Route path="/profile/:profileId" render={props => <ProtectedRoute component={Profile} {...props} back={'Home'} />} />

@@ -17,3 +17,12 @@
   height: 200px;
   width: 300px;
 }
+
+.dropdown {
+  display: flex;
+  flex-direction: row;
+}
+
+.dropdown-select {
+  margin-right: 30px;
+}

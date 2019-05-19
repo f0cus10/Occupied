@@ -168,7 +168,7 @@ router.get('/:spacesId', async (req, res) => {
   Create's new space and associates it to a blueprint and user.
  */
 router.post('/create', async (req, res) => {
-  const { name, blueprintId, blueprintName, description } = req.body;
+  const { name, blueprintId, blueprintName, description, category, imageUrl } = req.body;
   try {
     const foundBlueprint = await Blueprint.findOne({
       where: {
@@ -177,7 +177,7 @@ router.post('/create', async (req, res) => {
     });
     if (foundBlueprint) {
       const newSpace = await Space.create({
-        name, description
+        name, description, imageUrl, category
       })
       await foundBlueprint.addSpace(newSpace)
       res.sendStatus(201);

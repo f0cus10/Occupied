@@ -48,11 +48,6 @@ function Nav({ back, username, handleNavigation, id }) {
             onClick: () => handleNavigation('/create')
           },
           {
-            label: "Create Space",
-            icon: 'circlePlus',
-            onClick: () => handleNavigation('/createspace')
-          },
-          {
             label: "Join Blueprint",
             icon: 'search',
             onClick: () => handleNavigation('/join')
