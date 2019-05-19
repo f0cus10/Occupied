@@ -426,6 +426,7 @@ class ViewBlueprint extends Component {
             selected={selected}
             onSelect={this.handleTabChange}
           >
+            <title>View Blueprints</title>
             <Card>
               <Card.Section title={tabs[selected].content}>
               {tabs[selected].render}
