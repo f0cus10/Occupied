@@ -180,9 +180,13 @@ class ViewBlueprint extends Component {
     }
     )
     .then(res => {
-      if (res.status === 201) {
-        this.setState({ showToast : !this.state.showToast , toastMessage: 'Successfully created ' + name })
-      } 
+      const { created, errors } = res.data;
+      if(created){
+        this.setState({ showToast: !this.state.showToast, toastMessage: 'Successfully created ' + name})
+      }
+      else {
+        this.setState({ showToast: !this.state.showToast, toastMessage: errors[0].path + errors[0].message})
+      }
     })
     .catch(err => {
       this.setState({ showToast : !this.state.showToast , toastMessage: String(err) })
@@ -318,6 +322,7 @@ class ViewBlueprint extends Component {
                 return (
                   <ResourceList.Item
                     id={id}
+                    //TODO: Replace with env variable. VERY BAD DESIGN
                     url={`http://occupied-app.herokuapp.com/Profile/${id}`}
                     media={media}
                     accessibilityLabel={`View details for ${name}`}
