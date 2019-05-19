@@ -9,6 +9,7 @@ class Help extends Component {
       return(
     // const { data, profileId } = this.props;
     <Card title="How Occupied Works">
+      <title>Occupied - Help</title>
       <Card.Section ></Card.Section>
       <Card.Section title="Terms to know:">
         <p className="occupiedContent">
@@ -27,7 +28,7 @@ class Help extends Component {
     
       <Card.Section title="Create Blueprints">
         <p className="occupiedContent">
-          Users can create blueprints by going to the <a href="/create">create</a> blueprint page and entering the required information. 
+          Users can create blueprints by going to the <a href="/create">create blueprints </a> page and entering the required information. 
           After creating a blueprint the user can create spaces for that blueprint. 
           If the blueprint is private, the creator can go to the blueprint and invite members.
         </p>

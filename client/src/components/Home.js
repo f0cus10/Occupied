@@ -13,6 +13,7 @@ class Home extends Component {
     const { blueprints, id, imageUrl, categories } = this.props.data;
     return (
       <PageContainer title="Home">
+        <title>Occupied Home</title>
         <BlueprintGrid ownerIdProp={id} blueprints={blueprints} uniqueCategories={categories} />
       </PageContainer>
     );
