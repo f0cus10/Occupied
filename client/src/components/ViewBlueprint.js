@@ -180,11 +180,12 @@ class ViewBlueprint extends Component {
     }
     )
     .then(res => {
-      window.location.reload();
+      if (res.status === 201) {
+        this.setState({ showToast : !this.state.showToast , toastMessage: 'Successfully created ' + name })
+      } 
     })
     .catch(err => {
-      console.error(err);
-      window.location.reload();
+      this.setState({ showToast : !this.state.showToast , toastMessage: String(err) })
     });
   }
 
