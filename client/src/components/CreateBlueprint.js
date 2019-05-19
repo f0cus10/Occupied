@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { Card, TextField, FormLayout, Layout, Select, Button, Form} from "@shopify/polaris";
-import axios from 'axios';
+import { Card, TextField, FormLayout, Select, Button, Form, Banner} from "@shopify/polaris";
 import Cookies from 'js-cookie';
-import '../styles/CreateBlueprint.css';
 import PageContainer from '../components/PageContainer';
 class CreateBlueprint extends Component {
   constructor(props) {
@@ -16,32 +12,50 @@ class CreateBlueprint extends Component {
       imageUrl:'',
       address:'',
       isPublic: false,
-      category:''
+      category:'school'
     }
   }
 
-  createBlueprint = (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
+  createBlueprint = async (name, description, imageUrl="https://acutehearingcenters.com/wp-content/uploads/2017/01/Placeholder-for-Location.jpg", address, isPublic, category) => {
     const { username, id } = this.props.data;  
-    let data = { name, description, imageUrl, address, isPublic, userId: id, username, address, category};
-    fetch('/api/blueprint/create', {
-      method: 'POST',
-      headers: {
-        "access-token": Cookies.get('token'),
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
+    let data = { name, description, imageUrl, address, isPublic, userId: id, username, category};
+    //clear all the errors
+    this.setState({
+      message: null
     })
-    .then(res => {
-      if (res.status === 201) {
-        this.setState({ message: 'Create Successfull!' });
-      } else {
-        this.setState({ message: 'An error has occured' })
+    try{
+      const response = await fetch('/api/blueprint/create',{
+        method: 'POST',
+        headers: {
+          "access-token": Cookies.get('token'),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      });
+
+      //Check response status
+      if(response.status !== 200){
+        this.setState({ message: "Something went wrong" });
+        console.log("Response message returned with invalid status");
+        return;
       }
-    })
+
+      //if successfully created, notify the user
+      const { created, errors } = await response.json();
+      if (created){
+        this.setState({ message: "Create Successful!"});
+      }
+      else{
+        const msg = `${errors[0].path}: ${errors[0].message}`;
+        this.setState({ message: msg });
+      }
+      return;
+    } catch (err){
+      console.error(err);
+    }
   }
 
   render() {
-    const { username } = this.props.data;
     const { name, description, message, imageUrl, address, isPublic , category} = this.state;
     const blueprintCategory = [
       {label: 'School', value: 'school'},
@@ -55,8 +69,16 @@ class CreateBlueprint extends Component {
     ];
     return (
       <Card className="CBcard" title="Create Blueprint" sectioned>
+        { message ? (
+            <Banner
+            title={message}
+            onDismiss={()=> {this.setState({message: null})}}
+            status = {message === 'Create Successful!' ? "success": "critical"}
+            >
+            </Banner>
+          ) : null 
+        }
         <PageContainer title="">
-          <h3 className="warning"> {message} </h3>
           <Form className="blueprint"
             onSubmit={() =>
               this.createBlueprint(

@@ -3,14 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAuth, setWarning, setAuth } from '../store';
 import Cookies from 'js-cookie';
-import Modal from '../components/Modal';
 import { DisplayText, InlineError } from '@shopify/polaris';
 import '../styles/Login.css';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     if (Cookies.get('token')) {
       this.props.changeAuth()
@@ -27,13 +23,6 @@ class Login extends Component {
         <DisplayText size="extraLarge"> Occupied Login </DisplayText>
         <div className="form">
           <InlineError message={warning} fieldId="login" />
-          <form className="register-form">
-            <input type="text" placeholder="name" />
-            <input type="password" placeholder="password" />
-            <input type="text" placeholder="email address" />
-            <button>create</button>
-            <p className="message">Already registered? <a href="#">Sign In</a></p>
-          </form>
           <form onSubmit={setUsername} className="login-form">
             <input type="text" placeholder="Username" name="username" />
             <input type="password" placeholder="Password" name="password" />

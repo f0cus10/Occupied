@@ -1,6 +1,17 @@
 const router = require('express').Router();
+const _ = require('lodash');
 const { Blueprint, User, Space, Visit } = require('../models');
 const { Op } = require('sequelize');
+
+//TODO: Group this into a util function folder
+//Error handler
+const errorHandler = (err, models) => {
+  if (err instanceof models.sequelize.ValidationError){
+    //use lodash to pick between the key-value pairs in the object
+    return err.errors.map(x => _.pick(x, ['path', 'message']));
+  }
+  return [{ path: 'blueprint', message: 'Unknown Error' }];
+}
 
 router.get('/all', async (req, res, next) => {
   try {
@@ -153,8 +164,25 @@ router.post('/invite/', async(req, res) => {
   }
 });
 
-// router.post('/schedule')
-
+/*
+ * a POST request to create a Blueprint in the database. This requires the user to be logged in
+ * @params: {userId, username, name, description, address, category, imageUrl, isPublic}
+ * @output: a JSON is sent in the following format
+ * 
+ * ------------------------ RESPONSE SCHEMATIC ----------------------------
+ * 
+ * {
+ *   created: boolean,
+ *   errors: [
+ *     {
+ *       path: String or null,
+ *       message: String or null
+ *     }
+ *   ]
+ * }
+ * 
+ * 
+ */
 router.post('/create', async (req, res) => {
   let {
     userId,
@@ -173,17 +201,41 @@ router.post('/create', async (req, res) => {
       }
     });
     if (found) {
-      const newBlueprint = await Blueprint.create({
-        name, description, category, imageUrl, isPublic, address
-      })
-      await found.addBlueprint(newBlueprint);
-      await newBlueprint.addUser(found);
-      res.sendStatus(201);
+      try{
+        const newBlueprint = await Blueprint.create({
+          name, description, category, imageUrl, isPublic, address
+        })
+        const adminPromise = found.addBlueprint(newBlueprint);
+        const memberPromise = newBlueprint.addUser(found);
+        const response = {
+          created: true,
+          errors: [{path: null, message: null}]
+        }
+        res.json(response);
+        await adminPromise;
+        await memberPromise;
+      }
+      catch (error){
+        const resObject = {
+          created: false,
+          errors: errorHandler(error, Blueprint),
+        }
+        res.json(resObject);
+      }
     } else {
-      res.send(404);
+      const response = {
+        created: false,
+        errors: [{ path: 'user', message: 'User not found'}]
+      };
+      res.json(response);
     }
   } catch (err) {
     console.error(err);
+    const resObject = {
+      created: false,
+      errors: [{ path: 'database', message: 'Unknown database error' }],
+    }
+    res.json(resObject);
   }
 })
 

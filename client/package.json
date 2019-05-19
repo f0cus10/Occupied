@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "Occupied-client",
   "proxy": "http://localhost:5000/",
   "version": "0.1.0",
   "private": true,
@@ -22,12 +22,14 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.85.0"
+    "semantic-ui-react": "^0.85.0",
+    "source-map-explorer": "^1.8.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "PORT=3000 react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build": "PORT=3000 react-scripts build",
+    "test": "PORT=3000 react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
