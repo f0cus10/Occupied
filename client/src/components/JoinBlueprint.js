@@ -40,6 +40,7 @@ class JoinBlueprint extends Component {
           isMember={isMember}
           join
         />
+        <title>Join Blueprint</title>
       </Grid.Column>
     );
   };
