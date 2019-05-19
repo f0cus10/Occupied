@@ -40,6 +40,7 @@ After running the script, navigate to http://localhost:3000
 ## Folder structure
 
 The folders are arranged in the following fashion:
+```
 .
 +-- api
 +-- client
@@ -52,6 +53,7 @@ The folders are arranged in the following fashion:
 +-- package.json
 +-- package-lock.json
 +-- app.js
+```
 
 ## LICENSE
 The License is an `MIT` License and applies to the work of all current, future, and past contributors who have worked on the repository
