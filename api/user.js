@@ -85,8 +85,6 @@ router.get('/id/:id', async(req, res) => {
     });
     if (found) {
       foundBp = await found.getBlueprints();
-      console.log('foundBp')
-      console.log(foundBp)
       found.dataValues.blueprints = foundBp;
       res.send(found);
     } else {
