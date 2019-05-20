@@ -8,7 +8,8 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {}
+      data: {},
+      isFilter: false
     }
   }
 
@@ -19,13 +20,23 @@ class Profile extends Component {
       }
     })
     .then(res => {
+      console.log('res')
+      console.log(res)
       this.setState({ data : res.data });
     })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
+  filterCommon = () => {
+    this.setState({ isFilter : true });
   }
 
   render(){
     // const { data, profileId } = this.props;
-    const { data } = this.state;
+    const userData = this.props.data;
+    const { data, isFilter } = this.state;
     let username, email, description, imageUrl, blueprints, rows = [['','','','']];
     if (data) {
       username = data.username;
@@ -35,6 +46,9 @@ class Profile extends Component {
       imageUrl = data.imageUrl;
     }
     if (blueprints) {
+      if (isFilter) {
+        // blueprints = blueprints.filter(b => )
+      }
       rows = blueprints.map(b => ([b.name, b.category, String(b.isPublic), b.description]))
     }
     
@@ -46,8 +60,8 @@ class Profile extends Component {
             title={username}
             illustration={imageUrl}
             primaryAction={{
-              content: "Add Friend",
-              url: "https://www.shopify.com"
+              content: "Filter Common Blueprints",
+              onAction: () => this.filterCommon
             }}
           >
             <DescriptionList

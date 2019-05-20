@@ -32,11 +32,19 @@ app.get('*', function(req, res) {
             const { userToBlueprint, blueprintToSpace, userToSpace } = dummyAssociations;
             for (let a of userToBlueprint) {
                 const { user, blueprint } = a;
+                console.log('user')
+                console.log(user)
+                console.log('blueprint')
+                console.log(blueprint)
                 const foundUser = await User.findOne({ where: { username: user }});
                 const foundBp = await Blueprint.findOne({ where: { name: blueprint }});
                 if (foundUser || foundBp) {
-                    foundBp.addUser(foundUser);
-                    foundUser.addBlueprint(foundBp);
+                    // foundBp.addUser(foundUser);
+                    foundBp.addUser(foundUser, {
+                        through    : 'member',
+                        foreignKey : 'blueprintId'
+                    });
+                    foundUser.addBlueprint(foundBp, { through: 'member' });
                 } else {
                     throw 'assocation failed';
                 }

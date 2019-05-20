@@ -1,7 +1,15 @@
 {
   "userToBlueprint": [
     {
+      "user": "marjan",
+      "blueprint": "Baruch College"
+    },
+    {
       "user": "miguel",
+      "blueprint": "Baruch College"
+    },
+    {
+      "user": "jia",
       "blueprint": "Baruch College"
     },
     {
@@ -14,7 +22,7 @@
     },
     {
       "user": "jia",
-      "blueprint": "Hunter College"
+      "blueprint": "JP Morgan & Chase"
     },
     {
       "user": "miguel",

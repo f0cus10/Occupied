@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import CardContainer from "./Card";
 import '../styles/Grid.css';
 
+import { DisplayText } from '@shopify/polaris';
+
 class BlueprintGrid extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +35,7 @@ class BlueprintGrid extends Component {
 
     return (
       <div className="card-container">
-        {cards}
+        {!!cards.length ? cards :<DisplayText size="extraLarge">No blueprints here! Please create one in the create blueprints page!</DisplayText> }
       </div>
     );
   }
