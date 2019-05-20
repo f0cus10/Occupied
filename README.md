@@ -61,3 +61,7 @@ The License is an `MIT` License and applies to the work of all current, future, 
 ## CONTRIBUTING
 
 ***Coming Soon***
+
+## FINAL WRITE-UP
+For more detailed documentation on using Occupied, follow this link.
+https://docs.google.com/document/d/1UKZqqj28GUtx0Fbauo5jhOKjl0ucAkwSH6tFV83ZDWg/edit?usp=sharing
