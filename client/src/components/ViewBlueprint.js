@@ -404,8 +404,8 @@ class ViewBlueprint extends Component {
         panelID: "statistics"
       },
       {
-        id: "scheduling-page",
-        content: "Scheduling",
+        id: "usage-history-page",
+        content: "Usage History",
         render: (
           <div>
             <ExceptionList
@@ -413,7 +413,7 @@ class ViewBlueprint extends Component {
             />
           </div>
         ),
-        panelID: "scheduling"
+        panelID: "usage-history"
       }
     ];
 

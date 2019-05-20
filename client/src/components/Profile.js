@@ -30,7 +30,10 @@ class Profile extends Component {
   }
 
   filterCommon = () => {
-    this.setState({ isFilter : true });
+    const { isFilter } = this.state;
+    console.log('isFilter')
+    console.log(isFilter)
+    this.setState({ isFilter : !isFilter });
   }
 
   render(){
@@ -47,7 +50,7 @@ class Profile extends Component {
     }
     if (blueprints) {
       if (isFilter) {
-        // blueprints = blueprints.filter(b => )
+        blueprints = blueprints.filter(b => !!userData.blueprints.includes(a => a.name===b.name));
       }
       rows = blueprints.map(b => ([b.name, b.category, String(b.isPublic), b.description]))
     }
@@ -61,7 +64,7 @@ class Profile extends Component {
             illustration={imageUrl}
             primaryAction={{
               content: "Filter Common Blueprints",
-              onAction: () => this.filterCommon
+              onAction: () => this.filterCommon()
             }}
           >
             <DescriptionList

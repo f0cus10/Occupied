@@ -27,8 +27,8 @@ import { Link, Redirect } from "react-router-dom";
 
 export default class Home2 extends React.Component {
   defaultState = {
-    emailFieldValue: "dharma@jadedpixel.com",
-    nameFieldValue: "Jaded Pixel"
+    emailFieldValue: "miguel@ocupied.com",
+    nameFieldValue: "Occupied"
   };
 
   state = {
