@@ -1,16 +1,22 @@
 'use strict';
-var pg = require('pg');
-pg.defaults.ssl = true;
-
 var Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('defaultdb', 'doadmin', process.env.PGPASSWORD, {
-  host: process.env.DB_URL,
-  dialect: 'postgresql',
-  dialectOptions: { "ssl": {"require":true } },
-  port: 25060,
-  ssl: true
-});
+let sequelize;
+
+//If the app is running in production, connect to database differently
+if (process.env.NODE_ENV === 'production'){
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgresql',
+    logging: true,
+  })
+}
+//Else use development database settings
+else {
+  sequelize = new Sequelize(process.env.PGNAME, process.env.PGUSERNAME, process.env.PGPASSWORD, {
+    dialect: 'postgresql',
+    port: process.env.PGPORT,
+  })
+}
 
 /*
 * import all the models from the folder
