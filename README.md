@@ -3,30 +3,21 @@ Occupied is a web-based platform to help facilitate and control space reservatio
 
 It represents the structures (e.g. buildings, halls) as **Blueprints** and spaces within those structures (e.g. classrooms, meeting rooms) as **Spaces**.
 
-## Installation
+## Local Installation
 
-<details>
-    <summary> PREREQUISITES </summary>
+To install a localized version of **Occupied** for personal, organizational, or developmental purposes, follow these steps:
 
-    1. Node.JS + NPM
-    2. PostgreSQL
-    3. 512 bit (Public, Private) pair
-    4. Environment Variables
-</details>
+### Prerequisites
+To ensure proper installation, please make sure you have installed 
+1. [Node.js + npm](https://nodejs.org/en/download/) for your system
+2. `git` for cloning and version control
+3. [PostgreSQL](https://www.postgresql.org/download/) for your system. 
 
-After gathering all the dependencies,
+### Clone Repository
+Next, clone this repository through git using: `git clone github.com/f0cus10/Occupied.git`
 
-* Clone this repository
-* Run,
-```bash
-cd Occupied
-node app.js #This will start the backend
-```
-* Open a new terminal and run,
-```bash
-cd client
-npm start #This will start the frontend
-```
+### Configure Variables
+In order to successfully run the program, you must configure some variables
 **Optionally**,
 You could run `npm run dev` but output would be limited
 
