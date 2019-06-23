@@ -17,7 +17,11 @@ To ensure proper installation, please make sure you have installed
 Next, clone this repository through git using: `git clone github.com/f0cus10/Occupied.git`
 
 ### Configure Variables
-In order to successfully run the program, you must configure some variables
+In order to successfully run the program, you must configure some variables through the following steps:
+
+1. Generate a 512-bit *(public,private)* key pair. 
+2. Specify the environment variables in a file called `.env`.
+ 
 **Optionally**,
 You could run `npm run dev` but output would be limited
 
