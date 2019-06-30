@@ -69,18 +69,17 @@ For now, contact the maintainers or create an [issue](https://github.com/f0cus10
 The folders are arranged in the following fashion:
 ```
 .
-+-- .env
-+-- api
-+-- client
-|   +-- public
-|   +-- src
-+-- dummy
-+-- models
-+-- public.key
-+-- private.key
-+-- package.json
-+-- package-lock.json
-+-- app.js
++-- .env               // contains the environment variables
++-- api                // main REST API logic 
++-- client             // React client
+|   +-- public         // Icons, Labels, and other public stuff
+|   +-- src            // All the frontend logic
++-- dummy              // Hardcoded testing data
++-- models             // Sequelize database models
++-- public.key         // 512-bit RSA Public Key
++-- private.key        // 512-bit RSA Private Key
++-- package.json       // Dependencies and scripts
++-- app.js             // Backend starter logic
 ```
 ## Versioning
 This project uses [Semantic Versioning](semver.org) for versioning. For the versions available, see the [tags](https://github.com/f0cus10/Occupied/tags). 
