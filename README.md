@@ -62,7 +62,7 @@ After running the script, navigate to http://localhost:3000
 
 ***COMING SOON***
 
-For now, contact the maintainers or create an issue. 
+For now, contact the maintainers or create an [issue](https://github.com/f0cus10/Occupied/issues/new). 
 
 ## Directory Structure
 
@@ -82,14 +82,8 @@ The folders are arranged in the following fashion:
 +-- package-lock.json
 +-- app.js
 ```
+## Versioning
+This project uses [Semantic Versioning](semver.org) for versioning. For the versions available, see the [tags](https://github.com/f0cus10/Occupied/tags). 
 
 ## LICENSE
-The License is an `MIT` License and applies to the work of all current, future, and past contributors who have worked on the repository
-
-## CONTRIBUTING
-
-***Coming Soon***
-
-## FINAL WRITE-UP
-For more detailed documentation on using Occupied, follow this link.
-https://docs.google.com/document/d/1UKZqqj28GUtx0Fbauo5jhOKjl0ucAkwSH6tFV83ZDWg/edit?usp=sharing
+This project is licensed under the **MIT** License. See the [LICENSE](LICENSE) file for details.
