@@ -1,5 +1,5 @@
 # Occupied
-Occupied is a web-based platform to help facilitate and control space reservation in a given structure.
+Occupied is a web-based platform to help facilitate and control space reservation within a given establishment.
 
 It represents the structures (e.g. buildings, halls) as **Blueprints** and spaces within those structures (e.g. classrooms, meeting rooms) as **Spaces**.
 
@@ -29,11 +29,40 @@ the **BEGINNING** and **END** demarcations. You can generate the pair through `s
 #### Environment Variables
 An example for the environments vairables is provided in the `.env.example` file. Simply copy it to a `.env` file and specify the variables. 
 
+### Running Occupied
+After all the configuration is complete, you are ready to run Occupied!!!
+
+Next, all you have to do is go to the project's direcory and run the following commands:
+```bash
+npm install
+node app.js
+
+# In a new terminal window
+cd client
+npm install
+npm start
+```
+
+This starts the front-end and the back-end of the program separately. 
+
+**Optionally**, If you'd like to run the full-stack with one command, 
+```bash
+# Navigate to Occupied root directory
+npm run dev
+```
+*Caveat*: This method will limit the output from the server logs.
+
 
 ## Usage
 After running the script, navigate to http://localhost:3000 
 
 **NOTE**: If you have changed the frontend's **PORT** variable, navigate to that **PORT** instead. 
+
+## Troubleshooting
+
+***COMING SOON***
+
+For now, contact the maintainers or create an issue. 
 
 ## Directory Structure
 
