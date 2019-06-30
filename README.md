@@ -19,24 +19,28 @@ Next, clone this repository through git using: `git clone github.com/f0cus10/Occ
 ### Configure Variables
 In order to successfully run the program, you must configure some variables through the following steps:
 
-1. Generate a 512-bit *(public,private)* key pair. 
-2. Specify the environment variables in a file called `.env`.
+1. Generate a 512-bit *(public,private)* key pair.
+2. Specify the environment variables in a file called `.env`
  
-**Optionally**,
-You could run `npm run dev` but output would be limited
+#### Public, Private Key placement
+After generating the 512-bit key pair, place the public key, and the private key in the `public.key` and `private.key` files respectively. Make sure to copy all of the key including
+the **BEGINNING** and **END** demarcations. You can generate the pair through `ssh-keygen` or from here.
 
-Currently, the build has been tested to work on `Ubuntu >= 18.04`. 
+#### Environment Variables
+An example for the environments vairables is provided in the `.env.example` file. Simply copy it to a `.env` file and specify the variables. 
+
 
 ## Usage
 After running the script, navigate to http://localhost:3000 
 
 **NOTE**: If you have changed the frontend's **PORT** variable, navigate to that **PORT** instead. 
 
-## Folder structure
+## Directory Structure
 
 The folders are arranged in the following fashion:
 ```
 .
++-- .env
 +-- api
 +-- client
 |   +-- public
