@@ -82,7 +82,18 @@ The folders are arranged in the following fashion:
 +-- app.js             // Backend starter logic
 ```
 ## Versioning
-This project uses [Semantic Versioning](semver.org) for versioning. For the versions available, see the [tags](https://github.com/f0cus10/Occupied/tags). 
+This project uses [Semantic Versioning](semver.org) for versioning. For the versions available, see the [tags](https://github.com/f0cus10/Occupied/tags).
+
+## Authors
+Shout out to [Simon Ayzman](https://github.com/simonayzman) for inspiration, direction, and crucial feedback on the project
+
+* **Miguel Acero** - *Full-stack* - [AceroM](https://github.com/AceroM)
+* **Anupam Das** - *Front-end* - [anupamdas104](https://github.com/anupamdas104)
+* **Marjan Ansar** - *Front-end* - [Marjan154](https://github.com/Marjan154)
+* **Jia Jiang** - *Front-end* - [jiaj07](https://github.com/jiaj07)
+* **Iftikhar Khan** - *Full-stack* - [f0cus10](https://github.com/f0cus10)
+
+See also the list of [contributors](https://github.com/f0cus10/Occupied/contributors) who participated in this project.
 
 ## LICENSE
 This project is licensed under the **MIT** License. See the [LICENSE](LICENSE) file for details.
