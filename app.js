@@ -9,6 +9,10 @@ const dummySpaces = require('./dummy/spaces.json');
 const dummyVisits = require('./dummy/visits.json');
 const dummyAssociations = require('./dummy/associations.json');
 
+if (process.env.NODE_ENV === 'development'){
+    require('dotenv').config();
+}
+
 const app = express();
 db.sequelize.sync({ force: true }).then(() => console.log('synced!'));
 app.use(bodyParser.json());
