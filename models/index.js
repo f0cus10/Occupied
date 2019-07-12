@@ -13,11 +13,11 @@ if (process.env.NODE_ENV === 'production'){
 //Else use development database settings
 else {
   sequelize = new Sequelize(process.env.PGNAME, process.env.PGUSERNAME, process.env.PGPASSWORD, {
-    dialect: 'postgresql',
-    port: process.env.PGPORT,
+    host: 'localhost',
+    dialect: 'postgres',
+    port: process.env.PGPORT
   })
 }
-
 /*
 * import all the models from the folder
 */

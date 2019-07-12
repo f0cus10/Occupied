@@ -9,7 +9,8 @@ const dummySpaces = require('./dummy/spaces.json');
 const dummyVisits = require('./dummy/visits.json');
 const dummyAssociations = require('./dummy/associations.json');
 
-if (process.env.NODE_ENV === 'development'){
+// Load from .env file if app is not in prod
+if (process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
 
