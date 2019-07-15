@@ -24,7 +24,7 @@ In order to successfully run the program, you must configure some variables thro
  
 #### Public, Private Key placement
 After generating the 512-bit key pair, place the public key, and the private key in the `public.key` and `private.key` files respectively. Make sure to copy all of the key including
-the **BEGINNING** and **END** demarcations. You can generate the pair through `ssh-keygen` or from here.
+the **BEGINNING** and **END** demarcations. You can generate the pair through `ssh-keygen` or from [here](https://8gwifi.org/rsafunctions.jsp).
 
 #### Environment Variables
 An example for the environments vairables is provided in the `.env.example` file. Simply copy it to a `.env` file and specify the variables. 
