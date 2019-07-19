@@ -89,9 +89,9 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.associate = (models) => {
-    // User can have many blueprints that they belong to. 
+    // Users can own many Blueprints
     User.hasMany(models.Blueprint);
-    // A user can be part of many blueprints
+    // A user can be a member of many blueprints
     User.belongsToMany(models.Blueprint, {
       through    : 'member',
       foreignKey : 'userId'
