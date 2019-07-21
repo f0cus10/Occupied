@@ -183,7 +183,7 @@ router.post('/invite/', async(req, res) => {
  * 
  * 
  */
-router.post('/create', async (req, res) => {
+router.post('/create', async (req, res, next) => {
   let {
     userId,
     username,
@@ -203,13 +203,14 @@ router.post('/create', async (req, res) => {
     if (found) {
       try{
         // get all the Blueprints associated with this user
-        console.log('------------------\n');
         const presentAssociations = await found.getBlueprints();
         //iterate over array
         for (var i = 0, len = presentAssociations.length; i < len; i++) {
           if (presentAssociations[i].name == name){
             console.log('One already exists');            
-            res.json({ created: false, errors: [{ path: 'blueprint', message: 'Duplicate'}]})
+            res.json({ created: false, errors: [{ path: 'blueprint', message: 'Duplicate'}]}).send();
+            //handle back control to the main router instance
+            return;
           }
         }
         const newBlueprint = await Blueprint.create({
