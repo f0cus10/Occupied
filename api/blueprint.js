@@ -183,7 +183,7 @@ router.post('/invite/', async(req, res) => {
  * 
  * 
  */
-router.post('/create', async (req, res, next) => {
+router.post('/create', async (req, res) => {
   let {
     userId,
     username,
@@ -208,7 +208,7 @@ router.post('/create', async (req, res, next) => {
         for (var i = 0, len = presentAssociations.length; i < len; i++) {
           if (presentAssociations[i].name == name){
             console.log('One already exists');            
-            res.json({ created: false, errors: [{ path: 'blueprint', message: 'Duplicate'}]}).send();
+            res.json({ created: false, errors: [{ path: 'duplicate', message: 'This blueprint already exists'}]}).send();
             //handle back control to the main router instance
             return;
           }
