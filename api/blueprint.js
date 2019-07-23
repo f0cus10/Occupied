@@ -202,6 +202,17 @@ router.post('/create', async (req, res) => {
     });
     if (found) {
       try{
+        // get all the Blueprints associated with this user
+        const presentAssociations = await found.getBlueprints();
+        //iterate over array
+        for (var i = 0, len = presentAssociations.length; i < len; i++) {
+          if (presentAssociations[i].name == name){
+            console.log('One already exists');            
+            res.json({ created: false, errors: [{ path: 'duplicate', message: 'This blueprint already exists'}]}).send();
+            //handle back control to the main router instance
+            return;
+          }
+        }
         const newBlueprint = await Blueprint.create({
           name, description, category, imageUrl, isPublic, address
         })
